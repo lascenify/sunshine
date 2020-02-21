@@ -1,4 +1,4 @@
-package com.lascenify.sunshine
+package com.lascenify.sunshine.ui
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,16 +7,30 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.sunshine.R
 
-class ForecastAdapter : RecyclerView.Adapter<ForecastAdapter.ForecastAdapterViewHolder>() {
-    private var mWeatherData:Array<String?>? = null
+class ForecastAdapter(mHandler: ForecastAdapterOnClickHandler) :
+    RecyclerView.Adapter<ForecastAdapter.ForecastAdapterViewHolder>() {
 
+
+    interface ForecastAdapterOnClickHandler{
+        fun onClick(input:String)
+    }
+
+    companion object{
+        private var mWeatherData:Array<String?>? = null
+       lateinit var mClickHandler  : ForecastAdapterOnClickHandler
+    }
+
+    init {
+        mClickHandler = mHandler
+    }
     override fun onCreateViewHolder(parent: ViewGroup,
-                                    viewType: Int):
-            ForecastAdapterViewHolder {
+                                    viewType: Int): ForecastAdapterViewHolder {
         val context = parent.context
         val inflater = LayoutInflater.from(context)
         val view = inflater.inflate(R.layout.forecast_list_item, parent, false)
-        return ForecastAdapterViewHolder(view)
+        return ForecastAdapterViewHolder(
+            view
+        )
     }
 
     override fun getItemCount(): Int = if (mWeatherData.isNullOrEmpty()) 0 else mWeatherData!!.size
@@ -34,8 +48,15 @@ class ForecastAdapter : RecyclerView.Adapter<ForecastAdapter.ForecastAdapterView
         notifyDataSetChanged()
     }
 
-    class ForecastAdapterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ForecastAdapterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val mWeatherTextView:TextView = itemView.findViewById(R.id.tv_weather_data)
+        init {
+            itemView.setOnClickListener(this)
+        }
+        override fun onClick(v: View?) {
+            val weatherForDay: String = mWeatherData?.get(adapterPosition)!!
+            mClickHandler.onClick(weatherForDay)
+        }
     }
 
 }

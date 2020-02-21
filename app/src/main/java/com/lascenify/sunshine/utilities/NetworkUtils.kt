@@ -16,10 +16,11 @@
 package com.lascenify.sunshine.utilities
 
 import android.net.Uri
-import com.example.android.sunshine.BuildConfig
+import android.util.Log
 import com.example.android.sunshine.BuildConfig.OPEN_WEATHER_API_KEY
 import java.io.IOException
 import java.net.HttpURLConnection
+import java.net.MalformedURLException
 import java.net.URL
 import java.util.*
 
@@ -29,7 +30,9 @@ import java.util.*
 object NetworkUtils {
     private val TAG = NetworkUtils::class.java.simpleName
 
-    private const val FORECAST_BASE_URL = "https://api.openweathermap.org/data/2.5/forecast"
+    private const val STATIC_WEATHER_URL =
+        "https://andfun-weather.udacity.com/staticweather"
+    private const val FORECAST_BASE_URL = "https://api.openweathermap.org/data/2.5/forecast_list"
     /*
      * NOTE: These values only effect responses from OpenWeatherMap, NOT from the fake weather
      * server. They are simply here to allow us to teach you how to build a URL if you were to use
@@ -66,6 +69,31 @@ object NetworkUtils {
             .appendQueryParameter(DAYS_PARAM, numDays.toString())
             .appendQueryParameter(APP_ID, apiKey)
         return URL(uri.toString())
+    }
+
+
+    fun buildStaticUrl(locationQuery: String?): URL? {
+        val builtUri =
+            Uri.parse(STATIC_WEATHER_URL).buildUpon()
+                .appendQueryParameter(QUERY_PARAM, locationQuery)
+                .appendQueryParameter(FORMAT_PARAM, format)
+                .appendQueryParameter(UNITS_PARAM, units)
+                .appendQueryParameter(
+                    DAYS_PARAM,
+                    Integer.toString(numDays)
+                )
+                .build()
+
+        var url: URL? = null
+        try {
+            url = URL(builtUri.toString())
+        } catch (e: MalformedURLException) {
+            e.printStackTrace()
+        }
+
+        Log.v(TAG, "Built URI $url")
+
+        return url
     }
 
     /**
