@@ -24,18 +24,21 @@
     <!--or something similar.-->
     <string name="app_name">Sunshine</string>
 
-    <!--Used in overflow menu to refresh weather data-->
-    <string name="refresh_button">Refresh</string>
+    <!--Used in overflow menu -->
+    <string name="action_refresh">Refresh</string>
+    <string name="action_map">Open map</string>
+    <string name="action_share">Share</string>
+    <string name="action_settings">Settings</string>
 
-    <string name="error_message">Failed to get the information</string>
+    <string name="error_message">Failed to get the information. Click the refresh button.</string>
     <!-- - - - - - - - - - - - - -->
     <!--Used by SunshineDateUtils-->
     <!-- - - - - - - - - - - - - -->
 
-    <!-- For labelling today's forecast_list [CHAR LIMIT=15] -->
+    <!-- For labelling today's forecast [CHAR LIMIT=15] -->
     <string name="today">Today</string>
 
-    <!-- For labelling tomorrow's forecast_list [CHAR LIMIT=15] -->
+    <!-- For labelling tomorrow's forecast [CHAR LIMIT=15] -->
     <string name="tomorrow">Tomorrow</string>
 
     <!-- Date format [CHAR LIMIT=NONE] -->
@@ -130,6 +133,14 @@
     <string name="dayForecasted_bundle">dayForecasted</string>
 
 
+    <!-- - - - - - - - - - - -->
+    <!-- Used by SettingsFragment-->
+    <!-- - - - - - - - - - - -->
+    <!--NONE-->
+    <string name="pref_location">location</string>
+    <string name="pref_units">units</string>
+    <string name="pref_celsius_unit">Celsius</string>
+    <string name="pref_fahrenheit_unit">Fahrenheit</string>
     <!-- - - - - - - - - - - -->
     <!-- Used by NetworkUtils-->
     <!-- - - - - - - - - - - -->

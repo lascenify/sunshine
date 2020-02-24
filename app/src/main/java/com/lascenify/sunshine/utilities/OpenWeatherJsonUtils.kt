@@ -27,7 +27,7 @@ import java.net.HttpURLConnection
 object OpenWeatherJsonUtils {
     /**
      * This method parses JSON from a web response and returns an array of Strings
-     * describing the weather over various days from the forecast_list.
+     * describing the weather over various days from the forecast.
      *
      *
      * Later on, we'll be parsing the JSON into structured data within the
@@ -44,7 +44,7 @@ object OpenWeatherJsonUtils {
     fun getSimpleWeatherStringsFromJson(
         context: Context,
         forecastJsonStr: String?
-    ): Array<String?>? { /* Weather information. Each day's forecast_list info is an element of the "list" array */
+    ): Array<String?>? { /* Weather information. Each day's forecast info is an element of the "list" array */
         val OWM_LIST = "list"
         /* All temperatures are children of the "temp" object */
         val OWM_TEMPERATURE = "temp"

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <EditTextPreference
+        android:title="Preferred location"
+        android:key="@string/pref_location" />
+    <ListPreference
+        android:entries="@array/pref_units"
+        android:entryValues="@array/pref_units"
+        android:key="@string/pref_units"
+        android:title="Preferred unit"
+        android:defaultValue="@string/pref_celsius_unit"/>
+</PreferenceScreen>

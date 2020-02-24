@@ -3,9 +3,12 @@
 
     <item
         android:id="@+id/action_refresh"
-        android:title="@string/refresh_button"
+        android:title="@string/action_refresh"
         />
     <item
+        android:id="@+id/action_setings"
+        android:title="@string/action_settings"/>
+    <item
         android:id="@+id/action_open_map"
-        android:title="Open map"/>
+        android:title="@string/action_map"/>
 </menu>

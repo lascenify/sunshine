@@ -87,7 +87,7 @@ object SunshineDateUtils {
      * to users.  As classy and polished a user experience as "20140102" is, we can do better.
      *
      *
-     * The day string for forecast_list uses the following logic:
+     * The day string for forecast uses the following logic:
      * For today: "Today, June 8"
      * For tomorrow:  "Tomorrow"
      * For the next 5 days: "Wednesday" (just the day name)

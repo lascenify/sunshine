@@ -27,9 +27,11 @@
         <meta-data
             android:name="openWeather.apiKey"
             android:value="{$OPEN_WEATHER_API_KEY}"/>
+
         <activity
             android:name="com.lascenify.sunshine.MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

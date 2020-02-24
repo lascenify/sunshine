@@ -7,6 +7,7 @@ import android.view.*
 import android.widget.TextView
 import androidx.core.app.ShareCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.android.sunshine.R
 import kotlinx.android.synthetic.main.detail_fragment.*
 
@@ -46,9 +47,17 @@ class DetailFragment :Fragment(){
         .intent
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.detail_forecast_menu, menu)
+        inflater.inflate(R.menu.detail_forecast, menu)
         val menuItem = menu.findItem(R.id.action_share)
         menuItem.intent = createShareForecastIntent()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId
+        if (id == R.id.action_setings){
+            findNavController().navigate(R.id.settingsFragment)
+        }
+        return true
     }
 
 }

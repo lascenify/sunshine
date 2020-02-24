@@ -32,7 +32,7 @@ object NetworkUtils {
 
     private const val STATIC_WEATHER_URL =
         "https://andfun-weather.udacity.com/staticweather"
-    private const val FORECAST_BASE_URL = "https://api.openweathermap.org/data/2.5/forecast_list"
+    private const val FORECAST_BASE_URL = "https://api.openweathermap.org/data/2.5/forecast"
     /*
      * NOTE: These values only effect responses from OpenWeatherMap, NOT from the fake weather
      * server. They are simply here to allow us to teach you how to build a URL if you were to use
@@ -42,7 +42,7 @@ object NetworkUtils {
 /* The format we want our API to return */
     private const val format = "json"
     /* The units we want our API to return */
-    private const val units = "metric"
+    var units = "metric"
     /* The number of days we want our API to return */
     private const val numDays = 14
     private const val apiKey = OPEN_WEATHER_API_KEY

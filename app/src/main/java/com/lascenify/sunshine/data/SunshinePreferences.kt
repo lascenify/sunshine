@@ -16,6 +16,8 @@
 package com.lascenify.sunshine.data
 
 import android.content.Context
+import androidx.preference.PreferenceManager
+import com.example.android.sunshine.R
 
 object SunshinePreferences {
     /*
@@ -96,7 +98,8 @@ object SunshinePreferences {
      */
     fun getPreferredWeatherLocation(context: Context?): String {
         /** This will be implemented in a future lesson  */
-        return defaultWeatherLocation
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        return sharedPreferences.getString(context?.getString(R.string.pref_location), defaultWeatherLocation)!!
     }
 
     /**
@@ -107,7 +110,9 @@ object SunshinePreferences {
      */
     fun isMetric(context: Context?): Boolean {
         /** This will be implemented in a future lesson  */
-        return true
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val units = sharedPreferences.getString(context?.getString(R.string.pref_units), "metric")
+        return (units.equals("Celsius"))
     }
 
     /**
