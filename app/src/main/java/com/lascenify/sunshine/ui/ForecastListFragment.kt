@@ -2,26 +2,30 @@ package com.lascenify.sunshine.ui
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.sunshine.R
+import com.lascenify.sunshine.MainActivity
 import com.lascenify.sunshine.data.SunshinePreferences
 import com.lascenify.sunshine.utilities.NetworkUtils
 import com.lascenify.sunshine.utilities.OpenWeatherJsonUtils
 import java.io.IOException
 
 class ForecastListFragment :Fragment(),
-    ForecastAdapter.ForecastAdapterOnClickHandler {
-
+    ForecastAdapter.ForecastAdapterOnClickHandler, SharedPreferences.OnSharedPreferenceChangeListener{
     companion object{
+        private var PREFERENCE_UPDATES_FLAG = false
         private lateinit var mRecyclerView: RecyclerView
         private var mForecastAdapter: ForecastAdapter? = null
         private lateinit var mErrorMessageTextView: TextView
@@ -39,6 +43,11 @@ class ForecastListFragment :Fragment(),
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        PreferenceManager.getDefaultSharedPreferences(context).registerOnSharedPreferenceChangeListener(this)
+
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -66,11 +75,29 @@ class ForecastListFragment :Fragment(),
         loadWeatherData()
     }
 
+    override fun onStart() {
+        super.onStart()
+        if (PREFERENCE_UPDATES_FLAG){
+            loadWeatherData()
+            PREFERENCE_UPDATES_FLAG = false
+        }
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        PreferenceManager.getDefaultSharedPreferences(context).unregisterOnSharedPreferenceChangeListener(this)
+    }
+
+
+    private fun invalidateData() {
+        mForecastAdapter!!.setWeatherData(null)
+    }
 
     private fun loadWeatherData(){
         showWeatherDataView()
         val location = SunshinePreferences.getPreferredWeatherLocation(context)
-        StaticWeatherAsyncTask().execute(location)
+        OpenWeatherAsyncTask().execute(location)
     }
 
 
@@ -137,21 +164,34 @@ class ForecastListFragment :Fragment(),
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.forecast_list, menu)
+        inflater.inflate(R.menu.forecast, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
-        if (id == R.id.action_refresh) {
-            mForecastAdapter = null
-            loadWeatherData()
-        }
-        else if (id == R.id.action_open_map){
-            val location = SunshinePreferences.getPreferredWeatherLocation(context)
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("google.navigation:q=$location"))
-            startActivity(intent)
+        when (item.itemId) {
+            R.id.action_refresh -> {
+                invalidateData()
+                loadWeatherData()
+            }
+            R.id.action_open_map -> {
+                openLocationInMap()
+            }
+            R.id.action_setings -> {
+                findNavController().navigate(R.id.settingsFragment)
+            }
         }
         return true
+    }
+
+    private fun openLocationInMap(){
+        val location = SunshinePreferences.getPreferredWeatherLocation(context)
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("google.navigation:q=$location"))
+
+        if (intent.resolveActivity(activity?.packageManager!!) != null){
+            startActivity(intent)
+        } else{
+            Log.d(MainActivity::class.simpleName, "Couldn't call $location, no receiving apps installed!")
+        }
     }
 
     override fun onClick(weatherForecastForADay: String) {
@@ -159,4 +199,10 @@ class ForecastListFragment :Fragment(),
         bundle.putString(getString(R.string.dayForecasted_bundle), weatherForecastForADay)
         findNavController().navigate(R.id.detailFragment, bundle)
     }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        PREFERENCE_UPDATES_FLAG = true
+    }
+
+
 }

@@ -15,4 +15,8 @@
         android:id="@+id/forecastListFragment"
         android:name="com.lascenify.sunshine.ui.ForecastListFragment"
         android:label="ForecastListFragment" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.lascenify.sunshine.ui.SettingsFragment"
+        android:label="SettingsFragment" />
 </navigation>
