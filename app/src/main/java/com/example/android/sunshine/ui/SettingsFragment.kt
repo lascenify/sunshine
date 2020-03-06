@@ -1,4 +1,4 @@
-package com.lascenify.sunshine.ui
+package com.example.android.sunshine.ui
 
 import android.content.SharedPreferences
 import android.os.Bundle

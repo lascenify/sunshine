@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.lascenify.sunshine.utilities
+package com.example.android.sunshine.utilities
 
 import android.net.Uri
 import android.util.Log
@@ -80,7 +80,7 @@ object NetworkUtils {
                 .appendQueryParameter(UNITS_PARAM, units)
                 .appendQueryParameter(
                     DAYS_PARAM,
-                    Integer.toString(numDays)
+                    numDays.toString()
                 )
                 .build()
 

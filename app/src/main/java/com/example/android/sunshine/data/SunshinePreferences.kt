@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.lascenify.sunshine.data
+package com.example.android.sunshine.data
 
 import android.content.Context
 import androidx.preference.PreferenceManager
