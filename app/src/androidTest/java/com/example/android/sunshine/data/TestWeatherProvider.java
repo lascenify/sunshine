@@ -15,6 +15,7 @@ package com.example.android.sunshine.data;
  * limitations under the License.
  */
 import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -185,7 +186,9 @@ public class TestWeatherProvider {
          * the exact same data that is in testWeatherValues and we will validate that in the next
          * step.
          */
-        Cursor weatherCursor = mContext.getContentResolver().query(
+
+        ContentResolver contentResolver = mContext.getContentResolver();
+        Cursor weatherCursor = contentResolver.query(
                 WeatherContract.WeatherEntry.CONTENT_URI,
                 /* Columns; leaving this null returns every column in the table */
                 null,
