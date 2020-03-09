@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.lascenify.sunshine.utilities
+package com.example.android.sunshine.utilities
 
 import android.content.ContentValues
 import android.content.Context

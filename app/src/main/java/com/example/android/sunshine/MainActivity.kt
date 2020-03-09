@@ -13,11 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.lascenify.sunshine
+package com.example.android.sunshine
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.android.sunshine.R
 
 class MainActivity : AppCompatActivity(){
 

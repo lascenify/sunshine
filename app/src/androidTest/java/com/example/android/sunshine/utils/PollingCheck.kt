@@ -1,11 +1,13 @@
-package com.lascenify.sunshine.util
+package com.example.android.sunshine.utils
 
-import org.junit.Assert
+import junit.framework.Assert
 import java.util.concurrent.Callable
+
 
 abstract class PollingCheck {
     private var mTimeout: Long = 3000
 
+    constructor() {}
     constructor(timeout: Long) {
         mTimeout = timeout
     }

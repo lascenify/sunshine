@@ -1,4 +1,4 @@
-package com.lascenify.sunshine.ui
+package com.example.android.sunshine.ui
 
 import android.content.Context
 import android.content.Intent
@@ -16,10 +16,10 @@ import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.sunshine.R
-import com.lascenify.sunshine.MainActivity
-import com.lascenify.sunshine.data.SunshinePreferences
-import com.lascenify.sunshine.utilities.NetworkUtils
-import com.lascenify.sunshine.utilities.OpenWeatherJsonUtils
+import com.example.android.sunshine.MainActivity
+import com.example.android.sunshine.data.SunshinePreferences
+import com.example.android.sunshine.utilities.NetworkUtils
+import com.example.android.sunshine.utilities.OpenWeatherJsonUtils
 import java.io.IOException
 
 class ForecastListFragment :Fragment(),

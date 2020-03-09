@@ -1,17 +1,17 @@
-package com.lascenify.sunshine.data
+package com.example.android.sunshine.data
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import com.lascenify.sunshine.data.WeatherContract.WeatherEntry.Companion.COLUMN_DATE
-import com.lascenify.sunshine.data.WeatherContract.WeatherEntry.Companion.COLUMN_DEGREES
-import com.lascenify.sunshine.data.WeatherContract.WeatherEntry.Companion.COLUMN_HUMIDITY
-import com.lascenify.sunshine.data.WeatherContract.WeatherEntry.Companion.COLUMN_MAX_TEMP
-import com.lascenify.sunshine.data.WeatherContract.WeatherEntry.Companion.COLUMN_MIN_TEMP
-import com.lascenify.sunshine.data.WeatherContract.WeatherEntry.Companion.COLUMN_PRESSURE
-import com.lascenify.sunshine.data.WeatherContract.WeatherEntry.Companion.COLUMN_WEATHER_ID
-import com.lascenify.sunshine.data.WeatherContract.WeatherEntry.Companion.COLUMN_WIND_SPEED
-import com.lascenify.sunshine.data.WeatherContract.WeatherEntry.Companion.TABLE_NAME
+import com.example.android.sunshine.data.WeatherContract.WeatherEntry.COLUMN_DATE
+import com.example.android.sunshine.data.WeatherContract.WeatherEntry.COLUMN_DEGREES
+import com.example.android.sunshine.data.WeatherContract.WeatherEntry.COLUMN_HUMIDITY
+import com.example.android.sunshine.data.WeatherContract.WeatherEntry.COLUMN_MAX_TEMP
+import com.example.android.sunshine.data.WeatherContract.WeatherEntry.COLUMN_MIN_TEMP
+import com.example.android.sunshine.data.WeatherContract.WeatherEntry.COLUMN_PRESSURE
+import com.example.android.sunshine.data.WeatherContract.WeatherEntry.COLUMN_WEATHER_ID
+import com.example.android.sunshine.data.WeatherContract.WeatherEntry.COLUMN_WIND_SPEED
+import com.example.android.sunshine.data.WeatherContract.WeatherEntry.TABLE_NAME
 
 class WeatherDbHelper(context: Context) :SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION){
 
