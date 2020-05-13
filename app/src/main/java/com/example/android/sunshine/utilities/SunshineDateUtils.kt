@@ -21,6 +21,7 @@ import com.example.android.sunshine.R
 import com.example.android.sunshine.utilities.SunshineDateUtils.DAY_IN_MILLIS
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 /**
  * Class for handling date conversions that are useful for Sunshine.
@@ -44,6 +45,23 @@ object SunshineDateUtils {
             return date / DAY_IN_MILLIS * DAY_IN_MILLIS
         }
 
+        /**
+         * In order to ensure consistent inserts into WeatherProvider, we check that dates have been
+         * normalized before they are inserted. If they are not normalized, we don't want to accept
+         * them, and leave it up to the caller to throw an IllegalArgumentException.
+         *
+         * @param millisSinceEpoch Milliseconds since January 1, 1970 at midnight
+         *
+         * @return true if the date represents the beginning of a day in Unix time, false otherwise
+         */
+        @JvmStatic
+        fun isDateNormalized(millisSinceEpoch: Long): Boolean {
+            var isDateNormalized = false
+            if (millisSinceEpoch % DAY_IN_MILLIS == 0L) {
+                isDateNormalized = true
+            }
+            return isDateNormalized
+        }
         /**
          * Since all dates from the database are in UTC, we must convert the local date to the date in
          * UTC time. This function performs that conversion using the TimeZone offset.
@@ -120,7 +138,25 @@ object SunshineDateUtils {
                 DateUtils.formatDateTime(context, localDate, flags)
             }
         }
+
+    /**
+     * @return The number of milliseconds (UTC / GMT) for today's date at midnight in the local
+     * time zone
+     */
+    fun getNormalizedUtcDateForToday(): Long {
+
+        val utcNowMillis = System.currentTimeMillis()
+        val currentTimeZone = TimeZone.getDefault()
+        val gmtOffsetMillis = currentTimeZone.getOffset(utcNowMillis).toLong()
+        val timeSinceEpochLocalTimeMillis = utcNowMillis + gmtOffsetMillis
+
+        val daysSinceEpochLocal =
+            TimeUnit.MILLISECONDS.toDays(timeSinceEpochLocalTimeMillis)
+
+        return TimeUnit.DAYS.toMillis(daysSinceEpochLocal)
     }
+
+}
     /**
      * This method returns the number of days since the epoch (January 01, 1970, 12:00 Midnight UTC)
      * in UTC time from the current date.
@@ -205,3 +241,5 @@ object SunshineDateUtils {
             dayFormat.format(dateInMillis)
         }
     }
+
+

@@ -5,18 +5,18 @@
 
     <activity
         android:id="@+id/mainActivity"
-        android:name="com.example.android.sunshine.MainActivity"
+        android:name="com.example.android.sunshine.presentation.MainActivity"
         android:label="MainActivity" />
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.example.android.sunshine.ui.DetailFragment"
+        android:name="com.example.android.sunshine.presentation.DetailFragment"
         android:label="DetailFragment" />
     <fragment
         android:id="@+id/forecastListFragment"
-        android:name="com.example.android.sunshine.ui.ForecastListFragment"
+        android:name="com.example.android.sunshine.presentation.ForecastListFragment"
         android:label="ForecastListFragment" />
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.example.android.sunshine.ui.SettingsFragment"
+        android:name="com.example.android.sunshine.presentation.SettingsFragment"
         android:label="SettingsFragment" />
 </navigation>
