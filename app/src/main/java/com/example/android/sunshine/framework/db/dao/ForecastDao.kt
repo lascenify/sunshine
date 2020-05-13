@@ -11,30 +11,15 @@ interface ForecastDao {
     @Query("SELECT * FROM Forecast LIMIT 1")
     fun loadLastForecast(): LiveData<ForecastEntity?>
 
-
-    @Query("SELECT * FROM Forecast LIMIT 1")
-    fun loadLastForecastt(): ForecastEntity?
-
-    @Query("SELECT * FROM Forecast")
-    fun loadAll(): LiveData<List<ForecastEntity>?>
-
-    @Query ("SELECT * FROM Forecast WHERE id = :id")
-    fun loadForecastById(id:Int):ForecastEntity
-
     @Query ("SELECT * FROM Forecast ORDER BY abs(lat-:lat) AND abs(lon-:lon) LIMIT 1")
     fun loadForecastByCoordinates(lat:Double, lon:Double): LiveData<ForecastEntity?>
 
     @Query ("SELECT count(*) from Forecast")
     fun getCount():Int
 
-
-
     /** INSERT QUERIES **/
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertForecast(forecast: ForecastEntity)
-
-    @Insert (onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll (forecasts : List<ForecastEntity>)
 
     @Transaction
     fun deleteAllAndInsert(forecast: ForecastEntity){
@@ -42,17 +27,21 @@ interface ForecastDao {
         insertForecast(forecast)
     }
 
-    /** UPDATE QUERIES **/
+    /** UPDATE QUERIES
+     * In this case, there is no sense of updating a forecast.
+     * If we want to update the data, a network call will take place.
+     * Then we have to delete the forecast and introduce the new one
+     *
+     *
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun updateForecast(forecast: ForecastEntity)
-
+     */
 
     /** DELETE QUERIES **/
-    @Delete
-    fun deleteForecast(forecast: ForecastEntity)
+    @Query("DELETE FROM Forecast WHERE lat=:lat AND lon=:lon")
+    fun deleteForecastByCoordinates(lat: Double, lon: Double)
 
     @Query ("DELETE FROM Forecast")
     fun deleteAll()
-
 
 }

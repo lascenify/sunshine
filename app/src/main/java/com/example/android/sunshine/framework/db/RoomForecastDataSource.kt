@@ -1,13 +1,10 @@
 package com.example.android.sunshine.framework.db
 
 import androidx.lifecycle.LiveData
-import com.example.android.sunshine.framework.db.dao.ForecastDao
-import com.example.android.sunshine.framework.db.entities.ForecastEntity
-import com.example.android.sunshine.framework.db.entities.asLiveData
 import com.example.android.sunshine.core.data.ForecastLocalDataSource
 import com.example.android.sunshine.core.domain.ForecastResponse
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import com.example.android.sunshine.framework.db.dao.ForecastDao
+import com.example.android.sunshine.framework.db.entities.ForecastEntity
 import javax.inject.Inject
 
 open class RoomForecastDataSource @Inject constructor(private val forecastDao: ForecastDao) :
@@ -16,17 +13,18 @@ open class RoomForecastDataSource @Inject constructor(private val forecastDao: F
     //private val forecastDao = AppDatabase.getInstance(context).weatherForecastDao()
 
 
-    override fun forecastByCoordinates(lat: Double, lon: Double): LiveData<ForecastEntity?> {
+    override fun forecastByCoordinates(lat: Double, lon: Double): LiveData<ForecastEntity?> =
+        forecastDao.loadLastForecast()
+        /*
         val result1 = forecastDao.loadAll()
         val c = result1.value
         val other = forecastDao.loadForecastByCoordinates(lat, lon)
         val a = other.value
         val otheerrr = forecastDao.loadLastForecastt()
 
-        val result = forecastDao.loadLastForecast()//loadForecastByCoordinates(lat, lon)//.asLiveData()
-        val result22 =  result.value
-        return result
-    }
+        val result = *///loadForecastByCoordinates(lat, lon)//.asLiveData()
+        /*return result
+    }*/
 
     override fun count(): Int = forecastDao.getCount()
 
@@ -35,6 +33,12 @@ open class RoomForecastDataSource @Inject constructor(private val forecastDao: F
     }
 
     override fun remove(forecast: ForecastResponse) {
-        forecastDao.deleteForecast(forecast = ForecastEntity(forecast))
+        val coordinates = forecast.city?.coordinates!!
+        forecastDao.deleteForecastByCoordinates(
+            lat = coordinates.latitude!!,
+            lon = coordinates.longitude!!)
     }
+
+    override fun removeAll() = forecastDao.deleteAll()
+
 }

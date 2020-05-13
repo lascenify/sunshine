@@ -7,7 +7,7 @@ import com.example.android.sunshine.framework.Constants
 import com.example.android.sunshine.framework.api.ApiService
 import com.example.android.sunshine.framework.api.network.LiveDataCallAdapterFactory
 import com.example.android.sunshine.framework.api.network.RequestInterceptor
-import com.example.android.sunshine.util.getOrAwaitValue
+import com.example.android.sunshine.utilities.getOrAwaitValue
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory

@@ -17,5 +17,5 @@ interface ForecastLocalDataSource {
 
     fun remove(forecast: ForecastResponse)
 
-
+    fun removeAll()
 }

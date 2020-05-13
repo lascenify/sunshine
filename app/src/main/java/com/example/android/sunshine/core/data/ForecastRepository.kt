@@ -1,17 +1,13 @@
 package com.example.android.sunshine.core.data
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.switchMap
 import com.example.android.sunshine.framework.Constants.NetworkService.RATE_LIMITER_TYPE
 import com.example.android.sunshine.framework.db.entities.ForecastEntity
 import com.example.android.sunshine.core.domain.ForecastResponse
 import com.example.android.sunshine.framework.NetworkBoundResource
 import com.example.android.sunshine.framework.api.network.ApiForecastDataSource
 import com.example.android.sunshine.framework.db.RoomForecastDataSource
-import com.example.android.sunshine.utilities.AbsentLiveData
 import com.example.android.sunshine.utilities.RateLimiter
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
