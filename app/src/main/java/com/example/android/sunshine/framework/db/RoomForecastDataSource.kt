@@ -1,13 +1,10 @@
 package com.example.android.sunshine.framework.db
 
 import androidx.lifecycle.LiveData
-import com.example.android.sunshine.framework.db.dao.ForecastDao
-import com.example.android.sunshine.framework.db.entities.ForecastEntity
-import com.example.android.sunshine.framework.db.entities.asLiveData
 import com.example.android.sunshine.core.data.ForecastLocalDataSource
 import com.example.android.sunshine.core.domain.ForecastResponse
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import com.example.android.sunshine.framework.db.dao.ForecastDao
+import com.example.android.sunshine.framework.db.entities.ForecastEntity
 import javax.inject.Inject
 
 open class RoomForecastDataSource @Inject constructor(private val forecastDao: ForecastDao) :
@@ -36,6 +33,9 @@ open class RoomForecastDataSource @Inject constructor(private val forecastDao: F
     }
 
     override fun remove(forecast: ForecastResponse) {
-        forecastDao.deleteForecast(forecast = ForecastEntity(forecast))
+        val coordinates = forecast.city?.coordinates!!
+        forecastDao.deleteForecastByCoordinates(
+            lat = coordinates.latitude!!,
+            lon = coordinates.longitude!!)
     }
 }

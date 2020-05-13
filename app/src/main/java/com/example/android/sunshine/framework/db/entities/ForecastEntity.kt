@@ -14,7 +14,7 @@ import kotlinx.android.parcel.Parcelize
 data class ForecastEntity(
 
     @PrimaryKey(autoGenerate = true)
-    val id: Int? = 0,
+    val id: Int,
 
     @ColumnInfo(name = "list")
     // list of forecast. In case of 5 day weather forecast, 40 elements in this list (each 3 hours)
@@ -24,31 +24,9 @@ data class ForecastEntity(
     val city: CityEntity?) : Parcelable{
 
     @Ignore
-    constructor(forecastResponse: ForecastResponse):this(
+    constructor(forecastResponse: ForecastResponse): this(
+        id = 0,
         list = forecastResponse.list,
         city = forecastResponse.city?.let { CityEntity(it) }
     )
 }
-
-
-fun ForecastEntity.asDomainModel() : ForecastResponse =
-    ForecastResponse(
-        code = null,
-        message = null,
-        numberOfLines = null,
-        list = list!!,
-        city = city?.asDomainModel()
-    )
-/**
- * Must be implemented when the content provider get updated
-fun ForecastEntity.fromContentValues(val contentValues: ContentValues): ForecastEntity{
-    val id = contentValues.getAsInteger(WeatherContract.WeatherEntry._ID)
-    val contentValues
-    val forecastEntity = ForecastEntity(
-        id = ,
-        list = ,
-        city =  ,
-    )
-}*/
-
-fun ForecastEntity.asLiveData(): LiveData<ForecastEntity> = MutableLiveData<ForecastEntity>(this)

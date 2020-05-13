@@ -17,9 +17,7 @@ object TestUtil {
             "2020-05-11 09:00:00"
         )
 
-    fun createFakeForecastResponse(): ForecastResponse{
-        val lat = 38.24
-        val lon = -1.42
+    fun createFakeForecastResponse(coordinates: Coordinates): ForecastResponse{
         val forecastListItems = mutableListOf<ForecastListItem>()
         forecastListItems.add(createFakeForecastListItem())
         forecastListItems.add(createFakeForecastListItem())
@@ -30,7 +28,7 @@ object TestUtil {
             forecastListItems,
             City(6295630,
                 "Globe",
-                Coordinates(lat, lon),
+                coordinates,
                 0,
                 1588744386,
                 1588788002)

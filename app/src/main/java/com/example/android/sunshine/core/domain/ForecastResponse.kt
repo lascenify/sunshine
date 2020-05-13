@@ -12,7 +12,7 @@ data class ForecastResponse(
 
     @Json(name = "cod")
     // internal parameter
-    val code:String?,
+    val code: String?,
 
     @Json(name = "message")
     // internal parameter
