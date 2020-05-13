@@ -1,4 +1,4 @@
-package com.example.android.sunshine.util
+package com.example.android.sunshine.utilities
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer

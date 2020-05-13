@@ -16,17 +16,18 @@ open class RoomForecastDataSource @Inject constructor(private val forecastDao: F
     //private val forecastDao = AppDatabase.getInstance(context).weatherForecastDao()
 
 
-    override fun forecastByCoordinates(lat: Double, lon: Double): LiveData<ForecastEntity?> {
+    override fun forecastByCoordinates(lat: Double, lon: Double): LiveData<ForecastEntity?> =
+        forecastDao.loadLastForecast()
+        /*
         val result1 = forecastDao.loadAll()
         val c = result1.value
         val other = forecastDao.loadForecastByCoordinates(lat, lon)
         val a = other.value
         val otheerrr = forecastDao.loadLastForecastt()
 
-        val result = forecastDao.loadLastForecast()//loadForecastByCoordinates(lat, lon)//.asLiveData()
-        val result22 =  result.value
-        return result
-    }
+        val result = *///loadForecastByCoordinates(lat, lon)//.asLiveData()
+        /*return result
+    }*/
 
     override fun count(): Int = forecastDao.getCount()
 

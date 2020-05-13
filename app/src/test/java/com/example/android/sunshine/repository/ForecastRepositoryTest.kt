@@ -29,10 +29,8 @@ import rx.Single
 @RunWith(JUnit4::class)
 class ForecastRepositoryTest {
 
-//    private val forecastDao = mock(ForecastDao::class.java)
     @Mock
     private lateinit var localDataSource: RoomForecastDataSource
-//    private val apiService = mock(ApiService::class.java)
     @Mock
     private lateinit var remoteDataSource: ApiForecastDataSource
 
