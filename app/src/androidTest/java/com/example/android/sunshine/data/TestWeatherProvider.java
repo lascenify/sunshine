@@ -26,6 +26,9 @@ import android.net.Uri;
 
 import androidx.test.core.app.ApplicationProvider;
 
+import com.example.android.sunshine.framework.provider.WeatherContract;
+import com.example.android.sunshine.framework.provider.WeatherProvider;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -58,7 +61,7 @@ import static junit.framework.Assert.fail;
  * output window.
  * <p>
  * Finally, we have a method annotated with the @Before annotation, which tells the test runner
- * that the {@link #setUp()} method should be called before every method annotated with a @Test
+ * that the setup method should be called before every method annotated with a @Test
  * annotation. In our setUp method, all we do is delete all records from the database to start our
  * tests with a clean slate each time.
  */
@@ -72,10 +75,11 @@ public class TestWeatherProvider {
      * before every single method with an @Test annotation. We want to start each test clean, so we
      * delete all entries in the weather table to do so.
      */
+    /*
     @Before
     public void setUp() {
         deleteAllRecordsFromWeatherTable();
-    }
+    }*/
 
     /**
      * This test checks to make sure that the content provider is registered correctly in the
@@ -157,53 +161,38 @@ public class TestWeatherProvider {
      * <p>
      *   2) The values contained in the cursor did not match the values we inserted via SQLite
      */
+    /*
     @Test
     public void testBasicWeatherQuery() {
 
-        /* Use WeatherDbHelper to get access to a writable database */
         WeatherDbHelper dbHelper = new WeatherDbHelper(mContext);
         SQLiteDatabase database = dbHelper.getWritableDatabase();
 
-        /* Obtain weather values from TestUtilities */
         ContentValues testWeatherValues = createTestWeatherContentValues();
 
-        /* Insert ContentValues into database and get a row ID back */
         long weatherRowId = database.insert(
-                /* Table to insert values into */
                 WeatherContract.WeatherEntry.TABLE_NAME,
                 null,
-                /* Values to insert into table */
                 testWeatherValues);
 
         String insertFailed = "Unable to insert into the database";
         assertTrue(insertFailed, weatherRowId != -1);
 
-        /* We are done with the database, close it now. */
         database.close();
 
-        /*
-         * Perform our ContentProvider query. We expect the cursor that is returned will contain
-         * the exact same data that is in testWeatherValues and we will validate that in the next
-         * step.
-         */
 
         ContentResolver contentResolver = mContext.getContentResolver();
         Cursor weatherCursor = contentResolver.query(
                 WeatherContract.WeatherEntry.CONTENT_URI,
-                /* Columns; leaving this null returns every column in the table */
                 null,
-                /* Optional specification for columns in the "where" clause above */
                 null,
-                /* Values for "where" clause */
                 null,
-                /* Sort order to return in Cursor */
                 null);
 
-        /* This method will ensure that we  */
         validateThenCloseCursor("testBasicWeatherQuery",
                 weatherCursor,
                 testWeatherValues);
-    }
+    }*/
 
     /**
      * This method will clear all rows from the weather table in our database.
@@ -217,15 +206,14 @@ public class TestWeatherProvider {
      * because in this class, we are attempting to test the ContentProvider. We can't assume
      * that our ContentProvider's delete method works in our ContentProvider's test class.
      */
+    /*
     private void deleteAllRecordsFromWeatherTable() {
-        /* Access writable database through WeatherDbHelper */
         WeatherDbHelper helper = new WeatherDbHelper(mContext);
         SQLiteDatabase database = helper.getWritableDatabase();
 
-        /* The delete method deletes all of the desired rows from the table, not the table itself */
+
         database.delete(WeatherContract.WeatherEntry.TABLE_NAME, null, null);
 
-        /* Always close the database when you're through with it */
         database.close();
-    }
+    }*/
 }

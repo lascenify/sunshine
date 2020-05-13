@@ -1,6 +1,8 @@
 package com.example.android.sunshine.data
 import android.content.UriMatcher
-import com.example.android.sunshine.data.WeatherContract.WeatherEntry.buildWeatherUriWithDate
+import com.example.android.sunshine.framework.provider.WeatherContract
+import com.example.android.sunshine.framework.provider.WeatherContract.WeatherEntry.buildWeatherUriWithDate
+import com.example.android.sunshine.framework.provider.WeatherProvider
 import junit.framework.Assert
 import org.junit.Before
 import org.junit.Test

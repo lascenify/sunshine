@@ -3,11 +3,11 @@
 
     <EditTextPreference
         android:title="Preferred location"
-        android:key="@string/pref_location" />
+        android:key="@string/pref_location_key" />
     <ListPreference
         android:entries="@array/pref_units"
         android:entryValues="@array/pref_units"
-        android:key="@string/pref_units"
+        android:key="@string/pref_units_key"
         android:title="Preferred unit"
         android:defaultValue="@string/pref_celsius_unit"/>
 </PreferenceScreen>

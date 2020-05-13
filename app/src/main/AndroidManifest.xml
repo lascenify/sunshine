@@ -7,6 +7,8 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:name=".framework.SunshineApplication"
+        android:roundIcon="@drawable/ic_launcher_foreground"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <meta-data
@@ -14,7 +16,7 @@
             android:value="{$OPEN_WEATHER_API_KEY}"/>
 
         <activity
-            android:name="com.example.android.sunshine.MainActivity"
+            android:name=".presentation.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop">
             <intent-filter>
@@ -24,7 +26,10 @@
         </activity>
         <provider
             android:authorities="com.example.android.sunshine"
-            android:name=".data.WeatherProvider"
+            android:name=".framework.provider.WeatherProvider"
+            android:exported="false"/>
+
+        <service android:name="com.example.android.sunshine.framework.sync.SunshineSyncIntentService"
             android:exported="false"/>
     </application>
 
