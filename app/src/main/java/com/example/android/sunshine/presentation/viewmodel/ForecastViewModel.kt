@@ -16,8 +16,7 @@ import kotlinx.coroutines.*
 import javax.inject.Inject
 
 class ForecastViewModel
-@Inject constructor(private val context: Context, private val interactors: Interactors, private val repository: ForecastRepository):
-    ViewModel() {
+@Inject constructor(private val interactors: Interactors): ViewModel() {
     private val forecastParams: MutableLiveData<ForecastByCoordinates.Params> = MutableLiveData()
 
     val forecast= forecastParams.switchMap {

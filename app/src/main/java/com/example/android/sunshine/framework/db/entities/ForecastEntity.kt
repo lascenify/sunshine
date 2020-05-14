@@ -29,4 +29,15 @@ data class ForecastEntity(
         list = forecastResponse.list,
         city = forecastResponse.city?.let { CityEntity(it) }
     )
+
+    fun getCityName(): String = city?.name!!
+
+    fun getActualWeatherDescription(): String {
+        val aa=getActualWeather().weatherItem?.get(0)?.description.toString()
+        return aa
+    }
+
+    private fun getActualWeather(): ForecastListItem = list?.first()!!
+
+    fun getActualTemperature(): String = getActualWeather().mainInfo?.temperature.toString()
 }

@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -17,22 +18,19 @@ import com.example.android.sunshine.framework.SunshinePreferences
 import com.example.android.sunshine.presentation.viewmodel.ForecastViewModel
 import com.example.android.sunshine.core.domain.ForecastListItem
 import com.example.android.sunshine.core.interactors.ForecastByCoordinates
+import com.example.android.sunshine.databinding.ForecastListFragmentBinding
 import com.example.android.sunshine.framework.SunshineApplication
 import javax.inject.Inject
 
 class ForecastListFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListener{
 
-    //private lateinit var binding : ForecastListFragmentBinding
+    private lateinit var binding : ForecastListFragmentBinding
 
     @Inject lateinit var viewModel : ForecastViewModel
-
-    lateinit var recyclerView: RecyclerView
-
 
     companion object {
         private var PREFERENCE_UPDATES_FLAG = false
     }
-
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -48,13 +46,10 @@ class ForecastListFragment :Fragment(), SharedPreferences.OnSharedPreferenceChan
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        //binding = DataBindingUtil.inflate(inflater, R.layout.forecast_list_fragment, container, false)
-        //return binding.root
-        val rootView = inflater.inflate(R.layout.forecast_list_fragment, container, false)
-        recyclerView = rootView.findViewById(R.id.recyclerview_forecast)
-        return rootView
+        binding = DataBindingUtil.inflate(inflater, R.layout.forecast_list_fragment, container, false)
+        return binding.root
     }
-
+/*
     override fun onStart() {
         super.onStart()
         if (PREFERENCE_UPDATES_FLAG){
@@ -66,47 +61,53 @@ class ForecastListFragment :Fragment(), SharedPreferences.OnSharedPreferenceChan
     private fun loadWeatherData(){
         //showWeatherDataView()
         //iewModel.loadForecast()
-    }
+    }*/
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setForecastParams()
+
         val adapter = ForecastAdapter(){
             openDetailFragment(it)
         }
-        recyclerView.adapter = adapter
 
-        //viewModel = ViewModelProvider(this, SunshineViewModelFactory).get(ForecastViewModel::class.java)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.forecast = viewModel.forecast
+        binding.recyclerviewForecastDays.adapter = adapter
 
-        val coordinates : DoubleArray = SunshinePreferences.getLocationCoordinates(requireContext())
-        val units : String = context?.getString(R.string.pref_units_metric)!!
-        val lat = 38.24
-        val lon = -1.42
-        if (!coordinates.first().isNaN() && !coordinates.last().isNaN()){
-            viewModel.setForecastParams(ForecastByCoordinates.Params(
-                lat,
-                lon,
-                true,
-                units
-            ))
-        }
+        initForecastList(adapter)
 
+        setHasOptionsMenu(true)
+    }
+
+    private fun initForecastList(adapter: ForecastAdapter) {
         viewModel.forecast.observe(viewLifecycleOwner, Observer { resource ->
             if (resource != null){
                 adapter.apply {
                     resource.data?.list?.let { adapter.update(it) }
                 }
             }
-            //resource.data?.list?.let { adapter.update(it)}
-        }
-
-            /*Observer { forecastViewState ->
-            adapter.update(forecastViewState.data?.list!!)
-        }*/)
-
-
-
-        setHasOptionsMenu(true)
+        })
     }
+
+    private fun setForecastParams() {
+        val coordinates: DoubleArray = SunshinePreferences.getLocationCoordinates(requireContext())
+        val units: String = context?.getString(R.string.pref_units_metric)!!
+        val lat = 38.24
+        val lon = -1.42
+        if (!coordinates.first().isNaN() && !coordinates.last().isNaN()) {
+            viewModel.setForecastParams(
+                ForecastByCoordinates.Params(
+                    lat,
+                    lon,
+                    true,
+                    units
+                )
+            )
+        }
+    }
+
 
     /**
      * Method to navigate to DetailFragment
@@ -126,10 +127,10 @@ class ForecastListFragment :Fragment(), SharedPreferences.OnSharedPreferenceChan
         PreferenceManager.getDefaultSharedPreferences(context).unregisterOnSharedPreferenceChangeListener(this)
     }
 
-    private fun showLoading(){
+    /*private fun showLoading(){
         recyclerView.visibility = View.INVISIBLE
         //binding.pbForecast.visibility = View.VISIBLE
-    }
+    }*/
 
 /*
     private fun showWeatherDataView(){

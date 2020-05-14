@@ -45,6 +45,4 @@ class ForecastAdapter(//mHandler: ForecastAdapterOnClickHandler
         notifyDataSetChanged()
     }
 
-    fun submitList(newForecastList: List<ForecastListItem>){}
-
 }
