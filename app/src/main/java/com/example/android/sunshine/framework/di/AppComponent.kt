@@ -1,10 +1,9 @@
 package com.example.android.sunshine.framework.di
 
-import android.app.Application
 import android.content.Context
 import com.example.android.sunshine.framework.di.module.DataBaseModule
 import com.example.android.sunshine.framework.di.module.NetworkModule
-import com.example.android.sunshine.presentation.ForecastListFragment
+import com.example.android.sunshine.presentation.cityMainForecast.CityMainForecastFragment
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -17,7 +16,7 @@ interface AppComponent {
         fun create(@BindsInstance context: Context) : AppComponent
     }
 
-    fun inject(forecastListFragment: ForecastListFragment)
+    fun inject(cityMainForecastFragment: CityMainForecastFragment)
 
     //fun inject(detailFragment: DetailFragment)
 }

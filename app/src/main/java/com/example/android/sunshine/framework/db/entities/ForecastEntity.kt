@@ -32,10 +32,7 @@ data class ForecastEntity(
 
     fun getCityName(): String = city?.name!!
 
-    fun getActualWeatherDescription(): String {
-        val aa=getActualWeather().weatherItem?.get(0)?.description.toString()
-        return aa
-    }
+    fun getActualWeatherDescription(): String  = getActualWeather().weatherItem?.get(0)?.description.toString()
 
     private fun getActualWeather(): ForecastListItem = list?.first()!!
 

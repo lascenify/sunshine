@@ -40,7 +40,14 @@ data class ForecastListItem(
 
     @Json(name = "dt_txt")
     //Time in which the forecast is done, in txt
-    val dt_txt:String
-):Parcelable
+    val dt_txt:String?
+):Parcelable{
+
+    fun getHourOfDay() = dt_txt?.substringAfter(" ")?.substringBeforeLast(":") ?: "00:00"
+
+    fun getTemperature() = mainInfo?.temperature.toString()
+
+    fun getIcon() = weatherItem?.first()?.icon
+}
 
 

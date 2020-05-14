@@ -222,6 +222,7 @@ object SunshineWeatherUtils {
      *
      * @return resource id for the corresponding icon. -1 if no relation is found.
      */
+    /*
     fun getIconResourceForWeatherCondition(weatherId: Int): Int { /*
          * Based on weather code data found at:
          * See http://bugs.openweathermap.org/projects/api/wiki/Weather_Condition_Codes
@@ -250,6 +251,23 @@ object SunshineWeatherUtils {
             return R.drawable.ic_cloudy
         }
         return -1
+    }*/
+
+
+    fun getIconResourceFromIconPath(iconPath: String?) = when(iconPath){
+        "01d" -> "ic_01d"
+        "01n" -> "ic_01n"
+        "02d" -> "ic_02d"
+        "02n" -> "ic_02n"
+        "03d", "03n", "04d", "04n" -> "ic_03"
+        "09d" -> "ic_09d"
+        "09n" -> "ic_09n"
+        "10d", "10n" -> "ic_10"
+        "11d", "11n" -> "ic_11"
+        "13d", "13n" -> "ic_13"
+        "50d" -> "ic_50"
+        "50n" -> "ic_50n"
+        else -> "rainbow"
     }
 
     /**
@@ -260,6 +278,7 @@ object SunshineWeatherUtils {
      *
      * @return resource id for the corresponding icon. -1 if no relation is found.
      */
+    /*
     fun getArtResourceForWeatherCondition(weatherId: Int): Int { /*
          * Based on weather code data found at:
          * http://bugs.openweathermap.org/projects/api/wiki/Weather_Condition_Codes
@@ -295,5 +314,5 @@ object SunshineWeatherUtils {
         }
         Log.e(LOG_TAG, "Unknown Weather: $weatherId")
         return R.drawable.art_storm
-    }
+    }*/
 }

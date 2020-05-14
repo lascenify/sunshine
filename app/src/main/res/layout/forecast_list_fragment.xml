@@ -49,11 +49,23 @@
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    app:layout_constraintTop_toBottomOf="@id/layout_city_info"
+                    android:id="@+id/recycler_view_forecast_hours"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/layout_city_info"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_hour_forecast"
+                    />
+
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerview_forecast_days"
-                    tools:listitem="@layout/forecast_list_item"
+                    app:layout_constraintTop_toBottomOf="@id/recycler_view_forecast_hours"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/item_day_forecast"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
                 <TextView
