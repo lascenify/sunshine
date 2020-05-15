@@ -45,7 +45,7 @@ data class ForecastListItem(
 
     fun getHourOfDay() = dt_txt?.substringAfter(" ")?.substringBeforeLast(":") ?: "00:00"
 
-    fun getTemperature() = mainInfo?.temperature.toString() + "º"
+    fun getTemperature() = mainInfo?.temperature?.toInt().toString() + "º"
 
     fun getIcon() = weatherItem?.first()?.icon
 }

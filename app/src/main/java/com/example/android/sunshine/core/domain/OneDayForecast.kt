@@ -5,8 +5,8 @@ import java.time.DayOfWeek
 data class OneDayForecast(
     val dayOfWeek: String,
     val forecastList: List<ForecastListItem>,
-    private var maxTemperature: Double?,
-    private var minTemperature: Double?
+    private var maxTemperature: Int?,
+    private var minTemperature: Int?
 ){
     fun calculateTemperatures(){
         var min = forecastList[0].mainInfo?.temperature!!
@@ -18,8 +18,8 @@ data class OneDayForecast(
             if (temperature < min)
                 min = temperature
         }
-        maxTemperature = max
-        minTemperature = min
+        maxTemperature = max.toInt()
+        minTemperature = min.toInt()
     }
 
     /**

@@ -36,5 +36,5 @@ data class ForecastEntity(
 
     private fun getActualWeather(): ForecastListItem = list?.first()!!
 
-    fun getActualTemperature(): String = getActualWeather().mainInfo?.temperature.toString() + "º"
+    fun getActualTemperature(): String = getActualWeather().mainInfo?.temperature.toString().dropLast(1) + "º"
 }

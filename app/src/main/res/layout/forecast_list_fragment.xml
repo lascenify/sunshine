@@ -59,7 +59,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="3dp"
+                    android:layout_height="2dp"
                     android:background="#FFFFFF"
                     app:layout_constraintTop_toBottomOf="@id/layout_city_info"
                     app:layout_constraintBottom_toTopOf="@id/recycler_view_forecast_hours"
@@ -79,11 +79,12 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="3dp"
+                    android:layout_height="2dp"
                     android:background="#FFFFFF"
-                    app:layout_constraintTop_toBottomOf="@id/layout_city_info"
-                    app:layout_constraintBottom_toTopOf="@id/recycler_view_forecast_hours"
+                    app:layout_constraintTop_toBottomOf="@id/recycler_view_forecast_hours"
+                    app:layout_constraintBottom_toTopOf="@id/recyclerview_forecast_days"
                     />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerview_forecast_days"
                     android:layout_width="match_parent"
