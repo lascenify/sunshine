@@ -19,7 +19,7 @@ class ForecastRepository @Inject constructor(
     private val forecastLocalDataSource: RoomForecastDataSource
 ){
 
-    private val repoRateLimit = RateLimiter<String>(10, TimeUnit.MINUTES)
+    private val repoRateLimit = RateLimiter<String>(3, TimeUnit.HOURS)
 
     /*fun testingForecast(lat: Double, lon: Double, units: String): LiveData<Resource<ForecastEntity>>
             = forecastRemoteDataSource.getForecastByCoordinates(lat, lon, units)
@@ -28,13 +28,19 @@ class ForecastRepository @Inject constructor(
     fun forecastByCoordinates(lat: Double, lon: Double, units: String): LiveData<Resource<ForecastEntity>>{
         return object : NetworkBoundResource<ForecastEntity, ForecastResponse>(appExecutors = appExecutors){
             override fun saveCallResult(item: ForecastResponse) = forecastLocalDataSource.insert(item)
-            override fun shouldFetch(data: ForecastEntity?): Boolean = data == null
-            //return data == null || data.isEmpty() || repoRateLimit.shouldFetch(owner)
+            override fun shouldFetch(data: ForecastEntity?): Boolean = data == null || repoRateLimit.shouldFetch(RATE_LIMITER_TYPE)
             override fun loadFromDb(): LiveData<ForecastEntity?>  = forecastLocalDataSource.forecastByCoordinates(lat, lon)
             override fun createCall() = forecastRemoteDataSource.getForecastByCoordinates(lat, lon, units)
             override fun onFetchFailed() = repoRateLimit.reset(RATE_LIMITER_TYPE)
         }.asLiveData()
     }
+
+    fun removeAllLocalData() = forecastLocalDataSource.removeAll()
+
+
+    fun removeForecast(forecast: ForecastResponse) = forecastLocalDataSource.remove(forecast)
+
+    fun removeForecastByCoordinates(lat: Double, lon: Double) = forecastLocalDataSource.removeByCoordinates(lat, lon)
 /*
     fun forecastByCityName(city: String): LiveData<Resource<ForecastEntity>>{
         return object : NetworkBoundResource<ForecastEntity, ForecastResponse>(appExecutors = appExecutors){

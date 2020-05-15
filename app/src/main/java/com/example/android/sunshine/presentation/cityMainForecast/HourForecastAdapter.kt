@@ -20,6 +20,8 @@ class HourForecastAdapter(
         fun bind(position: Int){
             val forecast = forecastList?.get(position)
             binding.setVariable(BR.forecast, forecast)
+            if (position == 0)
+                binding.hourForecastItemHour.text = "Now"
             binding.forecastListItem = forecast
             binding.executePendingBindings()
         }

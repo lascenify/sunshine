@@ -4,6 +4,7 @@ import android.text.format.DateUtils
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
+import com.example.android.sunshine.core.data.Resource
 import com.example.android.sunshine.core.domain.ForecastListItem
 import com.example.android.sunshine.core.domain.OneDayForecast
 import com.example.android.sunshine.core.interactors.ForecastByCoordinates
@@ -19,16 +20,21 @@ class ForecastViewModel
     private lateinit var hoursFromTodayForecast: MutableList<ForecastListItem>
     private val forecastParams: MutableLiveData<ForecastByCoordinates.Params> = MutableLiveData()
 
-    val forecast= forecastParams.switchMap {
+    var forecast= forecastParams.switchMap {
         interactors.forecastByCoordinates.invoke(it)
     }
 
     fun setForecastParams(params: ForecastByCoordinates.Params){
-        if (forecastParams.value == params)
-            return
-        forecastParams.postValue(params)
+        if (forecastParams.value != params)
+            forecastParams.postValue(params)
     }
 
+
+    fun forceRefresh(){
+        /*forecast = forecastParams.switchMap {
+            interactors.refreshForecast.invoke(it)
+        }*/
+    }
     /**
      * 40 registros
      * 5 dias: 3 dias con 8 registros. Primer dia depende, ultimo dia depende

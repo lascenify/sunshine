@@ -5,7 +5,6 @@ import android.widget.ImageView
 import androidx.annotation.RequiresApi
 import androidx.databinding.BindingAdapter
 import com.example.android.sunshine.utilities.SunshineWeatherUtils
-import com.squareup.picasso.Picasso
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 @BindingAdapter("app:setWeatherIcon")

@@ -72,9 +72,7 @@ class CityMainForecastFragment :Fragment(), SharedPreferences.OnSharedPreference
 
         setForecastParams()
 
-        dayForecastAdapter = DayForecastAdapter() {
-                openDetailFragment(it)
-        }
+        dayForecastAdapter = DayForecastAdapter(R.layout.item_day_forecast)
 
         hourForecastAdapter = HourForecastAdapter(R.layout.item_hour_forecast)
 
@@ -168,8 +166,7 @@ class CityMainForecastFragment :Fragment(), SharedPreferences.OnSharedPreference
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_refresh -> {
-                /*invalidateData()
-                loadWeatherData()*/
+                forceRefreshData()
             }
             R.id.action_open_map -> {
                 openLocationInMap()
@@ -180,6 +177,8 @@ class CityMainForecastFragment :Fragment(), SharedPreferences.OnSharedPreference
         }
         return true
     }
+
+    fun forceRefreshData() = viewModel.forceRefresh()
 
     /**
      * Method used to open the location in map from the menu
