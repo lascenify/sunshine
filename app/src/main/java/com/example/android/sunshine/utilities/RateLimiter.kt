@@ -6,7 +6,7 @@ import androidx.collection.arrayMapOf
 import java.util.concurrent.TimeUnit
 
 
-open class RateLimiter <in KEY> (timeOut: Int, timeUnit: TimeUnit){
+class RateLimiter <in KEY> (timeOut: Int, timeUnit: TimeUnit){
     private val timestamps = ArrayMap<KEY, Long>()
     private val timeout = timeUnit.toMillis(timeOut.toLong())
 
@@ -35,11 +35,6 @@ open class RateLimiter <in KEY> (timeOut: Int, timeUnit: TimeUnit){
     @Synchronized
     fun reset(key: KEY){
         timestamps.remove(key)
-    }
-
-    fun setTimeStamps(timeStamps: Map<out KEY, Long>){
-        timestamps.clear()
-        timestamps.putAll(timeStamps)
     }
 
 }
