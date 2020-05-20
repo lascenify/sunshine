@@ -51,6 +51,10 @@ class ForecastViewModel
         }*/
     }
 
+
+    /**
+     * In the second RecyclerView, we will display the main info of the forecast for the next days
+     */
     private fun fetchNextDaysForecast() {
         val forecastList = forecast.value?.data?.list!!
         var previousDayTxt = forecastList.first().dt_txt!!.substringBefore(" ")
@@ -70,6 +74,10 @@ class ForecastViewModel
 
     }
 
+    /**
+     * We only need the next hours to be displayed in the first RecyclerView.
+     * These are the hours in which the forecast has been done and the next day.
+     */
     private fun fetchNextHoursForecast(){
         val forecastList = forecast.value?.data?.list!!
         val todayCompleteTxt = forecastList.first().dt_txt!!//.substringBefore(" ")

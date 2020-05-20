@@ -1,4 +1,4 @@
-package com.example.android.sunshine.presentation.cityMainForecast
+package com.example.android.sunshine.presentation.city
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.android.sunshine.BR
 import com.example.android.sunshine.core.domain.ForecastListItem
 import com.example.android.sunshine.databinding.ItemHourForecastBinding
-import com.example.android.sunshine.presentation.viewmodel.ForecastViewModel
 import com.example.android.sunshine.utilities.getNextDayOfYearFromTxt
 
 class HourForecastAdapter(

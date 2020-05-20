@@ -17,11 +17,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@color/colorPrimaryDark">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
             android:orientation="vertical">
                 <LinearLayout
                         android:id="@+id/layout_city_info"
@@ -92,7 +92,7 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerview_forecast_days"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintTop_toBottomOf="@id/recycler_view_forecast_hours"
                         tools:listitem="@layout/item_day_forecast" >
@@ -108,7 +108,7 @@
                 app:layout_constraintTop_toBottomOf="@id/recyclerview_forecast_days"
                 app:layout_constraintBottom_toBottomOf="parent"/-->
 
-            <androidx.fragment.app.FragmentContainerView
+            <!--androidx.fragment.app.FragmentContainerView
                 android:visibility="gone"
                         android:id="@+id/fragment_chart"
                         android:layout_height="wrap_content"
@@ -116,7 +116,7 @@
                         app:layout_constraintTop_toBottomOf="@id/recycler_view_forecast_hours"
                         app:layout_constraintBottom_toBottomOf="parent"
                         android:name="com.example.android.sunshine.presentation.cityMainForecast.TemperatureChartFragment"
-                        tools:layout="@layout/temp_chart_fragment" />
+                        tools:layout="@layout/temp_chart_fragment" /-->
 
                     <TextView
                         android:id="@+id/tv_error_message"

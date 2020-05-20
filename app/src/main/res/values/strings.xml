@@ -148,6 +148,7 @@
     <string name="pref_location_default" translatable="false">Cieza, es 30530</string>
     <string name="pref_celsius_unit">Celsius</string>
     <string name="pref_fahrenheit_unit">Fahrenheit</string>
+    <string name="bundle_day">dayForecast</string>
     <!-- - - - - - - - - - - -->
     <!-- Used by NetworkUtils-->
     <!-- - - - - - - - - - - -->

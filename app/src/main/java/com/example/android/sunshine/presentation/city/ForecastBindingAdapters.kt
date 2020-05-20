@@ -1,4 +1,4 @@
-package com.example.android.sunshine.presentation.cityMainForecast
+package com.example.android.sunshine.presentation.city
 
 import android.os.Build
 import android.view.View

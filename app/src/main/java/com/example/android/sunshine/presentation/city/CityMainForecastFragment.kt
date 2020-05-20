@@ -1,4 +1,4 @@
-package com.example.android.sunshine.presentation.cityMainForecast
+package com.example.android.sunshine.presentation.city
 
 import android.content.Context
 import android.content.Intent
@@ -17,16 +17,14 @@ import com.example.android.sunshine.framework.SunshinePreferences
 import com.example.android.sunshine.presentation.viewmodel.ForecastViewModel
 import com.example.android.sunshine.core.domain.ForecastListItem
 import com.example.android.sunshine.core.interactors.ForecastByCoordinates
-import com.example.android.sunshine.databinding.ForecastListFragmentBinding
-import com.example.android.sunshine.framework.SunshineApplication
-import com.example.android.sunshine.framework.di.ForecastScope
+import com.example.android.sunshine.databinding.CityFragmentBinding
 import com.example.android.sunshine.presentation.ForecastComponentProvider
 import com.example.android.sunshine.presentation.MainActivity
 import javax.inject.Inject
 
 class CityMainForecastFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListener{
 
-    private lateinit var binding : ForecastListFragmentBinding
+    private lateinit var binding : CityFragmentBinding
 
     @Inject
     lateinit var viewModel : ForecastViewModel
@@ -57,7 +55,7 @@ class CityMainForecastFragment :Fragment(), SharedPreferences.OnSharedPreference
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.forecast_list_fragment, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.city_fragment, container, false)
         return binding.root
     }
 /*
@@ -79,7 +77,14 @@ class CityMainForecastFragment :Fragment(), SharedPreferences.OnSharedPreference
 
         setForecastParams()
 
-        dayForecastAdapter = DayForecastAdapter(R.layout.item_day_forecast)
+        dayForecastAdapter = DayForecastAdapter(R.layout.item_day_forecast){ oneDayForecast ->
+            val args = Bundle()
+            args.putParcelable(getString(R.string.dayForecasted_bundle), oneDayForecast)
+            findNavController().navigate(
+                R.id.nav_dayFragment,
+                args
+            )
+        }
 
         hourForecastAdapter = HourForecastAdapter(R.layout.item_hour_forecast)
 
@@ -88,13 +93,13 @@ class CityMainForecastFragment :Fragment(), SharedPreferences.OnSharedPreference
         binding.recyclerviewForecastDays.adapter = dayForecastAdapter
         binding.recyclerViewForecastHours.adapter = hourForecastAdapter
 
+
         initForecastList()
 
         setHasOptionsMenu(true)
     }
 
     private fun initForecastList() {
-        Log.d("viewModelOnCity", viewModel.toString())
         viewModel.forecast.observe(viewLifecycleOwner, Observer { resource ->
             if (resource != null){
                 dayForecastAdapter.apply {
@@ -131,7 +136,7 @@ class CityMainForecastFragment :Fragment(), SharedPreferences.OnSharedPreference
     private fun openDetailFragment(forecastListItem: ForecastListItem){
         val bundle = Bundle()
         bundle.putParcelable(getString(R.string.dayForecasted_bundle), forecastListItem)
-        findNavController().navigate(R.id.detailFragment, bundle)
+        findNavController().navigate(R.id.nav_dayFragment, bundle)
     }
 
 
@@ -180,13 +185,13 @@ class CityMainForecastFragment :Fragment(), SharedPreferences.OnSharedPreference
                 openLocationInMap()
             }
             R.id.action_setings -> {
-                findNavController().navigate(R.id.settingsFragment)
+                findNavController().navigate(R.id.nav_settingsFragment)
             }
         }
         return true
     }
 
-    fun forceRefreshData() = viewModel.forceRefresh()
+    private fun forceRefreshData() = viewModel.forceRefresh()
 
     /**
      * Method used to open the location in map from the menu

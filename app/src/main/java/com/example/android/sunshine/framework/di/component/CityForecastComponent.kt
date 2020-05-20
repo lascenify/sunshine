@@ -2,9 +2,8 @@ package com.example.android.sunshine.framework.di.component
 
 import com.example.android.sunshine.framework.di.ForecastScope
 import com.example.android.sunshine.framework.di.module.CityForecastModule
-import com.example.android.sunshine.presentation.cityMainForecast.CityMainForecastFragment
-import com.example.android.sunshine.presentation.cityMainForecast.TemperatureChartFragment
-import dagger.Component
+import com.example.android.sunshine.presentation.city.CityMainForecastFragment
+import com.example.android.sunshine.presentation.city.TemperatureChartFragment
 import dagger.Subcomponent
 
 @ForecastScope
