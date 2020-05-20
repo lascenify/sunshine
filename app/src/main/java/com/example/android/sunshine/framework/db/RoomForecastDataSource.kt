@@ -41,4 +41,6 @@ open class RoomForecastDataSource @Inject constructor(private val forecastDao: F
 
     override fun removeAll() = forecastDao.deleteAll()
 
+
+    override fun removeByCoordinates(lat: Double, lon: Double) = forecastDao.deleteForecastByCoordinates(lat, lon)
 }

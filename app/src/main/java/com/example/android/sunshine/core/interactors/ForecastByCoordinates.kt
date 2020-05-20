@@ -11,7 +11,8 @@ import com.example.android.sunshine.presentation.viewmodel.ForecastViewModel
 import javax.inject.Inject
 
 /**
- * Use case that requires an API call to get the forecast for specific coordinates
+ * Use case that calls the repository to extract the forecast.
+ * This forecast can come from the local persistence database or from the API
  */
 class ForecastByCoordinates @Inject internal constructor(private val forecastRepository: ForecastRepository) {
 

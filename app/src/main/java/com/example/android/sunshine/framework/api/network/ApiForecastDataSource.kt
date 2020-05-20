@@ -14,10 +14,7 @@ open class ApiForecastDataSource
         lat: Double,
         lon: Double,
         units: String
-    ): LiveData<Resource<ForecastResponse>> {
-        val result = api.forecastByCoordinates(lat = lat, long = lon, units = units)
-        return result
-    }
+    ): LiveData<Resource<ForecastResponse>>  = api.forecastByCoordinates(lat = lat, long = lon, units = units)
 
 /*
     override suspend fun getForecastByCoordinates(

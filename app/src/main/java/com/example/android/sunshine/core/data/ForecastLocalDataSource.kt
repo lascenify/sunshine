@@ -18,4 +18,9 @@ interface ForecastLocalDataSource {
     fun remove(forecast: ForecastResponse)
 
     fun removeAll()
+
+    fun removeByCoordinates(
+        lat: Double,
+        lon: Double
+    )
 }

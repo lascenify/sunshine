@@ -29,7 +29,6 @@ class NetworkModule{
             .baseUrl(Constants.NetworkService.BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .addCallAdapterFactory(LiveDataCallAdapterFactory())
-            //.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(client)
             .build()
             .create(ApiService::class.java)

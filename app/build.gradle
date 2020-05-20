@@ -19,7 +19,7 @@ android {
     buildToolsVersion "29.0.3"
     defaultConfig {
         applicationId "com.lascenify.sunshine"
-        minSdkVersion 18
+        minSdkVersion 19
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -53,9 +53,9 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 
-    /*dataBinding{
+    dataBinding{
         enabled true
-    }*/
+    }
     useLibrary 'android.test.runner'
     useLibrary 'android.test.base'
     useLibrary 'android.test.mock'
@@ -68,10 +68,22 @@ android {
     lintOptions {
         abortOnError false
     }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.md'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.md'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/ASL2.0'
+        exclude("META-INF/*.kotlin_module")
+    }
 }
 
 dependencies {
-    def work_version = "2.3.4"
     def dagger_version = "2.27"
     def retrofit_version = '2.8.1'
 
@@ -110,10 +122,6 @@ dependencies {
     // optional - RxJava support for Room
     implementation "androidx.room:room-rxjava2:2.2.5"
 
-
-    // Work manager
-    implementation "androidx.work:work-runtime-ktx:$work_version"
-
     // JSON library Squareup Moshi
     implementation("com.squareup.moshi:moshi:1.9.2")
     implementation("com.squareup.moshi:moshi-kotlin:1.9.2")
@@ -142,9 +150,6 @@ dependencies {
     implementation 'androidx.arch.core:core-testing:2.1.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.8.1'
 
-    // Core module
-    //implementation project(':core')
-
     // OkHttp3
     implementation("com.squareup.okhttp3:okhttp:4.6.0")
     testImplementation("com.squareup.okhttp3:mockwebserver:4.6.0")
@@ -165,16 +170,30 @@ dependencies {
     // Optional -- UI testing with UI Automator
     //androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
 
-
     // Required -- JUnit 4 framework
     testImplementation 'junit:junit:4.13'
     testImplementation 'androidx.test:core:1.2.0'
     // Optional -- Mockito framework
     testImplementation 'org.mockito:mockito-core:3.3.1'
-    testImplementation 'org.robolectric:robolectric:4.3.1'
 
 
     // Debug Database Library
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 
+    // JAX-B dependencies for JDK 9+
+    kapt "com.sun.xml.bind:jaxb-core:2.3.0.1"
+    kapt "javax.xml.bind:jaxb-api:2.4.0-b180830.0359"
+    kapt "com.sun.xml.bind:jaxb-impl:2.3.2"
+    annotationProcessor "com.sun.xml.bind:jaxb-core:2.3.0.1"
+    annotationProcessor "javax.xml.bind:jaxb-api:2.4.0-b180830.0359"
+
+    // Charts
+    implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'
+
+}
+
+allprojects {
+    repositories {
+        maven { url 'https://jitpack.io' }
+    }
 }

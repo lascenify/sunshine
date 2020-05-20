@@ -1,12 +1,10 @@
 package com.example.android.sunshine.framework.di
 
-import com.example.android.sunshine.framework.di.module.DataBaseModule
-import com.example.android.sunshine.framework.di.module.NetworkModule
+import com.example.android.sunshine.framework.di.component.CityForecastComponent
 import dagger.Module
 
 @Module(
     subcomponents =
-    [//ApplicationModule::class, NetworkModule::class, DataBaseModule::class]
-]
+    [CityForecastComponent::class]
 )
 class AppSubcomponents

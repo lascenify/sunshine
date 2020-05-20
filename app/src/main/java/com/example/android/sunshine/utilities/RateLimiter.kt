@@ -2,6 +2,7 @@ package com.example.android.sunshine.utilities
 
 import android.os.SystemClock
 import androidx.collection.ArrayMap
+import androidx.collection.arrayMapOf
 import java.util.concurrent.TimeUnit
 
 
@@ -35,4 +36,5 @@ class RateLimiter <in KEY> (timeOut: Int, timeUnit: TimeUnit){
     fun reset(key: KEY){
         timestamps.remove(key)
     }
+
 }

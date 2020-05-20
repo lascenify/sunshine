@@ -10,7 +10,6 @@ import androidx.preference.PreferenceFragmentCompat
 import com.example.android.sunshine.R
 import com.example.android.sunshine.framework.SunshinePreferences
 import com.example.android.sunshine.framework.provider.WeatherContract
-import com.example.android.sunshine.framework.sync.SunshineSyncUtils
 
 class SettingsFragment :PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener{
 
@@ -65,7 +64,7 @@ class SettingsFragment :PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
         // if we have changed the preferred location
         if (key == getString(R.string.pref_location_key)){
             SunshinePreferences.resetLocationCoordinates(requireActivity())
-            SunshineSyncUtils.startImmediateSync(requireActivity())
+            //SunshineSyncUtils.startImmediateSync(requireActivity())
         }
         // or we have changed the preferred units
         else if (key == getString(R.string.pref_units_key)){
