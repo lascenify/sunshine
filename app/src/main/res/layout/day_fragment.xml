@@ -12,19 +12,16 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="26dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp">
+        android:layout_height="match_parent">
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/colorPrimaryDark"
             android:fitsSystemWindows="true"
             app:cardCornerRadius="24dp"
-            app:cardElevation="8dp">
+            app:cardElevation="8dp"
+            app:cardUseCompatPadding="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -33,15 +30,15 @@
 
                 <TextView
                     android:id="@+id/tv_day_day_of_week"
+                    style="@style/TextAppearance.MaterialComponents.Headline4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@{day.dayOfWeek}"
-                    tools:text="Jueves"
-                    style="@style/TextAppearance.MaterialComponents.Headline4"
-                    android:textColor="#FFFFFF"/>
+                    android:textColor="#FFFFFF"
+                    tools:text="Jueves" />
 
-                <LinearLayout
+                 <LinearLayout
                     android:id="@+id/linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -54,8 +51,8 @@
                         android:layout_height="wrap_content"
                         android:paddingRight="5dp"
                         android:text="@{day.minTemperature}"
-                        tools:text="14º"
-                        android:textColor="#FFFFFF"/>
+                        android:textColor="#FFFFFF"
+                        tools:text="14º" />
 
                     <TextView
 
@@ -65,8 +62,8 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="5dp"
                         android:text="@{day.maxTemperature}"
-                        tools:text="| 16º"
-                        android:textColor="#FFFFFF"/>
+                        android:textColor="#FFFFFF"
+                        tools:text="| 16º" />
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -81,5 +78,147 @@
 
         </com.google.android.material.card.MaterialCardView>
 
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:fitsSystemWindows="true"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="8dp"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    style="@style/TextAppearance.MaterialComponents.Headline6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Additional info"
+                    android:textColor="#FFFFFF" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/wind_iv"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/wind"
+                        android:paddingRight="5dp"
+                        android:layout_gravity="center"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+                    <LinearLayout
+                        android:id="@+id/wind_ly"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintLeft_toRightOf="@id/wind_iv"
+                        app:layout_constraintTop_toTopOf="parent">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:textColor="#FFFFFF"
+                            android:text="Wind"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="27 km/h"
+                            android:textSize="16sp"
+                            android:textColor="#B7B7B7"/>
+                    </LinearLayout>
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/hot_temp"
+                        android:layout_gravity="center"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/feels_like_ly"/>
+                    <LinearLayout
+                        android:id="@+id/feels_like_ly"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:textColor="#FFFFFF"
+                            android:text="Feels like"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="24ºC"
+                            android:textSize="16sp"
+                            android:textColor="#B7B7B7"/>
+                    </LinearLayout>
+                    <ImageView
+                        android:id="@+id/hum_iv"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/humidity"
+                        android:layout_gravity="center"
+                        app:layout_constraintTop_toBottomOf="@id/wind_ly"
+                        app:layout_constraintStart_toStartOf="parent"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintLeft_toRightOf="@id/hum_iv"
+                        app:layout_constraintTop_toBottomOf="@id/wind_ly">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:textColor="#FFFFFF"
+                            android:text="Humidity"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="30%"
+                            android:textSize="16sp"
+                            android:textColor="#B7B7B7"/>
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/rain_iv"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/rainbow"
+                        android:layout_gravity="center"
+                        app:layout_constraintTop_toBottomOf="@id/feels_like_ly"
+                        app:layout_constraintRight_toLeftOf="@id/feels_like_ly"/>
+                    <LinearLayout
+                        android:id="@+id/rain_ly"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintLeft_toRightOf="@id/rain_iv"
+                        app:layout_constraintTop_toBottomOf="@id/feels_like_ly">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:textColor="#FFFFFF"
+                            android:text="Rain"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="300mm"
+                            android:textSize="16sp"
+                            android:textColor="#B7B7B7"/>
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
 </layout>
