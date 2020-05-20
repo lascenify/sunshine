@@ -16,7 +16,7 @@ class DayForecastAdapter(
     private val layoutId: Int
 ) : RecyclerView.Adapter<DayForecastAdapter.ViewHolder>() {
 
-    private var dayList: MutableList<OneDayForecast>? = null
+    private var dayList: List<OneDayForecast>? = null
 
     inner class ViewHolder(private val binding: ItemDayForecastBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -48,9 +48,15 @@ class DayForecastAdapter(
      * Called whenever the list is updated.
      * Changes are being listened in the view.
      */
+    /*
     fun update(newForecastList: List<ForecastListItem>) {
         dayList = mutableListOf()
         fetchNextDaysForecast(newForecastList)
+        notifyDataSetChanged()
+    }*/
+
+    fun update(newForecastList: List<OneDayForecast>){
+        dayList = newForecastList
         notifyDataSetChanged()
     }
 
@@ -58,6 +64,7 @@ class DayForecastAdapter(
      * We only need the next hours to be displayed in this RecyclerView.
      * These are the hours in which the forecast has been done and the next day.
      */
+    /*
     private fun fetchNextDaysForecast(forecastList: List<ForecastListItem>) {
         var previousDayTxt = forecastList.first().dt_txt!!.substringBefore(" ")
 
@@ -75,7 +82,7 @@ class DayForecastAdapter(
             previousDayTxt = nextDayTxt
         }
 
-    }
+    }*/
 
 }
     /*

@@ -12,110 +12,133 @@
                     type="LiveData&lt;Resource&lt;ForecastEntity>>" />
         </data>
 
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorPrimary"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
             android:orientation="vertical">
-
                 <LinearLayout
-                    android:id="@+id/layout_city_info"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintTop_toTopOf="parent">
+                        android:id="@+id/layout_city_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintTop_toTopOf="parent">
+                            <TextView
+                                android:id="@+id/forecast_city_name"
+                                style="@style/TextAppearance.MaterialComponents.Headline3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@{forecast.data.cityName}"
+                                android:textColor="#FFFFFF"
+                                tools:text="Cieza"/>
 
-                        <TextView
-                            android:id="@+id/forecast_city_name"
-                            style="@style/TextAppearance.MaterialComponents.Headline3"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="@{forecast.data.cityName}"
-                            android:textColor="#FFFFFF"
-                            tools:text="Cieza"/>
+                            <TextView
+                                android:id="@+id/forecast_actual_description"
+                                style="@style/TextAppearance.MaterialComponents.Headline4"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@{forecast.data.actualWeatherDescription}"
+                                android:textColor="#FFFFFF"
+                                tools:text="Nublado"/>
 
-                        <TextView
-                            android:id="@+id/forecast_actual_description"
-                            style="@style/TextAppearance.MaterialComponents.Headline4"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="@{forecast.data.actualWeatherDescription}"
-                            android:textColor="#FFFFFF"
-                            tools:text="Nublado"/>
+                            <TextView
+                                android:id="@+id/forecast_actual_temperature"
+                                style="@style/TextAppearance.MaterialComponents.Headline2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@{forecast.data.actualTemperature}"
+                                android:textColor="#FFFFFF"
+                                tools:text="34º"/>
 
-                        <TextView
-                            android:id="@+id/forecast_actual_temperature"
-                            style="@style/TextAppearance.MaterialComponents.Headline2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="@{forecast.data.actualTemperature}"
-                            android:textColor="#FFFFFF"
-                            tools:text="34º"/>
+                    </LinearLayout>
 
-                </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="#FFFFFF"
+                        app:layout_constraintTop_toBottomOf="@id/layout_city_info"
+                        app:layout_constraintBottom_toTopOf="@id/recycler_view_forecast_hours"
+                            />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="#FFFFFF"
-                    app:layout_constraintTop_toBottomOf="@id/layout_city_info"
-                    app:layout_constraintBottom_toTopOf="@id/recycler_view_forecast_hours"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_view_forecast_hours"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorPrimaryDark"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/layout_city_info"
+                        tools:listitem="@layout/item_hour_forecast" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="#FFFFFF"
+                        app:layout_constraintTop_toBottomOf="@id/recycler_view_forecast_hours"
+                        app:layout_constraintBottom_toTopOf="@id/recyclerview_forecast_days"
                         />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_view_forecast_hours"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorPrimary"
-                    android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/layout_city_info"
-                    tools:listitem="@layout/item_hour_forecast" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerview_forecast_days"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintTop_toBottomOf="@id/recycler_view_forecast_hours"
+                        tools:listitem="@layout/item_day_forecast" >
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="#FFFFFF"
-                    app:layout_constraintTop_toBottomOf="@id/recycler_view_forecast_hours"
-                    app:layout_constraintBottom_toTopOf="@id/recyclerview_forecast_days"
-                    />
+                    </androidx.recyclerview.widget.RecyclerView>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerview_forecast_days"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintTop_toBottomOf="@id/recycler_view_forecast_hours"
-                    tools:listitem="@layout/item_day_forecast" />
 
-                <TextView
-                    android:id="@+id/tv_error_message"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="invisible"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-                    <!--android:text="@string/error_message"
-                    android:visibility="@{forecast.status.error == true}"
+            <!--include
+                layout="@layout/temp_chart_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:layout_editor_absoluteY="291dp"
+                app:layout_constraintTop_toBottomOf="@id/recyclerview_forecast_days"
+                app:layout_constraintBottom_toBottomOf="parent"/-->
 
-                    -->
+            <androidx.fragment.app.FragmentContainerView
+                android:visibility="gone"
+                        android:id="@+id/fragment_chart"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        app:layout_constraintTop_toBottomOf="@id/recycler_view_forecast_hours"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:name="com.example.android.sunshine.presentation.cityMainForecast.TemperatureChartFragment"
+                        tools:layout="@layout/temp_chart_fragment" />
 
-                <ProgressBar
-                    android:id="@+id/pb_forecast"
-                    android:layout_width="42dp"
-                    android:layout_height="42dp"
-                    android:layout_gravity="center"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:visibility="gone"/>
-                    <!--android:visibility="@{forecast.status.loading == true}"-->
+                    <TextView
+                        android:id="@+id/tv_error_message"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:text="@string/error_message"
+                        app:setVisibility="@{forecast.status.error == true}"/>
+
+                    <ProgressBar
+                        android:id="@+id/pb_forecast"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:layout_gravity="center"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:setVisibility="@{forecast.status.loading == true}"/>
+                        <!--android:visibility="@{forecast.status.loading == true}"-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

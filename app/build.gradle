@@ -19,7 +19,7 @@ android {
     buildToolsVersion "29.0.3"
     defaultConfig {
         applicationId "com.lascenify.sunshine"
-        minSdkVersion 18
+        minSdkVersion 19
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -182,8 +182,16 @@ dependencies {
 
 
     // JAX-B dependencies for JDK 9+
-    implementation "jakarta.xml.bind:jakarta.xml.bind-api:2.3.2"
-    implementation "org.glassfish.jaxb:jaxb-runtime:2.3.2"
+    //implementation "jakarta.xml.bind:jakarta.xml.bind-api:2.3.2"
+    //implementation "org.glassfish.jaxb:jaxb-runtime:2.3.2"
 
 
+    implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'
+
+}
+
+allprojects {
+    repositories {
+        maven { url 'https://jitpack.io' }
+    }
 }

@@ -11,9 +11,10 @@ import com.example.android.sunshine.framework.db.RoomForecastDataSource
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
-/*
+
 @Module
 class ApplicationModule (private val application: SunshineApplication) {
+
     @Provides
     @Singleton
     fun provideApplicationContext(): Context = application
@@ -30,4 +31,4 @@ class ApplicationModule (private val application: SunshineApplication) {
     @Singleton
     fun provideSharedPreferences(): SharedPreferences = PreferenceManager.getDefaultSharedPreferences(application)
 
-}*/
+}

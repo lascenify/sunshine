@@ -19,6 +19,8 @@ import com.example.android.sunshine.core.domain.ForecastListItem
 import com.example.android.sunshine.core.interactors.ForecastByCoordinates
 import com.example.android.sunshine.databinding.ForecastListFragmentBinding
 import com.example.android.sunshine.framework.SunshineApplication
+import com.example.android.sunshine.framework.di.ForecastScope
+import com.example.android.sunshine.presentation.ForecastComponentProvider
 import com.example.android.sunshine.presentation.MainActivity
 import javax.inject.Inject
 
@@ -26,7 +28,8 @@ class CityMainForecastFragment :Fragment(), SharedPreferences.OnSharedPreference
 
     private lateinit var binding : ForecastListFragmentBinding
 
-    @Inject lateinit var viewModel : ForecastViewModel
+    @Inject
+    lateinit var viewModel : ForecastViewModel
 
 
     private lateinit var hourForecastAdapter: HourForecastAdapter
@@ -38,7 +41,11 @@ class CityMainForecastFragment :Fragment(), SharedPreferences.OnSharedPreference
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (context.applicationContext as SunshineApplication).appComponent.inject(this)
+        //val component = (context.applicationContext as SunshineApplication).appComponent.cityForecastComp().create()
+        //component.inject(this)
+
+        (context as ForecastComponentProvider).get().inject(this)
+        Log.i("viewmodel", "In CityMainForecastFragment using Viewmodel $viewModel")
     }
 
     /**
@@ -87,13 +94,14 @@ class CityMainForecastFragment :Fragment(), SharedPreferences.OnSharedPreference
     }
 
     private fun initForecastList() {
+        Log.d("viewModelOnCity", viewModel.toString())
         viewModel.forecast.observe(viewLifecycleOwner, Observer { resource ->
             if (resource != null){
                 dayForecastAdapter.apply {
-                    resource.data?.list?.let { dayForecastAdapter.update(it) }
+                    resource.data?.list?.let{ update(viewModel.forecastOfNextDays()) }
                 }
                 hourForecastAdapter.apply {
-                    resource.data?.list?.let { hourForecastAdapter.update(it) }
+                    resource.data?.list?.let{ update(viewModel.forecastOfNextHours())}
                 }
             }
         })

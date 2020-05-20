@@ -18,10 +18,14 @@ package com.example.android.sunshine.presentation
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.android.sunshine.R
-import com.example.android.sunshine.framework.di.AppComponent
+import com.example.android.sunshine.framework.SunshineApplication
+import com.example.android.sunshine.framework.di.component.CityForecastComponent
+import javax.inject.Provider
 
-class MainActivity : AppCompatActivity(){
+typealias ForecastComponentProvider = Provider<CityForecastComponent>
+class MainActivity : AppCompatActivity(), ForecastComponentProvider{
 
+    lateinit var forecastComp: CityForecastComponent
     // Instance of the AppComponent that will be used by all the Activities in the project
     /*val appComponent: AppComponent by lazy {
         // Creates an instance of AppComponent using its Factory constructor
@@ -31,7 +35,11 @@ class MainActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
+
+        forecastComp = (applicationContext as SunshineApplication).appComponent.cityForecastComp().create()
     }
+
+    override fun get(): CityForecastComponent = forecastComp
 
 
 }
