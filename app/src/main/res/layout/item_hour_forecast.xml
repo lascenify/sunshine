@@ -15,7 +15,7 @@
         android:layout_width="70dp"
         android:layout_height="100dp"
         app:setBackgroundColor="@{isSelected}"
-        tools:backgroundTint="@color/colorYellow"
+        tools:backgroundTint="@color/colorPrimaryDark"
         app:cardCornerRadius="15dp">
 
         <RelativeLayout

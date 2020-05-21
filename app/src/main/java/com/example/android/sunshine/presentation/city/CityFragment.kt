@@ -20,9 +20,12 @@ import com.example.android.sunshine.databinding.CityFragmentBinding
 import com.example.android.sunshine.presentation.ForecastComponentProvider
 import com.example.android.sunshine.presentation.MainActivity
 import com.example.android.sunshine.presentation.common.HourForecastAdapter
+import kotlinx.android.synthetic.main.city_fragment.view.*
+import kotlinx.android.synthetic.main.layout_recycler_days.view.*
+import kotlinx.android.synthetic.main.layout_recycler_hours.view.*
 import javax.inject.Inject
 
-class CityMainForecastFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListener{
+class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListener{
 
     private lateinit var binding : CityFragmentBinding
 
@@ -63,7 +66,15 @@ class CityMainForecastFragment :Fragment(), SharedPreferences.OnSharedPreference
 
         setForecastParams()
 
-        dayForecastAdapter = DayForecastAdapter(R.layout.item_day_forecast){ oneDayForecast ->
+        bindViews()
+
+        initForecastList()
+
+        setHasOptionsMenu(true)
+    }
+
+    private fun bindViews() {
+        dayForecastAdapter = DayForecastAdapter(R.layout.item_day_forecast) { oneDayForecast ->
             val args = Bundle()
             args.putParcelable(getString(R.string.dayForecasted_bundle), oneDayForecast)
             findNavController().navigate(
@@ -76,18 +87,13 @@ class CityMainForecastFragment :Fragment(), SharedPreferences.OnSharedPreference
             HourForecastAdapter(
                 R.layout.item_hour_forecast
             ) {
-                // callback
+                updateConditionsUI(it)
             }
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.forecast = viewModel.forecast
-        binding.recyclerviewForecastDays.adapter = dayForecastAdapter
-        binding.recyclerViewForecastHours.adapter = hourForecastAdapter
-
-
-        initForecastList()
-
-        setHasOptionsMenu(true)
+        binding.hoursForecastLayout.recyclerviewForecastHours.adapter = hourForecastAdapter
+        binding.daysForecastLayout.recyclerviewForecastDays.adapter = dayForecastAdapter
     }
 
     private fun initForecastList() {
@@ -99,8 +105,14 @@ class CityMainForecastFragment :Fragment(), SharedPreferences.OnSharedPreference
                 hourForecastAdapter.apply {
                     resource.data?.list?.let{ update(viewModel.forecastOfNextHours())}
                 }
+                resource.data?.list?.get(0)?.let { updateConditionsUI(it) }
             }
         })
+
+    }
+
+    private fun updateConditionsUI(forecastListItem: ForecastListItem){
+        binding.cityConditionsLayout.listItem = forecastListItem
     }
 
     private fun setForecastParams() {

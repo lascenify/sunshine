@@ -55,6 +55,7 @@ class HourForecastAdapter(
     override fun getItemViewType(position: Int): Int = getLayoutIdForPosition(position)
 
     private fun getLayoutIdForPosition(position: Int) = layoutId
+
     /**
      * Called whenever the list is updated.
      * Changes are being listened in the view.

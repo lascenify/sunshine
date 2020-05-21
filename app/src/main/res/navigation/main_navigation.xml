@@ -17,7 +17,7 @@
         tools:layout="@layout/day_fragment"/>
     <fragment
         android:id="@+id/nav_cityFragment"
-        android:name="com.example.android.sunshine.presentation.city.CityMainForecastFragment"
+        android:name="com.example.android.sunshine.presentation.city.CityFragment"
         android:label="ForecastListFragment"
         tools:layout="@layout/city_fragment"/>
     <fragment

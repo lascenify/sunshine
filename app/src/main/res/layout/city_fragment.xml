@@ -28,98 +28,62 @@
             android:paddingTop="10dp"
             android:background="@color/colorPrimaryDark">
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardView"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorPrimaryDark"
-                android:fitsSystemWindows="true"
-                app:cardCornerRadius="24dp"
-                app:cardElevation="8dp"
-                app:cardUseCompatPadding="true">
+                android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/layout_city_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                    <LinearLayout
-                        android:id="@+id/layout_city_info"
+                    <TextView
+                        android:id="@+id/forecast_city_name"
+                        style="@style/TextAppearance.MaterialComponents.Headline3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        app:layout_constraintTop_toTopOf="parent">
+                        android:gravity="center"
+                        android:text="@{forecast.data.cityName}"
+                        android:textColor="#FFFFFF"
+                        tools:text="Cieza" />
 
-                        <TextView
-                            android:id="@+id/forecast_city_name"
-                            style="@style/TextAppearance.MaterialComponents.Headline3"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="@{forecast.data.cityName}"
-                            android:textColor="#FFFFFF"
-                            tools:text="Cieza" />
-
-                        <TextView
-                            android:id="@+id/forecast_actual_description"
-                            style="@style/TextAppearance.MaterialComponents.Headline4"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="@{forecast.data.actualWeatherDescription}"
-                            android:textColor="#FFFFFF"
-                            tools:text="Nublado" />
-
-                        <TextView
-                            android:id="@+id/forecast_actual_temperature"
-                            style="@style/TextAppearance.MaterialComponents.Headline2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="@{forecast.data.actualTemperature}"
-                            android:textColor="#FFFFFF"
-                            tools:text="34º" />
-
-                    </LinearLayout>
-
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recycler_view_forecast_hours"
+                    <TextView
+                        android:id="@+id/forecast_actual_description"
+                        style="@style/TextAppearance.MaterialComponents.Headline4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/colorPrimaryDark"
-                        android:orientation="horizontal"
-                        android:padding="10dp"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/layout_city_info"
-                        tools:listitem="@layout/item_hour_forecast" />
+                        android:gravity="center"
+                        android:text="@{forecast.data.actualWeatherDescription}"
+                        android:textColor="#FFFFFF"
+                        tools:text="Nublado" />
+
+                    <TextView
+                        android:id="@+id/forecast_actual_temperature"
+                        style="@style/TextAppearance.MaterialComponents.Headline2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@{forecast.data.actualTemperature}"
+                        android:textColor="#FFFFFF"
+                        tools:text="34º" />
 
                 </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
 
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorPrimaryDark"
-                android:fitsSystemWindows="true"
-                app:cardCornerRadius="24dp"
-                app:cardElevation="8dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginBottom="15dp">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerview_forecast_days"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintTop_toBottomOf="@id/recycler_view_forecast_hours"
-                    tools:listitem="@layout/item_day_forecast" />
+            <include
+                android:id="@+id/hours_forecast_layout"
+                layout="@layout/layout_recycler_hours"/>
 
-            </com.google.android.material.card.MaterialCardView>
+            <include
+                android:id="@+id/city_conditions_layout"
+                layout="@layout/layout_city_conditions"/>
 
+            <include
+                android:id="@+id/days_forecast_layout"
+                layout="@layout/layout_recycler_days"/>
 
 
                 <!--include
@@ -139,7 +103,7 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             android:name="com.example.android.sunshine.presentation.cityMainForecast.TemperatureChartFragment"
                             tools:layout="@layout/temp_chart_fragment" /-->
-
+            </LinearLayout>
             <TextView
                 android:id="@+id/tv_error_message"
                 android:layout_width="match_parent"
