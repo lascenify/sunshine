@@ -9,5 +9,6 @@ import kotlinx.android.parcel.Parcelize
 @JsonClass(generateAdapter = true)
 data class Rain(
     @Json(name = "3h")
+    // Rain volume for last 3 hours, mm
     val jsonMember3h: Double?
 ): Parcelable

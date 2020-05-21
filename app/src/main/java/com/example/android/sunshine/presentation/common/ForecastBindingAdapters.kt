@@ -1,10 +1,14 @@
-package com.example.android.sunshine.presentation.cityMainForecast
+package com.example.android.sunshine.presentation.common
 
+import android.content.res.Resources
+import android.graphics.Color
 import android.os.Build
 import android.view.View
 import android.widget.ImageView
 import androidx.annotation.RequiresApi
+import androidx.cardview.widget.CardView
 import androidx.databinding.BindingAdapter
+import com.example.android.sunshine.R
 import com.example.android.sunshine.utilities.SunshineWeatherUtils
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -22,4 +26,18 @@ fun setVisibility(view: View, isVisible: Boolean){
         view.visibility = View.VISIBLE
     else
         view.visibility = View.GONE
+}
+
+
+@RequiresApi(Build.VERSION_CODES.M)
+@BindingAdapter("app:setBackgroundColor")
+fun setBackgroundColor(view: View, isSelected: Boolean){
+    val cardView = view as CardView
+    val context = view.context
+    val theme = context.theme
+    if (isSelected)
+        cardView.backgroundTintList = context.resources.getColorStateList(R.color.colorSelected, theme)
+    else
+        cardView.backgroundTintList = context.resources.getColorStateList(R.color.colorPrimaryDark, theme)
+
 }

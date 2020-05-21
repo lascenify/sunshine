@@ -1,13 +1,16 @@
 package com.example.android.sunshine.core.domain
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 import java.time.DayOfWeek
 
+@Parcelize
 data class OneDayForecast(
     val dayOfWeek: String,
     val forecastList: List<ForecastListItem>,
     private var maxTemperature: Int?,
     private var minTemperature: Int?
-){
+): Parcelable{
     fun calculateTemperatures(){
         var min = forecastList[0].mainInfo?.temperature!!
         var max = forecastList[0].mainInfo?.temperature!!
@@ -38,4 +41,5 @@ data class OneDayForecast(
             calculateTemperatures()
         return minTemperature.toString() + "º"
     }
+
 }

@@ -1,4 +1,4 @@
-package com.example.android.sunshine.presentation.cityMainForecast
+package com.example.android.sunshine.presentation.city
 
 import android.content.Context
 import android.content.Intent
@@ -14,19 +14,17 @@ import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import com.example.android.sunshine.R
 import com.example.android.sunshine.framework.SunshinePreferences
-import com.example.android.sunshine.presentation.viewmodel.ForecastViewModel
 import com.example.android.sunshine.core.domain.ForecastListItem
 import com.example.android.sunshine.core.interactors.ForecastByCoordinates
-import com.example.android.sunshine.databinding.ForecastListFragmentBinding
-import com.example.android.sunshine.framework.SunshineApplication
-import com.example.android.sunshine.framework.di.ForecastScope
+import com.example.android.sunshine.databinding.CityFragmentBinding
 import com.example.android.sunshine.presentation.ForecastComponentProvider
 import com.example.android.sunshine.presentation.MainActivity
+import com.example.android.sunshine.presentation.common.HourForecastAdapter
 import javax.inject.Inject
 
 class CityMainForecastFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListener{
 
-    private lateinit var binding : ForecastListFragmentBinding
+    private lateinit var binding : CityFragmentBinding
 
     @Inject
     lateinit var viewModel : ForecastViewModel
@@ -41,8 +39,6 @@ class CityMainForecastFragment :Fragment(), SharedPreferences.OnSharedPreference
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        //val component = (context.applicationContext as SunshineApplication).appComponent.cityForecastComp().create()
-        //component.inject(this)
 
         (context as ForecastComponentProvider).get().inject(this)
         Log.i("viewmodel", "In CityMainForecastFragment using Viewmodel $viewModel")
@@ -57,36 +53,37 @@ class CityMainForecastFragment :Fragment(), SharedPreferences.OnSharedPreference
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.forecast_list_fragment, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.city_fragment, container, false)
         return binding.root
     }
-/*
-    override fun onStart() {
-        super.onStart()
-        if (PREFERENCE_UPDATES_FLAG){
-            loadWeatherData()
-            PREFERENCE_UPDATES_FLAG = false
-        }
-    }
 
-    private fun loadWeatherData(){
-        //showWeatherDataView()
-        //iewModel.loadForecast()
-    }*/
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setForecastParams()
 
-        dayForecastAdapter = DayForecastAdapter(R.layout.item_day_forecast)
+        dayForecastAdapter = DayForecastAdapter(R.layout.item_day_forecast){ oneDayForecast ->
+            val args = Bundle()
+            args.putParcelable(getString(R.string.dayForecasted_bundle), oneDayForecast)
+            findNavController().navigate(
+                R.id.nav_dayFragment,
+                args
+            )
+        }
 
-        hourForecastAdapter = HourForecastAdapter(R.layout.item_hour_forecast)
+        hourForecastAdapter =
+            HourForecastAdapter(
+                R.layout.item_hour_forecast
+            ) {
+                // callback
+            }
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.forecast = viewModel.forecast
         binding.recyclerviewForecastDays.adapter = dayForecastAdapter
         binding.recyclerViewForecastHours.adapter = hourForecastAdapter
+
 
         initForecastList()
 
@@ -94,7 +91,6 @@ class CityMainForecastFragment :Fragment(), SharedPreferences.OnSharedPreference
     }
 
     private fun initForecastList() {
-        Log.d("viewModelOnCity", viewModel.toString())
         viewModel.forecast.observe(viewLifecycleOwner, Observer { resource ->
             if (resource != null){
                 dayForecastAdapter.apply {
@@ -131,7 +127,7 @@ class CityMainForecastFragment :Fragment(), SharedPreferences.OnSharedPreference
     private fun openDetailFragment(forecastListItem: ForecastListItem){
         val bundle = Bundle()
         bundle.putParcelable(getString(R.string.dayForecasted_bundle), forecastListItem)
-        findNavController().navigate(R.id.detailFragment, bundle)
+        findNavController().navigate(R.id.nav_dayFragment, bundle)
     }
 
 
@@ -143,23 +139,6 @@ class CityMainForecastFragment :Fragment(), SharedPreferences.OnSharedPreference
         PreferenceManager.getDefaultSharedPreferences(context).unregisterOnSharedPreferenceChangeListener(this)
     }
 
-    /*private fun showLoading(){
-        recyclerView.visibility = View.INVISIBLE
-        //binding.pbForecast.visibility = View.VISIBLE
-    }*/
-
-/*
-    private fun showWeatherDataView(){
-        binding.pbForecast.visibility = View.INVISIBLE
-        binding.tvErrorMessage.visibility = View.INVISIBLE
-        binding.recyclerviewForecast.visibility = View.VISIBLE
-    }
-
-    private fun showErrorMessage(){
-        binding.pbForecast.visibility = View.INVISIBLE
-        binding.tvErrorMessage.visibility = View.VISIBLE
-        binding.recyclerviewForecast.visibility = View.INVISIBLE
-    }*/
 
     /**
      * Inflates the menu
@@ -180,13 +159,13 @@ class CityMainForecastFragment :Fragment(), SharedPreferences.OnSharedPreference
                 openLocationInMap()
             }
             R.id.action_setings -> {
-                findNavController().navigate(R.id.settingsFragment)
+                findNavController().navigate(R.id.nav_settingsFragment)
             }
         }
         return true
     }
 
-    fun forceRefreshData() = viewModel.forceRefresh()
+    private fun forceRefreshData() = viewModel.forceRefresh()
 
     /**
      * Method used to open the location in map from the menu
@@ -206,6 +185,39 @@ class CityMainForecastFragment :Fragment(), SharedPreferences.OnSharedPreference
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         PREFERENCE_UPDATES_FLAG = true
     }
+
+
+
+    /*
+    override fun onStart() {
+        super.onStart()
+        if (PREFERENCE_UPDATES_FLAG){
+            loadWeatherData()
+            PREFERENCE_UPDATES_FLAG = false
+        }
+    }
+
+    private fun loadWeatherData(){
+        //showWeatherDataView()
+        //iewModel.loadForecast()
+    }*/
+    /*private fun showLoading(){
+        recyclerView.visibility = View.INVISIBLE
+        //binding.pbForecast.visibility = View.VISIBLE
+    }*/
+
+/*
+    private fun showWeatherDataView(){
+        binding.pbForecast.visibility = View.INVISIBLE
+        binding.tvErrorMessage.visibility = View.INVISIBLE
+        binding.recyclerviewForecast.visibility = View.VISIBLE
+    }
+
+    private fun showErrorMessage(){
+        binding.pbForecast.visibility = View.INVISIBLE
+        binding.tvErrorMessage.visibility = View.VISIBLE
+        binding.recyclerviewForecast.visibility = View.INVISIBLE
+    }*/
 
 
 }

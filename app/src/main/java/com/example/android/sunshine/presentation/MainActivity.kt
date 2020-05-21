@@ -26,12 +26,6 @@ typealias ForecastComponentProvider = Provider<CityForecastComponent>
 class MainActivity : AppCompatActivity(), ForecastComponentProvider{
 
     lateinit var forecastComp: CityForecastComponent
-    // Instance of the AppComponent that will be used by all the Activities in the project
-    /*val appComponent: AppComponent by lazy {
-        // Creates an instance of AppComponent using its Factory constructor
-        // We pass the applicationContext that will be used as Context in the graph
-        DaggerAppComponent.factory().create(applicationContext)
-    }*/
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)

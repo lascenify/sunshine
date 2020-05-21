@@ -1,28 +1,40 @@
-package com.example.android.sunshine.presentation.cityMainForecast
+package com.example.android.sunshine.presentation.common
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.android.sunshine.BR
 import com.example.android.sunshine.core.domain.ForecastListItem
 import com.example.android.sunshine.databinding.ItemHourForecastBinding
-import com.example.android.sunshine.presentation.viewmodel.ForecastViewModel
 import com.example.android.sunshine.utilities.getNextDayOfYearFromTxt
 
 class HourForecastAdapter(
-    private val layoutId: Int
+    private val layoutId: Int,
+    private val callback: ((ForecastListItem) -> Unit)?
 ) : RecyclerView.Adapter<HourForecastAdapter.ViewHolder>() {
 
+    private var checkedPosition = 0
     private var forecastList: List<ForecastListItem>? = null
 
     inner class ViewHolder (private val binding: ItemHourForecastBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int){
             val forecast = forecastList?.get(position)
-            binding.setVariable(BR.forecast, forecast)
-            if (position == 0)
-                binding.hourForecastItemHour.text = "Now"
             binding.forecastListItem = forecast
+            binding.isSelected = false
+            if (checkedPosition == adapterPosition){
+                binding.isSelected = true
+            }
+
+            binding.root.setOnClickListener {
+                binding.forecastListItem?.let {
+                    binding.isSelected = true
+                    if (checkedPosition != adapterPosition) {
+                        notifyItemChanged(checkedPosition);
+                        checkedPosition = adapterPosition;
+                    }
+                    callback?.invoke(it)
+                }
+            }
             binding.executePendingBindings()
         }
     }
@@ -30,6 +42,7 @@ class HourForecastAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding: ItemHourForecastBinding = DataBindingUtil.inflate(layoutInflater, viewType, parent, false)
+
         return ViewHolder(binding)
     }
 
