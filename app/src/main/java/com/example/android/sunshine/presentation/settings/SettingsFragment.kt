@@ -1,4 +1,4 @@
-package com.example.android.sunshine.presentation
+package com.example.android.sunshine.presentation.settings
 
 import android.content.SharedPreferences
 import android.os.Bundle

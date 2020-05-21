@@ -1,29 +1,36 @@
 package com.example.android.sunshine.presentation.day
 
-import android.app.Activity
-import android.content.Intent
+import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.widget.TextView
-import androidx.core.app.ShareCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.liveData
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.Observer
 import com.example.android.sunshine.R
+import com.example.android.sunshine.core.domain.ForecastListItem
 import com.example.android.sunshine.core.domain.OneDayForecast
 import com.example.android.sunshine.databinding.DayFragmentBinding
-import com.example.android.sunshine.presentation.city.HourForecastAdapter
+import com.example.android.sunshine.presentation.ForecastComponentProvider
+import com.example.android.sunshine.presentation.common.HourForecastAdapter
+import javax.inject.Inject
 
 class DayFragment :Fragment(){
 
     private lateinit var mDayForecastTextView : TextView
     private val FORECAST_SHARE_HASHTAG = " #SunshineApp"
 
+    @Inject
+    lateinit var viewModel: DayViewModel
+
     private lateinit var binding: DayFragmentBinding
 
-    private lateinit var dayForecast: OneDayForecast
+
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (context as ForecastComponentProvider).get().inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,25 +41,44 @@ class DayFragment :Fragment(){
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        getForecastFromArguments()
+        setHasOptionsMenu(true)
+        setupRecyclerView()
+    }
+
+    private fun getForecastFromArguments() {
+        val dayForecast: OneDayForecast
         val bundle = arguments
         if (bundle != null) {
             dayForecast = bundle.getParcelable(getString(R.string.dayForecasted_bundle))!!
             binding.day = dayForecast
+            viewModel.setDayForecast(dayForecast)
+            updateUI(dayForecast.forecastList[0])
         }
-        setHasOptionsMenu(true)
-
-        setupRecyclerView()
     }
 
-    fun setupRecyclerView(){
-        val adapter = HourForecastAdapter(R.layout.item_hour_forecast)
-        adapter.update(dayForecast.forecastList)
-        binding.recyclerViewDayForecastHours.adapter = adapter
+    private fun setupRecyclerView(){
+        val adapter =
+            HourForecastAdapter(
+                R.layout.item_hour_forecast
+            ) { forecastListItem ->
+                updateUI(forecastListItem)
+
+            }
+        viewModel.forecast.observe(viewLifecycleOwner, Observer {forecast ->
+            if (forecast != null) {
+                adapter.update(forecast.forecastList)
+                binding.recyclerViewDayForecastHours.adapter = adapter
+            }
+        })
     }
 
+    private fun updateUI(forecastListItem: ForecastListItem){
+        binding.listItem = forecastListItem
+
+    }
 /*
     private fun createShareForecastIntent():Intent = ShareCompat.IntentBuilder.from(activity as Activity)
         .setType("text/plain")

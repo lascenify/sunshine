@@ -14,12 +14,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import com.example.android.sunshine.R
 import com.example.android.sunshine.framework.SunshinePreferences
-import com.example.android.sunshine.presentation.viewmodel.ForecastViewModel
 import com.example.android.sunshine.core.domain.ForecastListItem
 import com.example.android.sunshine.core.interactors.ForecastByCoordinates
 import com.example.android.sunshine.databinding.CityFragmentBinding
 import com.example.android.sunshine.presentation.ForecastComponentProvider
 import com.example.android.sunshine.presentation.MainActivity
+import com.example.android.sunshine.presentation.common.HourForecastAdapter
 import javax.inject.Inject
 
 class CityMainForecastFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListener{
@@ -39,8 +39,6 @@ class CityMainForecastFragment :Fragment(), SharedPreferences.OnSharedPreference
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        //val component = (context.applicationContext as SunshineApplication).appComponent.cityForecastComp().create()
-        //component.inject(this)
 
         (context as ForecastComponentProvider).get().inject(this)
         Log.i("viewmodel", "In CityMainForecastFragment using Viewmodel $viewModel")
@@ -58,19 +56,7 @@ class CityMainForecastFragment :Fragment(), SharedPreferences.OnSharedPreference
         binding = DataBindingUtil.inflate(inflater, R.layout.city_fragment, container, false)
         return binding.root
     }
-/*
-    override fun onStart() {
-        super.onStart()
-        if (PREFERENCE_UPDATES_FLAG){
-            loadWeatherData()
-            PREFERENCE_UPDATES_FLAG = false
-        }
-    }
 
-    private fun loadWeatherData(){
-        //showWeatherDataView()
-        //iewModel.loadForecast()
-    }*/
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -86,7 +72,12 @@ class CityMainForecastFragment :Fragment(), SharedPreferences.OnSharedPreference
             )
         }
 
-        hourForecastAdapter = HourForecastAdapter(R.layout.item_hour_forecast)
+        hourForecastAdapter =
+            HourForecastAdapter(
+                R.layout.item_hour_forecast
+            ) {
+                // callback
+            }
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.forecast = viewModel.forecast
@@ -148,23 +139,6 @@ class CityMainForecastFragment :Fragment(), SharedPreferences.OnSharedPreference
         PreferenceManager.getDefaultSharedPreferences(context).unregisterOnSharedPreferenceChangeListener(this)
     }
 
-    /*private fun showLoading(){
-        recyclerView.visibility = View.INVISIBLE
-        //binding.pbForecast.visibility = View.VISIBLE
-    }*/
-
-/*
-    private fun showWeatherDataView(){
-        binding.pbForecast.visibility = View.INVISIBLE
-        binding.tvErrorMessage.visibility = View.INVISIBLE
-        binding.recyclerviewForecast.visibility = View.VISIBLE
-    }
-
-    private fun showErrorMessage(){
-        binding.pbForecast.visibility = View.INVISIBLE
-        binding.tvErrorMessage.visibility = View.VISIBLE
-        binding.recyclerviewForecast.visibility = View.INVISIBLE
-    }*/
 
     /**
      * Inflates the menu
@@ -211,6 +185,39 @@ class CityMainForecastFragment :Fragment(), SharedPreferences.OnSharedPreference
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         PREFERENCE_UPDATES_FLAG = true
     }
+
+
+
+    /*
+    override fun onStart() {
+        super.onStart()
+        if (PREFERENCE_UPDATES_FLAG){
+            loadWeatherData()
+            PREFERENCE_UPDATES_FLAG = false
+        }
+    }
+
+    private fun loadWeatherData(){
+        //showWeatherDataView()
+        //iewModel.loadForecast()
+    }*/
+    /*private fun showLoading(){
+        recyclerView.visibility = View.INVISIBLE
+        //binding.pbForecast.visibility = View.VISIBLE
+    }*/
+
+/*
+    private fun showWeatherDataView(){
+        binding.pbForecast.visibility = View.INVISIBLE
+        binding.tvErrorMessage.visibility = View.INVISIBLE
+        binding.recyclerviewForecast.visibility = View.VISIBLE
+    }
+
+    private fun showErrorMessage(){
+        binding.pbForecast.visibility = View.INVISIBLE
+        binding.tvErrorMessage.visibility = View.VISIBLE
+        binding.recyclerviewForecast.visibility = View.INVISIBLE
+    }*/
 
 
 }

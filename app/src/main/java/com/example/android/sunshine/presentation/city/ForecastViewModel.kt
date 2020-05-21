@@ -1,24 +1,23 @@
-package com.example.android.sunshine.presentation.viewmodel
+package com.example.android.sunshine.presentation.city
 
-import android.text.format.DateUtils
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
-import com.example.android.sunshine.core.data.Resource
 import com.example.android.sunshine.core.domain.ForecastListItem
 import com.example.android.sunshine.core.domain.OneDayForecast
 import com.example.android.sunshine.core.interactors.ForecastByCoordinates
 import com.example.android.sunshine.framework.Interactors
 import com.example.android.sunshine.framework.di.ForecastScope
-import com.example.android.sunshine.utilities.getDayOfWeekFromDt
 import com.example.android.sunshine.utilities.getDayOfWeekFromText
 import com.example.android.sunshine.utilities.getNextDayOfYearFromTxt
-import java.util.*
 import javax.inject.Inject
 
 @ForecastScope
 class ForecastViewModel
-@Inject constructor(private val interactors: Interactors): ViewModel() {
+@Inject constructor(
+    private val interactors: Interactors
+): ViewModel() {
+
     private val daysForecast: MutableList<OneDayForecast> = mutableListOf()
     private val hoursForecast: MutableList<ForecastListItem> = mutableListOf()
     private val forecastParams: MutableLiveData<ForecastByCoordinates.Params> = MutableLiveData()

@@ -7,6 +7,10 @@
         <variable
             name="day"
             type="com.example.android.sunshine.core.domain.OneDayForecast" />
+
+        <variable
+            name="listItem"
+            type="com.example.android.sunshine.core.domain.ForecastListItem" />
     </data>
 
     <LinearLayout
@@ -112,26 +116,32 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent"/>
+
                     <LinearLayout
                         android:id="@+id/wind_ly"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
+                        android:paddingBottom="10dp"
                         app:layout_constraintLeft_toRightOf="@id/wind_iv"
                         app:layout_constraintTop_toTopOf="parent">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="16sp"
+                            android:text="Wind"
                             android:textColor="#FFFFFF"
-                            android:text="Wind"/>
+                            android:textSize="16sp" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            tools:text="27 km/h"
+                            android:textColor="#B7B7B7"
                             android:textSize="16sp"
-                            android:textColor="#B7B7B7"/>
+                            tools:text="27 km/h"
+                            android:text="@{listItem.wind}"/>
                     </LinearLayout>
+
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
@@ -139,26 +149,32 @@
                         android:layout_gravity="center"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintRight_toLeftOf="@id/feels_like_ly"/>
+
                     <LinearLayout
                         android:id="@+id/feels_like_ly"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
+                        android:paddingBottom="10dp"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="16sp"
+                            android:text="Feels like"
                             android:textColor="#FFFFFF"
-                            android:text="Feels like"/>
+                            android:textSize="16sp" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            tools:text="24ºC"
+                            android:textColor="#B7B7B7"
                             android:textSize="16sp"
-                            android:textColor="#B7B7B7"/>
+                            tools:text="24ºC"
+                            android:text="@{listItem.feelsLike}"/>
                     </LinearLayout>
+
                     <ImageView
                         android:id="@+id/hum_iv"
                         android:layout_width="30dp"
@@ -184,7 +200,8 @@
                             android:layout_height="wrap_content"
                             tools:text="30%"
                             android:textSize="16sp"
-                            android:textColor="#B7B7B7"/>
+                            android:textColor="#B7B7B7"
+                            android:text="@{listItem.humidity}"/>
                     </LinearLayout>
 
                     <ImageView
@@ -213,7 +230,8 @@
                             android:layout_height="wrap_content"
                             tools:text="300mm"
                             android:textSize="16sp"
-                            android:textColor="#B7B7B7"/>
+                            android:textColor="#B7B7B7"
+                            android:text="@{listItem.rain}"/>
                     </LinearLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

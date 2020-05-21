@@ -22,7 +22,7 @@
         tools:layout="@layout/city_fragment"/>
     <fragment
         android:id="@+id/nav_settingsFragment"
-        android:name="com.example.android.sunshine.presentation.SettingsFragment"
+        android:name="com.example.android.sunshine.presentation.settings.SettingsFragment"
         android:label="SettingsFragment"
         tools:layout="@layout/settings_fragment"/>
 </navigation>

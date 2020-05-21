@@ -50,6 +50,15 @@ data class ForecastListItem(
     fun getTemperature() = mainInfo?.temperature
 
     fun getIcon() = weatherItem?.first()?.icon
+
+    fun getWind() = wind?.speed.toString() + " m/s"
+
+    fun getFeelsLike() = mainInfo?.feelsLike?.toInt().toString() + "º"
+
+    fun getRain() = if (rain != null) rain.jsonMember3h.toString() + " mm" else "0 mm"
+
+    fun getHumidity() = mainInfo?.humidity?.toInt().toString() + "%"
+
 }
 
 

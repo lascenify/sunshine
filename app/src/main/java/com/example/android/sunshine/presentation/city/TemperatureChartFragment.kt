@@ -21,7 +21,6 @@ import com.example.android.sunshine.R
 import com.example.android.sunshine.core.domain.ForecastListItem
 import com.example.android.sunshine.databinding.TempChartFragmentBinding
 import com.example.android.sunshine.presentation.ForecastComponentProvider
-import com.example.android.sunshine.presentation.viewmodel.ForecastViewModel
 import javax.inject.Inject
 
 class TemperatureChartFragment : Fragment(){
