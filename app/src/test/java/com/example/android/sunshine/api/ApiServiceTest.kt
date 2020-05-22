@@ -34,8 +34,6 @@ class ApiServiceTest {
     @JvmField
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
-
-
     private lateinit var apiService: ApiService
     private lateinit var mockWebServer: MockWebServer
     private lateinit var moshi: Moshi
