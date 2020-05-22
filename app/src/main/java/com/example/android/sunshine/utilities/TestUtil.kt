@@ -4,7 +4,7 @@ import com.example.android.sunshine.core.domain.*
 
 object TestUtil {
 
-    private fun createFakeForecastListItem()=
+    fun createFakeForecastListItem()=
         ForecastListItem(
             1588766400,
             null,

@@ -13,6 +13,7 @@ Weather forecast app written in Kotlin (in progress)
 
 - [Dagger 2](https://dagger.dev/) -> Dependency Injection
 - [Android Debug Database](https://github.com/amitshekhariitbhu/Android-Debug-Database)
+- [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart) -> Chart Library
 
 ### Android Jetpack Components:
 - [LiveData](https://developer.android.com/topic/libraries/architecture/livedata)

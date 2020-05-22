@@ -30,25 +30,4 @@ object DataConverter {
         return adapter.toJson(objects)
     }
 
-    @TypeConverter
-    @JvmStatic
-    fun weatherStringToList(data: String?): List<WeatherItem>? {
-        if (data == null) {
-            return emptyList()
-        }
-
-        val moshi = Moshi.Builder().build()
-        val type = Types.newParameterizedType(List::class.java, WeatherItem::class.java)
-        val adapter = moshi.adapter<List<WeatherItem>>(type)
-        return adapter.fromJson(data)
-    }
-
-    @TypeConverter
-    @JvmStatic
-    fun weatherListToString(objects: List<WeatherItem>): String {
-        val moshi = Moshi.Builder().build()
-        val type = Types.newParameterizedType(List::class.java, WeatherItem::class.java)
-        val adapter = moshi.adapter<List<WeatherItem>>(type)
-        return adapter.toJson(objects)
-    }
 }
