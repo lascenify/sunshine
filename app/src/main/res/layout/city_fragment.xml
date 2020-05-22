@@ -85,8 +85,7 @@
                 android:id="@+id/lineChart"
                 android:layout_height="300dp"
                 android:layout_width="match_parent"
-                android:padding="10dp"
-                android:layout_marginBottom="20dp">
+                android:layout_margin="15dp">
             </com.github.mikephil.charting.charts.LineChart>
 
             <include

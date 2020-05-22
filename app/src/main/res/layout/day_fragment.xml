@@ -10,76 +10,73 @@
 
     </data>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.google.android.material.card.MaterialCardView
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryDark">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorPrimaryDark"
-            android:fitsSystemWindows="true"
-            app:cardCornerRadius="24dp"
-            app:cardElevation="8dp"
-            app:cardUseCompatPadding="true">
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_day_day_of_week"
+                style="@style/TextAppearance.MaterialComponents.Headline4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@{day.dayOfWeek}"
+                android:textColor="#FFFFFF"
+                tools:text="Jueves" />
 
             <LinearLayout
+                android:id="@+id/linear_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:gravity="center">
 
                 <TextView
-                    android:id="@+id/tv_day_day_of_week"
-                    style="@style/TextAppearance.MaterialComponents.Headline4"
-                    android:layout_width="match_parent"
+                    android:id="@+id/tv_day_min_tmp"
+                    style="@style/TextAppearance.MaterialComponents.Headline5"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@{day.dayOfWeek}"
+                    android:paddingRight="5dp"
+                    android:text="@{day.minTemperature}"
                     android:textColor="#FFFFFF"
-                    tools:text="Jueves" />
+                    tools:text="14º" />
 
-                 <LinearLayout
-                    android:id="@+id/linear_layout"
-                    android:layout_width="match_parent"
+                <TextView
+
+                    android:id="@+id/tv_day_max_tmp"
+                    style="@style/TextAppearance.MaterialComponents.Headline5"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center">
-
-                    <TextView
-                        android:id="@+id/tv_day_min_tmp"
-                        style="@style/TextAppearance.MaterialComponents.Headline5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingRight="5dp"
-                        android:text="@{day.minTemperature}"
-                        android:textColor="#FFFFFF"
-                        tools:text="14º" />
-
-                    <TextView
-
-                        android:id="@+id/tv_day_max_tmp"
-                        style="@style/TextAppearance.MaterialComponents.Headline5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="5dp"
-                        android:text="@{day.maxTemperature}"
-                        android:textColor="#FFFFFF"
-                        tools:text="| 16º" />
-                </LinearLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_view_day_forecast_hours"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="10dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_hour_forecast" />
+                    android:paddingLeft="5dp"
+                    android:text="@{day.maxTemperature}"
+                    android:textColor="#FFFFFF"
+                    tools:text="| 16º" />
             </LinearLayout>
 
-        </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+        <include
+            android:id="@+id/hours_forecast_layout"
+            layout="@layout/layout_recycler_hours"/>
+
 
         <include android:id="@+id/layout_day_conditions"
             layout="@layout/layout_city_conditions"/>
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/lineChart"
+            android:layout_height="300dp"
+            android:layout_width="match_parent"
+            android:layout_margin="15dp">
+        </com.github.mikephil.charting.charts.LineChart>
+
     </LinearLayout>
+    </ScrollView>
 </layout>

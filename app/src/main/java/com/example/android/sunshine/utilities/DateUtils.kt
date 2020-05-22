@@ -20,14 +20,14 @@ fun getDayOfWeekFromText(dayTxt: String): String{
 
 private fun getDayOfWeekFromNumber(dayOfWeek: Int) =
     when(dayOfWeek){
-        2 -> "Lunes"
-        3 -> "Martes"
-        4 -> "Miércoles"
-        5 -> "Jueves"
-        6 -> "Viernes"
-        7 -> "Sábado"
-        1 -> "Domingo"
-        else -> "Lunes"
+        2 -> "Monday"
+        3 -> "Tuesday"
+        4 -> "Wednesday"
+        5 -> "Thursday"
+        6 -> "Friday"
+        7 -> "Saturday"
+        1 -> "Sunday"
+        else -> "Monday"
     }
 
 
