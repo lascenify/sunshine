@@ -77,6 +77,13 @@
                 android:id="@+id/hours_forecast_layout"
                 layout="@layout/layout_recycler_hours"/>
 
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/lineChart"
+                android:layout_height="300dp"
+                android:layout_width="match_parent">
+            </com.github.mikephil.charting.charts.LineChart>
+
             <include
                 android:id="@+id/city_conditions_layout"
                 layout="@layout/layout_city_conditions"/>
