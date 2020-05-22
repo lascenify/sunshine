@@ -13,6 +13,7 @@ import com.example.android.sunshine.core.domain.OneDayForecast
 import com.example.android.sunshine.databinding.DayFragmentBinding
 import com.example.android.sunshine.presentation.ForecastComponentProvider
 import com.example.android.sunshine.presentation.common.HourForecastAdapter
+import com.example.android.sunshine.utilities.ChartUtilities
 import javax.inject.Inject
 
 class DayFragment :Fragment(){
@@ -68,7 +69,8 @@ class DayFragment :Fragment(){
         viewModel.forecast.observe(viewLifecycleOwner, Observer {forecast ->
             if (forecast != null) {
                 adapter.update(forecast.forecastList)
-                binding.recyclerViewDayForecastHours.adapter = adapter
+                binding.hoursForecastLayout.recyclerviewForecastHours.adapter = adapter
+                ChartUtilities.setUpChart(forecast.forecastList, binding.lineChart, "Temperature")
             }
         })
     }

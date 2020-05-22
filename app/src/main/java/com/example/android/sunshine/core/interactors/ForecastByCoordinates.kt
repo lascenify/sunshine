@@ -17,7 +17,6 @@ class ForecastByCoordinates @Inject internal constructor(private val forecastRep
     class Params(
         val lat: Double,
         val lon: Double,
-        val fetchRequired: Boolean,
         val units: String
     )
 
