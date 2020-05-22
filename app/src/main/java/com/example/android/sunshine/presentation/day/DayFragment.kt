@@ -25,8 +25,6 @@ class DayFragment :Fragment(){
 
     private lateinit var binding: DayFragmentBinding
 
-
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         (context as ForecastComponentProvider).get().inject(this)
@@ -65,8 +63,8 @@ class DayFragment :Fragment(){
                 R.layout.item_hour_forecast
             ) { forecastListItem ->
                 updateUI(forecastListItem)
-
             }
+
         viewModel.forecast.observe(viewLifecycleOwner, Observer {forecast ->
             if (forecast != null) {
                 adapter.update(forecast.forecastList)
@@ -76,7 +74,7 @@ class DayFragment :Fragment(){
     }
 
     private fun updateUI(forecastListItem: ForecastListItem){
-        binding.listItem = forecastListItem
+        binding.layoutDayConditions.listItem = forecastListItem
 
     }
 /*

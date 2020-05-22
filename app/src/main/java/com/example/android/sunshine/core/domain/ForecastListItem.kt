@@ -41,7 +41,7 @@ data class ForecastListItem(
     @Json(name = "dt_txt")
     //Time in which the forecast is done, in txt
     val dt_txt:String?
-):Parcelable{
+):Parcelable {
 
     fun getHourOfDay() = dt_txt?.substringAfter(" ")?.substringBeforeLast(":") ?: "00:00"
 
@@ -55,7 +55,7 @@ data class ForecastListItem(
 
     fun getFeelsLike() = mainInfo?.feelsLike?.toInt().toString() + "º"
 
-    fun getRain() = if (rain != null) rain.jsonMember3h.toString() + " mm" else "0 mm"
+    fun getRain() = if (rain != null) rain.jsonMember3h.toString () + " mm" else "0.0 mm"
 
     fun getHumidity() = mainInfo?.humidity?.toInt().toString() + "%"
 

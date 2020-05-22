@@ -188,7 +188,7 @@ dependencies {
     annotationProcessor "javax.xml.bind:jaxb-api:2.4.0-b180830.0359"
 
     // Charts
-    implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
 }
 
