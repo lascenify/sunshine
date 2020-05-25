@@ -30,7 +30,7 @@ class ChartUtilitiesTest{
 
     @Test
     fun testConfigureDataSet(){
-        ChartUtilities.setUpChart(dataList, chart, "title")
+        ChartUtilities.setUpChart(dataList, chart, "title", true)
         val entryCount = chart.data.entryCount
         
         assert(chart.data.entryCount == 2)
