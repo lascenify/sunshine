@@ -16,7 +16,6 @@
 package com.example.android.sunshine.utilities
 
 import android.content.Context
-import android.util.Log
 import com.example.android.sunshine.R
 import com.example.android.sunshine.framework.SunshinePreferences
 import javax.inject.Inject
@@ -35,9 +34,6 @@ object WeatherUtils {
      * @return Temperature in degrees Fahrenheit (°F)
      */
     fun celsiusToFahrenheit(temperatureInCelsius: Double): Double = temperatureInCelsius * 1.8 + 32
-
-
-    fun fahrenheitToCelsius(temperatureInFahrenheit: Double): Double = (temperatureInFahrenheit - 32)/1.8
 
     /**
      * Temperature data is stored in Celsius by our app. Depending on the user's preference,
@@ -101,12 +97,8 @@ object WeatherUtils {
         var windFormat: Int = R.string.format_wind_kmh
         if (!SunshinePreferences.isMetric(context)) {
             windFormat = R.string.format_wind_mph
-            windSpeed = .621371192237334f * windSpeed
+            windSpeed *= .621371192237334f
         }
-        /*
-         * You know what's fun, writing really long if/else statements with tons of possible
-         * conditions. Seriously, try it!
-         */
         var direction = "Unknown"
         if (degrees >= 337.5 || degrees < 22.5) {
             direction = "N"
@@ -128,82 +120,6 @@ object WeatherUtils {
         return String.format(context.getString(windFormat), windSpeed, direction)
     }
 
-    /**
-     * Helper method to provide the string according to the weather
-     * condition id returned by the OpenWeatherMap call.
-     *
-     * @param context   Android context
-     * @param weatherId from OpenWeatherMap API response
-     * http://bugs.openweathermap.org/projects/api/wiki/Weather_Condition_Codes
-     *
-     * @return String for the weather condition, null if no relation is found.
-     */
-    fun getStringForWeatherCondition(
-        context: Context,
-        weatherId: Int
-    ): String {
-        val stringId: Int
-        if (weatherId >= 200 && weatherId <= 232) {
-            stringId = R.string.condition_2xx
-        } else if (weatherId >= 300 && weatherId <= 321) {
-            stringId = R.string.condition_3xx
-        } else when (weatherId) {
-            500 -> stringId = R.string.condition_500
-            501 -> stringId = R.string.condition_501
-            502 -> stringId = R.string.condition_502
-            503 -> stringId = R.string.condition_503
-            504 -> stringId = R.string.condition_504
-            511 -> stringId = R.string.condition_511
-            520 -> stringId = R.string.condition_520
-            531 -> stringId = R.string.condition_531
-            600 -> stringId = R.string.condition_600
-            601 -> stringId = R.string.condition_601
-            602 -> stringId = R.string.condition_602
-            611 -> stringId = R.string.condition_611
-            612 -> stringId = R.string.condition_612
-            615 -> stringId = R.string.condition_615
-            616 -> stringId = R.string.condition_616
-            620 -> stringId = R.string.condition_620
-            621 -> stringId = R.string.condition_621
-            622 -> stringId = R.string.condition_622
-            701 -> stringId = R.string.condition_701
-            711 -> stringId = R.string.condition_711
-            721 -> stringId = R.string.condition_721
-            731 -> stringId = R.string.condition_731
-            741 -> stringId = R.string.condition_741
-            751 -> stringId = R.string.condition_751
-            761 -> stringId = R.string.condition_761
-            762 -> stringId = R.string.condition_762
-            771 -> stringId = R.string.condition_771
-            781 -> stringId = R.string.condition_781
-            800 -> stringId = R.string.condition_800
-            801 -> stringId = R.string.condition_801
-            802 -> stringId = R.string.condition_802
-            803 -> stringId = R.string.condition_803
-            804 -> stringId = R.string.condition_804
-            900 -> stringId = R.string.condition_900
-            901 -> stringId = R.string.condition_901
-            902 -> stringId = R.string.condition_902
-            903 -> stringId = R.string.condition_903
-            904 -> stringId = R.string.condition_904
-            905 -> stringId = R.string.condition_905
-            906 -> stringId = R.string.condition_906
-            951 -> stringId = R.string.condition_951
-            952 -> stringId = R.string.condition_952
-            953 -> stringId = R.string.condition_953
-            954 -> stringId = R.string.condition_954
-            955 -> stringId = R.string.condition_955
-            956 -> stringId = R.string.condition_956
-            957 -> stringId = R.string.condition_957
-            958 -> stringId = R.string.condition_958
-            959 -> stringId = R.string.condition_959
-            960 -> stringId = R.string.condition_960
-            961 -> stringId = R.string.condition_961
-            962 -> stringId = R.string.condition_962
-            else -> return context.getString(R.string.condition_unknown, weatherId)
-        }
-        return context.getString(stringId)
-    }
 
     /**
      * The API returns an icon path associated to each forecast item. This path

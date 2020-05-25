@@ -9,13 +9,13 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.hamcrest.MatcherAssert.assertThat
+
+import org.hamcrest.Matchers.`is`
 
 
-@RunWith(AndroidJUnit4::class)
 class ChartUtilitiesTest{
 
-    @get:Rule
-    val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     private val dataList = mutableListOf<ForecastListItem>()
 
@@ -23,7 +23,7 @@ class ChartUtilitiesTest{
 
     @Before
     fun setup(){
-        for (i in 0.. 40)
+        for (i in 0 until 40)
             dataList.add(TestUtil.createFakeForecastListItem())
         chart = LineChart(ApplicationProvider.getApplicationContext())
     }
@@ -31,10 +31,8 @@ class ChartUtilitiesTest{
     @Test
     fun testConfigureDataSet(){
         ChartUtilities.setUpChart(dataList, chart, "title", true)
-        val entryCount = chart.data.entryCount
-        
-        assert(chart.data.entryCount == 2)
-        assert(chart.data.dataSetLabels.contains("title"))
-        assert(chart.data.dataSetCount == 2)
+        assertThat(chart.data.entryCount, `is`(40))
+        assertThat(chart.data.dataSetLabels.contains("title"), `is`(true))
+        assertThat(chart.data.dataSetCount, `is`(1))
     }
 }
