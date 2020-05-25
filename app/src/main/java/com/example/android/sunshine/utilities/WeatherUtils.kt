@@ -19,24 +19,25 @@ import android.content.Context
 import android.util.Log
 import com.example.android.sunshine.R
 import com.example.android.sunshine.framework.SunshinePreferences
+import javax.inject.Inject
 
 /**
  * Contains useful utilities for a weather app, such as conversion between Celsius and Fahrenheit,
  * from kph to mph, and from degrees to NSEW.  It also contains the mapping of weather condition
  * codes in OpenWeatherMap to strings.  These strings are contained
  */
-object SunshineWeatherUtils {
-    private val LOG_TAG = SunshineWeatherUtils::class.java.simpleName
+object WeatherUtils {
+
     /**
      * This method will convert a temperature from Celsius to Fahrenheit.
-     *
      * @param temperatureInCelsius Temperature in degrees Celsius(°C)
      *
      * @return Temperature in degrees Fahrenheit (°F)
      */
-    private fun celsiusToFahrenheit(temperatureInCelsius: Double): Double {
-        return temperatureInCelsius * 1.8 + 32
-    }
+    fun celsiusToFahrenheit(temperatureInCelsius: Double): Double = temperatureInCelsius * 1.8 + 32
+
+
+    fun fahrenheitToCelsius(temperatureInFahrenheit: Double): Double = (temperatureInFahrenheit - 32)/1.8
 
     /**
      * Temperature data is stored in Celsius by our app. Depending on the user's preference,
@@ -60,35 +61,25 @@ object SunshineWeatherUtils {
             temperature = celsiusToFahrenheit(temperature)
             temperatureFormatResourceId = R.string.format_temperature_fahrenheit
         }
-        /* For presentation, assume the user doesn't care about tenths of a degree. */return String.format(
+        /* For presentation, assume the user doesn't care about tenths of a degree. */
+        return String.format(
             context.getString(temperatureFormatResourceId),
             temperature
         )
     }
 
     /**
-     * This method will format the temperatures to be displayed in the
-     * following form: "HIGH°C / LOW°C"
-     *
-     * @param context Android Context to access preferences and resources
-     * @param high    High temperature for a day in user's preferred units
-     * @param low     Low temperature for a day in user's preferred units
-     *
-     * @return String in the form: "HIGH°C / LOW°C"
+     * Performs the conversion Celsius - Kelvin if necessary, but returns a simpler string.
+     * Temperatures will be formated to the following form: "21º"
      */
-    fun formatHighLows(
+    fun formatSimpleTemperature(
         context: Context,
-        high: Double,
-        low: Double
+        temperature: Int
     ): String {
-        val roundedHigh = Math.round(high)
-        val roundedLow = Math.round(low)
-        val formattedHigh =
-            formatTemperature(context, roundedHigh.toDouble())
-        val formattedLow =
-            formatTemperature(context, roundedLow.toDouble())
-        return "$formattedHigh / $formattedLow"
+        val formattedTemp = formatTemperature(context, temperature.toDouble())
+        return formattedTemp.dropLast(1)
     }
+
 
     /**
      * This method uses the wind direction in degrees to determine compass direction as a
@@ -215,45 +206,12 @@ object SunshineWeatherUtils {
     }
 
     /**
-     * Helper method to provide the icon resource id according to the weather condition id returned
-     * by the OpenWeatherMap call.
-     *
-     * @param weatherId from OpenWeatherMap API response
-     *
-     * @return resource id for the corresponding icon. -1 if no relation is found.
+     * The API returns an icon path associated to each forecast item. This path
+     * needs to be converted into our app naming convention.
+     * @param iconPath returned from the API
+     * @return the new icon name associated with the resource. This will be used
+     * to get the icon of that forecast.
      */
-    /*
-    fun getIconResourceForWeatherCondition(weatherId: Int): Int { /*
-         * Based on weather code data found at:
-         * See http://bugs.openweathermap.org/projects/api/wiki/Weather_Condition_Codes
-         */
-        if (weatherId >= 200 && weatherId <= 232) {
-            return R.drawable.ic_storm
-        } else if (weatherId >= 300 && weatherId <= 321) {
-            return R.drawable.ic_light_rain
-        } else if (weatherId >= 500 && weatherId <= 504) {
-            return R.drawable.ic_rain
-        } else if (weatherId == 511) {
-            return R.drawable.ic_snow
-        } else if (weatherId >= 520 && weatherId <= 531) {
-            return R.drawable.ic_rain
-        } else if (weatherId >= 600 && weatherId <= 622) {
-            return R.drawable.ic_snow
-        } else if (weatherId >= 701 && weatherId <= 761) {
-            return R.drawable.ic_fog
-        } else if (weatherId == 761 || weatherId == 781) {
-            return R.drawable.ic_storm
-        } else if (weatherId == 800) {
-            return R.drawable.ic_clear
-        } else if (weatherId == 801) {
-            return R.drawable.ic_light_clouds
-        } else if (weatherId >= 802 && weatherId <= 804) {
-            return R.drawable.ic_cloudy
-        }
-        return -1
-    }*/
-
-
     fun getIconResourceFromIconPath(iconPath: String?) = when(iconPath){
         "01d" -> "ic_01d"
         "01n" -> "ic_01n"
@@ -270,49 +228,6 @@ object SunshineWeatherUtils {
         else -> "rainbow"
     }
 
-    /**
-     * Helper method to provide the art resource id according to the weather condition id returned
-     * by the OpenWeatherMap call.
-     *
-     * @param weatherId from OpenWeatherMap API response
-     *
-     * @return resource id for the corresponding icon. -1 if no relation is found.
-     */
-    /*
-    fun getArtResourceForWeatherCondition(weatherId: Int): Int { /*
-         * Based on weather code data found at:
-         * http://bugs.openweathermap.org/projects/api/wiki/Weather_Condition_Codes
-         */
-        if (weatherId >= 200 && weatherId <= 232) {
-            return R.drawable.art_storm
-        } else if (weatherId >= 300 && weatherId <= 321) {
-            return R.drawable.art_light_rain
-        } else if (weatherId >= 500 && weatherId <= 504) {
-            return R.drawable.art_rain
-        } else if (weatherId == 511) {
-            return R.drawable.art_snow
-        } else if (weatherId >= 520 && weatherId <= 531) {
-            return R.drawable.art_rain
-        } else if (weatherId >= 600 && weatherId <= 622) {
-            return R.drawable.art_snow
-        } else if (weatherId >= 701 && weatherId <= 761) {
-            return R.drawable.art_fog
-        } else if (weatherId == 761 || weatherId == 771 || weatherId == 781) {
-            return R.drawable.art_storm
-        } else if (weatherId == 800) {
-            return R.drawable.art_clear
-        } else if (weatherId == 801) {
-            return R.drawable.art_light_clouds
-        } else if (weatherId >= 802 && weatherId <= 804) {
-            return R.drawable.art_clouds
-        } else if (weatherId >= 900 && weatherId <= 906) {
-            return R.drawable.art_storm
-        } else if (weatherId >= 958 && weatherId <= 962) {
-            return R.drawable.art_storm
-        } else if (weatherId >= 951 && weatherId <= 957) {
-            return R.drawable.art_clear
-        }
-        Log.e(LOG_TAG, "Unknown Weather: $weatherId")
-        return R.drawable.art_storm
-    }*/
+
+
 }

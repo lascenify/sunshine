@@ -11,8 +11,7 @@ class ForecastByCoordinates @Inject internal constructor(private val forecastRep
 
     operator fun invoke (
         params: Params
-    )  = //forecastRepository.testingForecast(params.lat, params.lon, params.units)
-        forecastRepository.forecastByCoordinates(params.lat, params.lon, params.units)
+    )  = forecastRepository.forecastByCoordinates(params.lat, params.lon, params.units)
 
     class Params(
         val lat: Double,

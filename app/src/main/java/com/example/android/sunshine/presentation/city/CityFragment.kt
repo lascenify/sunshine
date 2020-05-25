@@ -38,11 +38,11 @@ import kotlin.collections.ArrayList
 
 class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListener{
 
+    private var FIRST_TIME = true
     private lateinit var binding : CityFragmentBinding
 
     @Inject
     lateinit var viewModel : ForecastViewModel
-
 
     private lateinit var hourForecastAdapter: HourForecastAdapter
     private lateinit var dayForecastAdapter: DayForecastAdapter
@@ -50,6 +50,9 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
     companion object {
         private var PREFERENCE_UPDATES_FLAG = false
     }
+
+
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -74,6 +77,7 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        FIRST_TIME = true
         setForecastParams()
 
         bindViews()
@@ -99,8 +103,9 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
     }
 
     private fun initForecastList() {
+        viewModel.forecast.removeObservers(viewLifecycleOwner)
         viewModel.forecast.observe(viewLifecycleOwner, Observer { resource ->
-            if (resource != null){
+            if (resource != null && resource.status.isSuccessful()){
                 dayForecastAdapter.apply {
                     resource.data?.list?.let{ update(viewModel.forecastOfNextDays()) }
                 }
@@ -108,9 +113,20 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
                     resource.data?.list?.let{ update(viewModel.forecastOfNextHours())}
                 }
                 resource.data?.list?.get(0)?.let { updateConditionsUI(it) }
-                if (resource.status.isSuccessful())
-                    ChartUtilities.setUpChart(viewModel.forecastOfNextHours().subList(0, 9), binding.lineChart, "Temperature of the next 24 hours")
+                if (FIRST_TIME) {
+                    FIRST_TIME = false
+                    val isMetric = SunshinePreferences.isMetric(requireContext())
+                    ChartUtilities.setUpChart(
+                        viewModel.forecastOfNextHours().subList(0, 9),
+                        binding.lineChart,
+                        "Temperature of the next 24 hours",
+                        isMetric
+                    )
+                    Log.d("chart", binding.lineChart.xAxis.labelCount.toString())
+                    Log.d("chart", binding.lineChart.axisLeft.labelCount.toString())
+                }
             }
+
         })
 
     }
@@ -155,7 +171,6 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
         super.onDestroy()
         PreferenceManager.getDefaultSharedPreferences(context).unregisterOnSharedPreferenceChangeListener(this)
     }
-
 
     /**
      * Inflates the menu

@@ -1,6 +1,7 @@
 package com.example.android.sunshine.presentation.day
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.*
 import android.widget.TextView
@@ -11,6 +12,7 @@ import com.example.android.sunshine.R
 import com.example.android.sunshine.core.domain.ForecastListItem
 import com.example.android.sunshine.core.domain.OneDayForecast
 import com.example.android.sunshine.databinding.DayFragmentBinding
+import com.example.android.sunshine.framework.SunshinePreferences
 import com.example.android.sunshine.presentation.ForecastComponentProvider
 import com.example.android.sunshine.presentation.common.HourForecastAdapter
 import com.example.android.sunshine.utilities.ChartUtilities
@@ -70,7 +72,8 @@ class DayFragment :Fragment(){
             if (forecast != null) {
                 adapter.update(forecast.forecastList)
                 binding.hoursForecastLayout.recyclerviewForecastHours.adapter = adapter
-                ChartUtilities.setUpChart(forecast.forecastList, binding.lineChart, "Temperature")
+                val isMetric = SunshinePreferences.isMetric(requireContext())
+                ChartUtilities.setUpChart(forecast.forecastList, binding.lineChart, "Temperature", isMetric)
             }
         })
     }
@@ -79,6 +82,7 @@ class DayFragment :Fragment(){
         binding.layoutDayConditions.listItem = forecastListItem
 
     }
+
 /*
     private fun createShareForecastIntent():Intent = ShareCompat.IntentBuilder.from(activity as Activity)
         .setType("text/plain")

@@ -41,7 +41,7 @@
             android:paddingRight="8dp"
             android:textSize="18sp"
             android:layout_toLeftOf="@id/tv_item_day_min_tmp"
-            android:text="@{day.maxTemperature}"
+            app:setSimpleTemperature="@{day.maxTemperature}"
             android:textColor="#FFFFFF"/>
 
         <TextView
@@ -51,7 +51,7 @@
             tools:text="5º"
             android:textSize="18sp"
             android:layout_alignParentRight="true"
-            android:text="@{day.minTemperature}"
+            app:setSimpleTemperature="@{day.minTemperature}"
             android:textColor="#FFFFFF"/>
 
         <View

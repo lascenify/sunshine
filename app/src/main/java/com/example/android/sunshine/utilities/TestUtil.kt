@@ -4,6 +4,9 @@ import com.example.android.sunshine.core.domain.*
 
 object TestUtil {
 
+    /**
+     * Creates a fake ForecastListItem
+     */
     fun createFakeForecastListItem()=
         ForecastListItem(
             1588766400,
@@ -17,6 +20,10 @@ object TestUtil {
             "2020-05-11 09:00:00"
         )
 
+    /**
+     * Creates a fake ForecastResponse of certain given coordinates
+     * @param coordinates: coordinates of the city from which we want to create a fake ForecastResponse
+     */
     fun createFakeForecastResponse(coordinates: Coordinates): ForecastResponse{
         val forecastListItems = mutableListOf<ForecastListItem>()
         forecastListItems.add(createFakeForecastListItem())

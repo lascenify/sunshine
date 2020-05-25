@@ -24,13 +24,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <provider
-            android:authorities="com.example.android.sunshine"
-            android:name=".framework.provider.WeatherProvider"
-            android:exported="false"/>
-
-        <service android:name="com.example.android.sunshine.framework.sync.SunshineSyncIntentService"
-            android:exported="false"/>
     </application>
 
 </manifest>
