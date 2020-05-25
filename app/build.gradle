@@ -173,7 +173,7 @@ dependencies {
     testImplementation 'androidx.test:core:1.2.0'
     // Optional -- Mockito framework
     testImplementation 'org.mockito:mockito-core:3.3.1'
-
+    testImplementation 'org.mockito:mockito-inline:2.13.0'
 
     // Debug Database Library
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'

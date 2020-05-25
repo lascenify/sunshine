@@ -3,7 +3,6 @@ package com.example.android.sunshine.presentation.city
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -23,18 +22,7 @@ import com.example.android.sunshine.presentation.ForecastComponentProvider
 import com.example.android.sunshine.presentation.MainActivity
 import com.example.android.sunshine.presentation.common.HourForecastAdapter
 import com.example.android.sunshine.utilities.ChartUtilities
-import com.github.mikephil.charting.charts.LineChart
-import com.github.mikephil.charting.components.Legend
-import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.components.YAxis
-import com.github.mikephil.charting.components.YAxis.AxisDependency
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
-import com.github.mikephil.charting.utils.ColorTemplate
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 
 class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListener{
 
@@ -185,7 +173,7 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_refresh -> {
-                forceRefreshData()
+                retry()
             }
             R.id.action_open_map -> {
                 openLocationInMap()
@@ -197,7 +185,7 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
         return true
     }
 
-    private fun forceRefreshData() = viewModel.forceRefresh()
+    private fun retry() = viewModel.retry()
 
     /**
      * Method used to open the location in map from the menu
