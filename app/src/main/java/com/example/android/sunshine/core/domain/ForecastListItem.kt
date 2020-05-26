@@ -53,7 +53,7 @@ data class ForecastListItem(
 
     fun getWindString() = wind?.speed.toString() + " m/s"
 
-    fun getFeelsLike() = mainInfo?.feelsLike?.toInt().toString() + "º"
+    fun getFeelsLike() = mainInfo?.feelsLike
 
     fun getRainString() = if (rain != null) rain.jsonMember3h.toString () + " mm" else "0.0 mm"
 

@@ -52,7 +52,7 @@ object SunshinePreferences {
      * @param context Context used to get the SharedPreferences
      */
     fun resetLocationCoordinates(context: Context) {
-        val sharedPreferences =PreferenceManager.getDefaultSharedPreferences(context)
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         val editor = sharedPreferences.edit()
 
         editor.remove(PREF_COORD_LAT)
@@ -80,11 +80,10 @@ object SunshinePreferences {
      */
     fun isMetric(context: Context): Boolean {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-
+        val metric = context.getString(R.string.pref_celsius_unit)
         val keyForUnits = context.getString(R.string.pref_units_key)
-        val defaultUnits = context.getString(R.string.pref_units_metric)
-        val preferredUnits = sharedPreferences.getString(keyForUnits, defaultUnits)
-        val metric = context.getString(R.string.pref_units_metric)
+        val preferredUnits = sharedPreferences.getString(keyForUnits, metric)
+
 
         return metric == preferredUnits
     }

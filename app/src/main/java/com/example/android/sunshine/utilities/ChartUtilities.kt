@@ -13,18 +13,24 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 
+/**
+ * Object to set up a chart given a list of items, a chart and a label
+ */
 object ChartUtilities {
-    fun setUpChart(list: List<ForecastListItem>, lineChart: LineChart, label: String){
-        val values = ArrayList<Entry>()
-        val yValues = ArrayList<Double>()
-        val xAxisValues = arrayListOf<String>()
-        list.forEachIndexed { index, forecastItem ->
-            xAxisValues.add(forecastItem.getHourOfDay())
-            val value = forecastItem.getTemperature()!!
-            yValues.add(value)
-            values.add(Entry(index.toFloat(), value.toFloat()))
-        }
 
+    fun setUpChart(list: List<ForecastListItem>, lineChart: LineChart, label: String, isMetric: Boolean){
+        //lineChart.clear()
+        val (values, yValues, xAxisValues) = fillData(list, isMetric)
+        val data = configureDataSet(values, label)
+        customSettings(lineChart, data, xAxisValues, yValues)
+        //lineChart.notifyDataSetChanged()
+    }
+
+
+    private fun configureDataSet(
+        values: ArrayList<Entry>,
+        label: String
+    ): LineData {
         val set1 = LineDataSet(values, label)
         set1.axisDependency = YAxis.AxisDependency.LEFT
         set1.color = ColorTemplate.getHoloBlue()
@@ -39,18 +45,38 @@ object ChartUtilities {
         set1.mode = LineDataSet.Mode.HORIZONTAL_BEZIER
 
         // create a data object with the data sets
-
-        // create a data object with the data sets
         val data = LineData(set1)
         data.setValueTextColor(Color.WHITE)
         data.setValueTextSize(9f)
+        return data
+    }
 
-        // add some transparency to the color with "& 0x90FFFFFF"
-        customSettings(lineChart, data, xAxisValues, yValues)
+    private fun fillData(list: List<ForecastListItem>, isMetric: Boolean): Triple<ArrayList<Entry>, ArrayList<Double>, ArrayList<String>> {
+        val values = ArrayList<Entry>()
+        val yValues = ArrayList<Double>()
+        val xAxisValues = arrayListOf<String>()
+        list.forEachIndexed { index, forecastItem ->
+            xAxisValues.add(forecastItem.getHourOfDay())
+            var temperature = forecastItem.getTemperature()!!
+            if (!isMetric)
+                temperature = WeatherUtils.celsiusToFahrenheit(temperature)
+            yValues.add(temperature)
+            values.add(Entry(index.toFloat(), temperature.toFloat()))
+        }
+        return Triple(values, yValues, xAxisValues)
     }
 
     private fun customSettings(chart: LineChart, data: LineData, xAxisValues: ArrayList<String>, yAxisValues: ArrayList<Double>){
         chart.data = data
+        customChart(chart)
+        customLegend(chart)
+        customXAxis(chart, xAxisValues)
+        customYAxis(chart, yAxisValues)
+        val rightAxis = chart.axisRight
+        rightAxis.isEnabled = false
+    }
+
+    private fun customChart(chart: LineChart) {
         chart.description.isEnabled = false
         chart.setTouchEnabled(false)
 
@@ -63,14 +89,19 @@ object ChartUtilities {
         // set an alternative background color
         chart.setBackgroundResource(R.color.colorPrimaryDark)
         chart.setViewPortOffsets(0f, 0f, 0f, 0f)
+    }
 
-
-        // get the legend (only possible after setting data)
+    private fun customLegend(chart: LineChart) {
         val l = chart.legend
         l.isEnabled = true
         l.verticalAlignment = Legend.LegendVerticalAlignment.TOP
         l.textColor = Color.WHITE
+    }
 
+    private fun customXAxis(
+        chart: LineChart,
+        xAxisValues: ArrayList<String>
+    ) {
         val xAxis = chart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         xAxis.textSize = 12f
@@ -83,8 +114,14 @@ object ChartUtilities {
         xAxis.axisMaximum = xAxisValues.size.toFloat()
         xAxis.labelCount = xAxisValues.size
         xAxis.valueFormatter = IndexAxisValueFormatter(xAxisValues)
+        xAxis.isEnabled = true
 
+    }
 
+    private fun customYAxis(
+        chart: LineChart,
+        yAxisValues: ArrayList<Double>
+    ) {
         val leftAxis = chart.axisLeft
         leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
         leftAxis.textColor = Color.WHITE
@@ -93,9 +130,8 @@ object ChartUtilities {
         leftAxis.axisMinimum = yAxisValues.min()?.minus(10)?.toFloat()!!
         leftAxis.axisMaximum = yAxisValues.max()?.plus(10)?.toFloat()!!
         leftAxis.yOffset = -9f
-
-
-        val rightAxis = chart.axisRight
-        rightAxis.isEnabled = false
+        leftAxis.isEnabled = true
     }
+
+
 }

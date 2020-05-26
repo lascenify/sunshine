@@ -9,7 +9,6 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.example.android.sunshine.R
 import com.example.android.sunshine.framework.SunshinePreferences
-import com.example.android.sunshine.framework.provider.WeatherContract
 
 class SettingsFragment :PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener{
 
@@ -68,7 +67,7 @@ class SettingsFragment :PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
         }
         // or we have changed the preferred units
         else if (key == getString(R.string.pref_units_key)){
-            activity?.contentResolver?.notifyChange(WeatherContract.WeatherEntry.CONTENT_URI, null)
+            //activity?.contentResolver?.notifyChange(WeatherContract.WeatherEntry.CONTENT_URI, null)
         }
         // Figure out which preference was changed
         val preference: Preference? = findPreference(key)

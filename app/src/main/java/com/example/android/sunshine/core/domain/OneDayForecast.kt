@@ -30,16 +30,16 @@ data class OneDayForecast(
      */
     fun getIcon() = forecastList[3].getIcon()
 
-    fun getMaxTemperature(): String {
+    fun getMaxTemperature(): Int {
         if (maxTemperature == null)
             calculateTemperatures()
-        return maxTemperature.toString() + "º"
+        return maxTemperature!!
     }
 
-    fun getMinTemperature(): String {
+    fun getMinTemperature(): Int {
         if (minTemperature == null)
             calculateTemperatures()
-        return minTemperature.toString() + "º"
+        return minTemperature!!
     }
 
 }

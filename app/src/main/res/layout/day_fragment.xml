@@ -45,7 +45,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingRight="5dp"
-                    android:text="@{day.minTemperature}"
+                    app:setTemperature="@{day.minTemperature}"
                     android:textColor="#FFFFFF"
                     tools:text="14º" />
 
@@ -56,7 +56,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="5dp"
-                    android:text="@{day.maxTemperature}"
+                    app:setTemperature="@{day.maxTemperature}"
                     android:textColor="#FFFFFF"
                     tools:text="| 16º" />
             </LinearLayout>

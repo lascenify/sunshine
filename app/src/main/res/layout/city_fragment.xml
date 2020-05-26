@@ -66,7 +66,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="@{forecast.data.actualTemperature}"
+                        app:setTemperature="@{forecast.data.actualTemperature}"
                         android:textColor="#FFFFFF"
                         tools:text="34º" />
 
@@ -86,6 +86,7 @@
                 android:layout_height="300dp"
                 android:layout_width="match_parent"
                 android:layout_margin="15dp">
+                <!--app:setChartData="@{forecast.data.list}">-->
             </com.github.mikephil.charting.charts.LineChart>
 
             <include

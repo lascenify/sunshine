@@ -3,7 +3,6 @@ package com.example.android.sunshine.presentation.city
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -22,27 +21,17 @@ import com.example.android.sunshine.framework.SunshinePreferences
 import com.example.android.sunshine.presentation.ForecastComponentProvider
 import com.example.android.sunshine.presentation.MainActivity
 import com.example.android.sunshine.presentation.common.HourForecastAdapter
+import com.example.android.sunshine.presentation.viewmodel.ForecastViewModel
 import com.example.android.sunshine.utilities.ChartUtilities
-import com.github.mikephil.charting.charts.LineChart
-import com.github.mikephil.charting.components.Legend
-import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.components.YAxis
-import com.github.mikephil.charting.components.YAxis.AxisDependency
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
-import com.github.mikephil.charting.utils.ColorTemplate
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 
 class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListener{
 
+    private var FIRST_TIME = true
     private lateinit var binding : CityFragmentBinding
 
     @Inject
     lateinit var viewModel : ForecastViewModel
-
 
     private lateinit var hourForecastAdapter: HourForecastAdapter
     private lateinit var dayForecastAdapter: DayForecastAdapter
@@ -50,6 +39,9 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
     companion object {
         private var PREFERENCE_UPDATES_FLAG = false
     }
+
+
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -74,6 +66,7 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        FIRST_TIME = true
         setForecastParams()
 
         bindViews()
@@ -85,7 +78,7 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
 
     private fun bindViews() {
         dayForecastAdapter = DayForecastAdapter(R.layout.item_day_forecast) { oneDayForecast ->
-            openDetailFragment(oneDayForecast)
+            openDayFragment(oneDayForecast)
         }
 
         hourForecastAdapter = HourForecastAdapter(R.layout.item_hour_forecast) { forecastListItem ->
@@ -93,14 +86,15 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
             }
 
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.forecast = viewModel.forecast
         binding.hoursForecastLayout.recyclerviewForecastHours.adapter = hourForecastAdapter
         binding.daysForecastLayout.recyclerviewForecastDays.adapter = dayForecastAdapter
     }
 
     private fun initForecastList() {
+        viewModel.forecast.removeObservers(viewLifecycleOwner)
         viewModel.forecast.observe(viewLifecycleOwner, Observer { resource ->
-            if (resource != null){
+            if (resource != null && resource.status.isSuccessful()){
+                binding.forecast = viewModel.forecast
                 dayForecastAdapter.apply {
                     resource.data?.list?.let{ update(viewModel.forecastOfNextDays()) }
                 }
@@ -108,9 +102,20 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
                     resource.data?.list?.let{ update(viewModel.forecastOfNextHours())}
                 }
                 resource.data?.list?.get(0)?.let { updateConditionsUI(it) }
-                if (resource.status.isSuccessful())
-                    ChartUtilities.setUpChart(viewModel.forecastOfNextHours().subList(0, 9), binding.lineChart, "Temperature of the next 24 hours")
+                if (FIRST_TIME) {
+                    FIRST_TIME = false
+                    val isMetric = SunshinePreferences.isMetric(requireContext())
+                    ChartUtilities.setUpChart(
+                        viewModel.forecastOfNextHours().subList(0, 9),
+                        binding.lineChart,
+                        "Temperature of the next 24 hours",
+                        isMetric
+                    )
+                    Log.d("chart", binding.lineChart.xAxis.labelCount.toString())
+                    Log.d("chart", binding.lineChart.axisLeft.labelCount.toString())
+                }
             }
+
         })
 
     }
@@ -138,13 +143,10 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
     /**
      * Method to navigate to DetailFragment
      */
-    private fun openDetailFragment(oneDayForecast: OneDayForecast){
-        val args = Bundle()
-        args.putParcelable(getString(R.string.dayForecasted_bundle), oneDayForecast)
-        findNavController().navigate(
-            R.id.nav_dayFragment,
-            args
-        )
+    private fun openDayFragment(oneDayForecast: OneDayForecast){
+        viewModel.setSelectedDay(oneDayForecast)
+        val action = CityFragmentDirections.actionCityFragmentToDayFragment()
+        findNavController().navigate(action)
     }
 
 
@@ -155,7 +157,6 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
         super.onDestroy()
         PreferenceManager.getDefaultSharedPreferences(context).unregisterOnSharedPreferenceChangeListener(this)
     }
-
 
     /**
      * Inflates the menu
@@ -170,7 +171,7 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_refresh -> {
-                forceRefreshData()
+                retry()
             }
             R.id.action_open_map -> {
                 openLocationInMap()
@@ -182,7 +183,7 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
         return true
     }
 
-    private fun forceRefreshData() = viewModel.forceRefresh()
+    private fun retry() = viewModel.retry()
 
     /**
      * Method used to open the location in map from the menu

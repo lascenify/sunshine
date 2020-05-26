@@ -9,6 +9,12 @@ import com.squareup.moshi.Types
 
 object DataConverter {
 
+    /**
+     * Method to convert a json string to a List<ForecastListItem>.
+     * The data passed as a parameter should be equal to the list json object of the response.
+     * @param data: json string containing the list of forecasts.
+     * @return the list of ForecastListItem casted
+     */
     @TypeConverter
     @JvmStatic
     fun stringToList(data: String?): List<ForecastListItem>? {
@@ -21,6 +27,11 @@ object DataConverter {
         return adapter.fromJson(data)
     }
 
+    /**
+     * Method to convert a list of ForecastListItem into a string with json format.
+     * @param objects: list of ForecastListItem
+     * @return string with json format containing all the items from the list.
+     */
     @TypeConverter
     @JvmStatic
     fun listToString(objects: List<ForecastListItem>): String {

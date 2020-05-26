@@ -5,7 +5,14 @@ import androidx.collection.ArrayMap
 import androidx.collection.arrayMapOf
 import java.util.concurrent.TimeUnit
 
-
+/**
+ * This class is used within the repository, in order to check whether the data should be extracted
+ * from the API or not.
+ * @param timeOut: if the time elapsed since last fetched is greather than this timeOut,
+ * shouldFetch will return true
+ * @param timeUnit: time unit in which the timeOut is given
+ * @param KEY is the key that will be checked to retrieve the timestamps
+ */
 class RateLimiter <in KEY> (timeOut: Int, timeUnit: TimeUnit){
     private val timestamps = ArrayMap<KEY, Long>()
     private val timeout = timeUnit.toMillis(timeOut.toLong())

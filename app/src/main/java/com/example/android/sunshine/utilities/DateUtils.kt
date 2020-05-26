@@ -4,12 +4,11 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.time.milliseconds
 
-fun getDayOfWeekFromDt(dt: Long?): String{
-    val calendar: Calendar = Calendar.getInstance()
-    calendar.timeInMillis = dt!!
-    return getDayOfWeekFromNumber(calendar.get(Calendar.DAY_OF_WEEK))
-}
-
+/**
+ * Given a date in format txt, returns the day of the week.
+ * @param dayTxt: complete date in txt. For example: 2020-05-22
+ * @return string with the day of the week. For example, Friday
+ */
 fun getDayOfWeekFromText(dayTxt: String): String{
     val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
     val date = simpleDateFormat.parse(dayTxt)
@@ -18,6 +17,11 @@ fun getDayOfWeekFromText(dayTxt: String): String{
     return getDayOfWeekFromNumber(calendar.get(Calendar.DAY_OF_WEEK))
 }
 
+/**
+ * Returns the day name of the week from a given number (1-7)
+ * @param dayOfWeek: day of week in number, starting in Sunday
+ * @return name of the day of the week
+ */
 private fun getDayOfWeekFromNumber(dayOfWeek: Int) =
     when(dayOfWeek){
         2 -> "Monday"
@@ -30,7 +34,11 @@ private fun getDayOfWeekFromNumber(dayOfWeek: Int) =
         else -> "Monday"
     }
 
-
+/**
+ * Returns the next day of the calendar from a date in txt.
+ * @param todayCompleteTxt: the date of the calendar from which we want to know the next day
+ * @return the next day of the calendar, in string format
+ */
 fun getNextDayOfYearFromTxt(todayCompleteTxt: String): String{
     val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
     val todayDate = simpleDateFormat.parse(todayCompleteTxt)

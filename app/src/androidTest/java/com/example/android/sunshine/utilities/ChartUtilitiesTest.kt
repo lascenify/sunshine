@@ -1,0 +1,38 @@
+package com.example.android.sunshine.utilities
+
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.test.core.app.ApplicationProvider
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.android.sunshine.core.domain.ForecastListItem
+import com.github.mikephil.charting.charts.LineChart
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.hamcrest.MatcherAssert.assertThat
+
+import org.hamcrest.Matchers.`is`
+
+
+class ChartUtilitiesTest{
+
+
+    private val dataList = mutableListOf<ForecastListItem>()
+
+    private lateinit var chart: LineChart
+
+    @Before
+    fun setup(){
+        for (i in 0 until 40)
+            dataList.add(TestUtil.createFakeForecastListItem())
+        chart = LineChart(ApplicationProvider.getApplicationContext())
+    }
+
+    @Test
+    fun testConfigureDataSet(){
+        ChartUtilities.setUpChart(dataList, chart, "title", true)
+        assertThat(chart.data.entryCount, `is`(40))
+        assertThat(chart.data.dataSetLabels.contains("title"), `is`(true))
+        assertThat(chart.data.dataSetCount, `is`(1))
+    }
+}

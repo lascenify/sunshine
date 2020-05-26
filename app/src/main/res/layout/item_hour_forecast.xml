@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:textColor="#FFFFFF"
-                android:text="@{forecastListItem.temperatureString}"
+                app:setTemperature="@{forecastListItem.temperature}"
                 tools:text="24ºC"
                 android:layout_centerHorizontal="true"
                 android:paddingBottom="5dp"/>
