@@ -21,6 +21,7 @@ import com.example.android.sunshine.framework.SunshinePreferences
 import com.example.android.sunshine.presentation.ForecastComponentProvider
 import com.example.android.sunshine.presentation.MainActivity
 import com.example.android.sunshine.presentation.common.HourForecastAdapter
+import com.example.android.sunshine.presentation.viewmodel.ForecastViewModel
 import com.example.android.sunshine.utilities.ChartUtilities
 import javax.inject.Inject
 

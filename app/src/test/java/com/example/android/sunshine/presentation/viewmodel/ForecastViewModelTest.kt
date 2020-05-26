@@ -1,4 +1,4 @@
-package com.example.android.sunshine.presentation.city
+package com.example.android.sunshine.presentation.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
@@ -6,9 +6,11 @@ import androidx.lifecycle.Observer
 import com.example.android.sunshine.core.data.Resource
 import com.example.android.sunshine.core.domain.Coordinates
 import com.example.android.sunshine.core.domain.ForecastListItem
+import com.example.android.sunshine.core.domain.OneDayForecast
 import com.example.android.sunshine.core.interactors.ForecastByCoordinates
 import com.example.android.sunshine.framework.Interactors
 import com.example.android.sunshine.framework.db.entities.ForecastEntity
+import com.example.android.sunshine.presentation.viewmodel.ForecastViewModel
 import com.example.android.sunshine.util.mock
 import com.example.android.sunshine.utilities.TestUtil
 import org.hamcrest.CoreMatchers.`is`
@@ -44,7 +46,10 @@ class ForecastViewModelTest{
     fun setup(){
         MockitoAnnotations.initMocks(this)
         interactors = Interactors(forecastByCoordinates)
-        forecastViewModel = ForecastViewModel(interactors)
+        forecastViewModel =
+            ForecastViewModel(
+                interactors
+            )
         params = ForecastByCoordinates.Params(0.0, 0.0, "metric")
     }
 
@@ -237,5 +242,15 @@ class ForecastViewModelTest{
         listOfForecastItems.addAll(forecastViewModel.forecastOfNextHours())
         assertThat(listOfForecastItems.first().dt_txt, `is`("2020-05-11 15:00:00"))
         assertThat(listOfForecastItems.last().dt_txt, `is`("2020-05-12 21:00:00"))
+    }
+
+    @Test
+    fun testSelectDay(){
+        val selectedDay = OneDayForecast("Thursday", listOf(), 20, 10)
+        forecastViewModel.setSelectedDay(selectedDay)
+        assertThat(forecastViewModel.selectedDay, notNullValue())
+        assertThat(forecastViewModel.selectedDay.value?.dayOfWeek, `is` ("Thursday"))
+        assertThat(forecastViewModel.selectedDay.value?.getMinTemperature(), `is` (10))
+        assertThat(forecastViewModel.selectedDay.value?.getMaxTemperature(), `is` (20))
     }
 }

@@ -1,4 +1,4 @@
-package com.example.android.sunshine.presentation.city
+package com.example.android.sunshine.presentation.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

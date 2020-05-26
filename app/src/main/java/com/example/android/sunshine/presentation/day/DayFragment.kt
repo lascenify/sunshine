@@ -1,7 +1,6 @@
 package com.example.android.sunshine.presentation.day
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.*
 import android.widget.TextView
@@ -10,11 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.example.android.sunshine.R
 import com.example.android.sunshine.core.domain.ForecastListItem
-import com.example.android.sunshine.core.domain.OneDayForecast
 import com.example.android.sunshine.databinding.DayFragmentBinding
 import com.example.android.sunshine.framework.SunshinePreferences
 import com.example.android.sunshine.presentation.ForecastComponentProvider
-import com.example.android.sunshine.presentation.city.ForecastViewModel
+import com.example.android.sunshine.presentation.viewmodel.ForecastViewModel
 import com.example.android.sunshine.presentation.common.HourForecastAdapter
 import com.example.android.sunshine.utilities.ChartUtilities
 import javax.inject.Inject
