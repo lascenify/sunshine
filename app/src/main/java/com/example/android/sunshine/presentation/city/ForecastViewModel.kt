@@ -22,12 +22,17 @@ class ForecastViewModel
 
     private var INVALID_HOURS_DATA = false
     private var INVALID_DAYS_DATA = false
+
     private val daysForecast: MutableList<OneDayForecast> = mutableListOf()
     private val hoursForecast: MutableList<ForecastListItem> = mutableListOf()
     private val _forecastParams: MutableLiveData<ForecastByCoordinates.Params> = MutableLiveData()
-
     val forecastParams: LiveData<ForecastByCoordinates.Params>
         get() = _forecastParams
+
+    private val _selectedDay = MutableLiveData<OneDayForecast>()
+
+    val selectedDay: LiveData<OneDayForecast>
+        get() = _selectedDay
 
     var forecast= _forecastParams.switchMap { params ->
         if (params == null){
@@ -37,6 +42,15 @@ class ForecastViewModel
             INVALID_DAYS_DATA = true
             interactors.forecastByCoordinates.invoke(params)
         }
+    }
+
+    fun setForecastParams(params: ForecastByCoordinates.Params?){
+        if (_forecastParams.value != params)
+            _forecastParams.value = params
+    }
+
+    fun setSelectedDay(oneDayForecast: OneDayForecast){
+        _selectedDay.value = oneDayForecast
     }
 
     fun forecastOfNextHours(): MutableList<ForecastListItem> {
@@ -51,10 +65,6 @@ class ForecastViewModel
         return daysForecast
     }
 
-    fun setForecastParams(params: ForecastByCoordinates.Params?){
-        if (_forecastParams.value != params)
-            _forecastParams.value = params
-    }
 
     /**
      * In the second RecyclerView, we will display the main info of the forecast for the next days

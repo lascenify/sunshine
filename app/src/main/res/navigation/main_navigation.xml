@@ -17,9 +17,9 @@
         android:name="com.example.android.sunshine.presentation.day.DayFragment"
         android:label="DetailFragment"
         tools:layout="@layout/day_fragment">
-        <argument
+        <!--argument
             android:name="oneDayForecast"
-            app:argType="com.example.android.sunshine.core.domain.OneDayForecast"/>
+            app:argType="com.example.android.sunshine.core.domain.OneDayForecast"/-->
     </fragment>
 
     <fragment

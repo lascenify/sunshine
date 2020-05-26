@@ -85,7 +85,6 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
             }
 
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.forecast = viewModel.forecast
         binding.hoursForecastLayout.recyclerviewForecastHours.adapter = hourForecastAdapter
         binding.daysForecastLayout.recyclerviewForecastDays.adapter = dayForecastAdapter
     }
@@ -94,6 +93,7 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
         viewModel.forecast.removeObservers(viewLifecycleOwner)
         viewModel.forecast.observe(viewLifecycleOwner, Observer { resource ->
             if (resource != null && resource.status.isSuccessful()){
+                binding.forecast = viewModel.forecast
                 dayForecastAdapter.apply {
                     resource.data?.list?.let{ update(viewModel.forecastOfNextDays()) }
                 }
@@ -143,7 +143,8 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
      * Method to navigate to DetailFragment
      */
     private fun openDayFragment(oneDayForecast: OneDayForecast){
-        val action = CityFragmentDirections.actionCityFragmentToDayFragment(oneDayForecast)
+        viewModel.setSelectedDay(oneDayForecast)
+        val action = CityFragmentDirections.actionCityFragmentToDayFragment()
         findNavController().navigate(action)
     }
 

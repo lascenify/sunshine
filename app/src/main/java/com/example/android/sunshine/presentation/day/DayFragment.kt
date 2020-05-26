@@ -14,6 +14,7 @@ import com.example.android.sunshine.core.domain.OneDayForecast
 import com.example.android.sunshine.databinding.DayFragmentBinding
 import com.example.android.sunshine.framework.SunshinePreferences
 import com.example.android.sunshine.presentation.ForecastComponentProvider
+import com.example.android.sunshine.presentation.city.ForecastViewModel
 import com.example.android.sunshine.presentation.common.HourForecastAdapter
 import com.example.android.sunshine.utilities.ChartUtilities
 import javax.inject.Inject
@@ -24,7 +25,7 @@ class DayFragment :Fragment(){
     private val FORECAST_SHARE_HASHTAG = " #SunshineApp"
 
     @Inject
-    lateinit var viewModel: DayViewModel
+    lateinit var viewModel: ForecastViewModel
 
     private lateinit var binding: DayFragmentBinding
 
@@ -44,12 +45,12 @@ class DayFragment :Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getForecastFromArguments()
+        //getForecastFromArguments()
         setHasOptionsMenu(true)
         setupRecyclerView()
     }
 
-    private fun getForecastFromArguments() {
+    /*private fun getForecastFromArguments() {
         val dayForecast: OneDayForecast
         val bundle = arguments
         if (bundle != null) {
@@ -58,7 +59,7 @@ class DayFragment :Fragment(){
             viewModel.setDayForecast(dayForecast)
             updateUI(dayForecast.forecastList[0])
         }
-    }
+    }*/
 
     private fun setupRecyclerView(){
         val adapter =
@@ -68,8 +69,10 @@ class DayFragment :Fragment(){
                 updateUI(forecastListItem)
             }
 
-        viewModel.forecast.observe(viewLifecycleOwner, Observer {forecast ->
+        viewModel.selectedDay.observe(viewLifecycleOwner, Observer {forecast ->
             if (forecast != null) {
+                updateUI(forecast.forecastList[0])
+                binding.day = forecast
                 adapter.update(forecast.forecastList)
                 binding.hoursForecastLayout.recyclerviewForecastHours.adapter = adapter
                 val isMetric = SunshinePreferences.isMetric(requireContext())
