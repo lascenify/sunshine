@@ -77,7 +77,7 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
 
     private fun bindViews() {
         dayForecastAdapter = DayForecastAdapter(R.layout.item_day_forecast) { oneDayForecast ->
-            openDetailFragment(oneDayForecast)
+            openDayFragment(oneDayForecast)
         }
 
         hourForecastAdapter = HourForecastAdapter(R.layout.item_hour_forecast) { forecastListItem ->
@@ -142,13 +142,9 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
     /**
      * Method to navigate to DetailFragment
      */
-    private fun openDetailFragment(oneDayForecast: OneDayForecast){
-        val args = Bundle()
-        args.putParcelable(getString(R.string.dayForecasted_bundle), oneDayForecast)
-        findNavController().navigate(
-            R.id.nav_dayFragment,
-            args
-        )
+    private fun openDayFragment(oneDayForecast: OneDayForecast){
+        val action = CityFragmentDirections.actionCityFragmentToDayFragment(oneDayForecast)
+        findNavController().navigate(action)
     }
 
 

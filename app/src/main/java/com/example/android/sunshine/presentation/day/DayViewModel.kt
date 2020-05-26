@@ -9,15 +9,15 @@ import javax.inject.Inject
 
 @ForecastScope
 class DayViewModel @Inject constructor(
-
 ): ViewModel(){
-    private var dayForecast: MutableLiveData<OneDayForecast>  = MutableLiveData()
+    private var _forecast: MutableLiveData<OneDayForecast>  = MutableLiveData()
 
-    val forecast: LiveData<OneDayForecast> = dayForecast
+    val forecast: LiveData<OneDayForecast>
+        get() = _forecast
 
     fun setDayForecast(day: OneDayForecast){
-        if (day != dayForecast.value)
-            dayForecast.postValue(day)
+        if (day != _forecast.value)
+            _forecast.postValue(day)
     }
 
 }
