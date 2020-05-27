@@ -18,6 +18,7 @@ import com.example.android.sunshine.core.domain.OneDayForecast
 import com.example.android.sunshine.core.interactors.ForecastByCoordinates
 import com.example.android.sunshine.databinding.CityFragmentBinding
 import com.example.android.sunshine.framework.SunshinePreferences
+import com.example.android.sunshine.framework.db.entities.toDomain
 import com.example.android.sunshine.presentation.ForecastComponentProvider
 import com.example.android.sunshine.presentation.MainActivity
 import com.example.android.sunshine.presentation.common.HourForecastAdapter
@@ -93,7 +94,9 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
     private fun initForecastList() {
         viewModel.forecast.removeObservers(viewLifecycleOwner)
         viewModel.forecast.observe(viewLifecycleOwner, Observer { resource ->
+            // CHANGE CONDITION TO SHOW PROGRESS BAR
             if (resource != null && resource.status.isSuccessful()){
+                viewModel.insertCity(resource.data?.city?.toDomain()!!) // remove later
                 binding.forecast = viewModel.forecast
                 dayForecastAdapter.apply {
                     resource.data?.list?.let{ update(viewModel.forecastOfNextDays()) }
@@ -178,6 +181,10 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
             }
             R.id.action_setings -> {
                 findNavController().navigate(R.id.nav_settingsFragment)
+            }
+
+            R.id.action_manage_cities -> {
+                findNavController().navigate(R.id.nav_citiesManagementFragment)
             }
         }
         return true

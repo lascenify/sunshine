@@ -4,10 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
+import com.example.android.sunshine.core.data.Resource
+import com.example.android.sunshine.core.domain.City
 import com.example.android.sunshine.core.domain.ForecastListItem
 import com.example.android.sunshine.core.domain.OneDayForecast
 import com.example.android.sunshine.core.interactors.ForecastByCoordinates
 import com.example.android.sunshine.framework.Interactors
+import com.example.android.sunshine.framework.db.entities.ForecastEntity
 import com.example.android.sunshine.framework.di.ForecastScope
 import com.example.android.sunshine.utilities.AbsentLiveData
 import com.example.android.sunshine.utilities.getDayOfWeekFromText
@@ -34,7 +37,7 @@ class ForecastViewModel
     val selectedDay: LiveData<OneDayForecast>
         get() = _selectedDay
 
-    var forecast= _forecastParams.switchMap { params ->
+    var forecast: LiveData<Resource<ForecastEntity>> = _forecastParams.switchMap { params ->
         if (params == null){
             AbsentLiveData.create()
         } else {
@@ -42,6 +45,11 @@ class ForecastViewModel
             INVALID_DAYS_DATA = true
             interactors.forecastByCoordinates.invoke(params)
         }
+    }
+
+    // ONLY FOR TESTING
+    fun insertCity(city: City){
+        interactors.insertCityToForecast.invoke(city)
     }
 
     fun setForecastParams(params: ForecastByCoordinates.Params?){

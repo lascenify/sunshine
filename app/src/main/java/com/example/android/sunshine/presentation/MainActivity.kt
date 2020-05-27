@@ -19,6 +19,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.android.sunshine.R
 import com.example.android.sunshine.framework.SunshineApplication
+import com.example.android.sunshine.framework.di.component.CitiesManagementComponent
 import com.example.android.sunshine.framework.di.component.CityForecastComponent
 import javax.inject.Provider
 
@@ -26,11 +27,14 @@ typealias ForecastComponentProvider = Provider<CityForecastComponent>
 class MainActivity : AppCompatActivity(), ForecastComponentProvider{
 
     lateinit var forecastComp: CityForecastComponent
+    lateinit var citiesManagementComponent: CitiesManagementComponent
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
 
         forecastComp = (applicationContext as SunshineApplication).appComponent.cityForecastComp().create()
+        citiesManagementComponent = (applicationContext as SunshineApplication).appComponent.citiesSettingsComp().create()
+
     }
 
     override fun get(): CityForecastComponent = forecastComp

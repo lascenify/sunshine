@@ -2,6 +2,7 @@ package com.example.android.sunshine.framework.db.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.example.android.sunshine.framework.db.entities.CityEntity
 import com.example.android.sunshine.framework.db.entities.ForecastEntity
 
 @Dao

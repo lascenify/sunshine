@@ -19,6 +19,8 @@ interface AppComponent {
 
     fun cityForecastComp(): CityForecastComponent.Factory
 
+    fun citiesSettingsComp(): CitiesManagementComponent.Factory
+
     /*fun inject(cityMainForecastFragment: CityMainForecastFragment)
 
     fun inject(temperatureChartFragment: TemperatureChartFragment)*/

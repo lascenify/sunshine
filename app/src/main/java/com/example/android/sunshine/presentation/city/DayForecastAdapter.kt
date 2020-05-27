@@ -38,7 +38,7 @@ class DayForecastAdapter(
         return ViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = if (dayList == null) 0 else dayList!!.size
+    override fun getItemCount(): Int = dayList?.size ?: 0
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(position)

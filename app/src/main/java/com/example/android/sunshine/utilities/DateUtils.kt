@@ -2,6 +2,7 @@ package com.example.android.sunshine.utilities
 
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.regex.Pattern
 import kotlin.time.milliseconds
 
 /**
@@ -46,4 +47,13 @@ fun getNextDayOfYearFromTxt(todayCompleteTxt: String): String{
     calendar.time = todayDate
     calendar.add(Calendar.DAY_OF_YEAR, 1)
     return simpleDateFormat.format(calendar.time);
+}
+
+fun getLocalTimeFromTimezone(timeZoneLong: Long): String{
+    val dateFormat = SimpleDateFormat("HH:mm")
+    val timeZone = TimeZone.getDefault()
+    timeZone.rawOffset = timeZoneLong.toInt()
+    val calendar = Calendar.getInstance()
+    calendar.timeZone = timeZone
+    return dateFormat.format(calendar.time)
 }

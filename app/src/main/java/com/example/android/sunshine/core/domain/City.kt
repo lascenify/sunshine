@@ -2,6 +2,7 @@
 package com.example.android.sunshine.core.domain
 
 import android.os.Parcelable
+import com.example.android.sunshine.framework.db.entities.CityEntity
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
