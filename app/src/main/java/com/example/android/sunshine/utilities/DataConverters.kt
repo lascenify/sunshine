@@ -1,9 +1,8 @@
 package com.example.android.sunshine.utilities
 
 import androidx.room.TypeConverter
-import com.example.android.sunshine.core.domain.City
-import com.example.android.sunshine.core.domain.ForecastListItem
-import com.example.android.sunshine.core.domain.WeatherItem
+import com.example.android.sunshine.core.domain.forecast.City
+import com.example.android.sunshine.core.domain.forecast.ForecastListItem
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 

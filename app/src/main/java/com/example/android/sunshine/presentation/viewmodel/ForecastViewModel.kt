@@ -5,9 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
 import com.example.android.sunshine.core.data.Resource
-import com.example.android.sunshine.core.domain.City
-import com.example.android.sunshine.core.domain.ForecastListItem
-import com.example.android.sunshine.core.domain.OneDayForecast
+import com.example.android.sunshine.core.domain.forecast.ForecastListItem
+import com.example.android.sunshine.core.domain.forecast.OneDayForecast
 import com.example.android.sunshine.core.interactors.ForecastByCoordinates
 import com.example.android.sunshine.framework.Interactors
 import com.example.android.sunshine.framework.db.entities.ForecastEntity
@@ -47,10 +46,6 @@ class ForecastViewModel
         }
     }
 
-    // ONLY FOR TESTING
-    fun insertCity(city: City){
-        interactors.insertCityToForecast.invoke(city)
-    }
 
     fun setForecastParams(params: ForecastByCoordinates.Params?){
         if (_forecastParams.value != params)
@@ -86,11 +81,13 @@ class ForecastViewModel
         for (x in 0 until 4){
             val nextDayTxt = getNextDayOfYearFromTxt(previousDayTxt)
             val forecastListFromDay = forecastList.filter { it.dt_txt?.contains(nextDayTxt) == true}
-            val oneDayForecast = OneDayForecast(
-                getDayOfWeekFromText(nextDayTxt),
-                forecastListFromDay,
-                null,
-                null)
+            val oneDayForecast =
+                OneDayForecast(
+                    getDayOfWeekFromText(nextDayTxt),
+                    forecastListFromDay,
+                    null,
+                    null
+                )
             oneDayForecast.calculateTemperatures()
             daysForecast.add(oneDayForecast)
             previousDayTxt = nextDayTxt

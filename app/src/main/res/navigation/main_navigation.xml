@@ -19,7 +19,7 @@
         tools:layout="@layout/day_fragment">
         <!--argument
             android:name="oneDayForecast"
-            app:argType="com.example.android.sunshine.core.domain.OneDayForecast"/-->
+            app:argType="com.example.android.sunshine.core.domain.forecast.OneDayForecast"/-->
     </fragment>
 
     <fragment
@@ -31,4 +31,9 @@
         android:id="@+id/nav_citiesManagementFragment"
         android:name="com.example.android.sunshine.presentation.settings.CitiesManagementFragment"
         android:label="CitiesManagementFragment" />
+
+    <fragment
+        android:id="@+id/nav_searchFragment"
+        android:name="com.example.android.sunshine.presentation.search.SearchFragment"
+        android:label="SearchFragment"/>
 </navigation>

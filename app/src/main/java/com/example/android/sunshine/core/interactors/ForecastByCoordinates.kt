@@ -1,12 +1,9 @@
 package com.example.android.sunshine.core.interactors
 
 import androidx.lifecycle.LiveData
-import com.example.android.sunshine.core.data.CityRepository
-import com.example.android.sunshine.core.data.ForecastRepository
+import com.example.android.sunshine.core.data.forecast.ForecastRepository
 import com.example.android.sunshine.core.data.Resource
-import com.example.android.sunshine.framework.db.entities.CityEntity
 import com.example.android.sunshine.framework.db.entities.ForecastEntity
-import com.example.android.sunshine.framework.db.entities.toDomain
 import javax.inject.Inject
 
 /**

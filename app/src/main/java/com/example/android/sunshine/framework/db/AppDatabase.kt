@@ -7,16 +7,14 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.android.sunshine.framework.Constants.Database.DATABASE_NAME
-import com.example.android.sunshine.framework.db.dao.CityDao
 import com.example.android.sunshine.framework.db.dao.ForecastDao
 import com.example.android.sunshine.framework.db.entities.*
 import com.example.android.sunshine.utilities.DataConverter
 
 
 @Database(entities = [
-    ForecastEntity::class,
-    CityEntity::class
-], version = 7, exportSchema = false)
+    ForecastEntity::class
+], version = 8, exportSchema = false)
 @TypeConverters(DataConverter::class)
 abstract class AppDatabase : RoomDatabase(){
     companion object{
@@ -41,5 +39,4 @@ abstract class AppDatabase : RoomDatabase(){
     }
 
     abstract fun weatherForecastDao(): ForecastDao
-    abstract fun cityDao(): CityDao
 }

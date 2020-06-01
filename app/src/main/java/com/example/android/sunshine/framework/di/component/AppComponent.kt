@@ -21,6 +21,8 @@ interface AppComponent {
 
     fun citiesSettingsComp(): CitiesManagementComponent.Factory
 
+    fun searchComp(): SearchComponent.Factory
+
     /*fun inject(cityMainForecastFragment: CityMainForecastFragment)
 
     fun inject(temperatureChartFragment: TemperatureChartFragment)*/

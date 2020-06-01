@@ -192,6 +192,9 @@ dependencies {
     // Charts
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
+    // API for places
+    implementation "com.algolia:algoliasearch-android:3.27.0"
+
 }
 
 allprojects {

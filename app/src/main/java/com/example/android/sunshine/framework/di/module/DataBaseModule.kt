@@ -29,7 +29,4 @@ class DataBaseModule () {
     @Provides
     fun provideForecastDao(db: AppDatabase) = db.weatherForecastDao()
 
-    @Singleton
-    @Provides
-    fun provideCityDao(db: AppDatabase) = db.cityDao()
 }

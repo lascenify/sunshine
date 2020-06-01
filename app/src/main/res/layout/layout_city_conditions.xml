@@ -6,7 +6,7 @@
     <data>
         <variable
             name="listItem"
-            type="com.example.android.sunshine.core.domain.ForecastListItem" />
+            type="com.example.android.sunshine.core.domain.forecast.ForecastListItem" />
     </data>
 
     <TableLayout

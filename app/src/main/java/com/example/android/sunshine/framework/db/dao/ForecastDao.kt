@@ -2,7 +2,6 @@ package com.example.android.sunshine.framework.db.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.android.sunshine.framework.db.entities.CityEntity
 import com.example.android.sunshine.framework.db.entities.ForecastEntity
 
 @Dao
@@ -12,8 +11,14 @@ interface ForecastDao {
     @Query("SELECT * FROM Forecast LIMIT 1")
     fun loadLastForecast(): LiveData<ForecastEntity?>
 
-    @Query ("SELECT * FROM Forecast ORDER BY abs(lat-:lat) AND abs(lon-:lon) LIMIT 1")
+    @Query ("SELECT * FROM Forecast WHERE lat =:lat AND lon =:lon LIMIT 1")
     fun loadForecastByCoordinates(lat:Double, lon:Double): LiveData<ForecastEntity?>
+
+    @Query("SELECT list, cityName, timezone FROM Forecast")
+    fun loadLastForecasts(): LiveData<List<ForecastEntity>?>
+
+    @Query("SELECT * FROM Forecast WHERE cityName =:name")
+    fun loadForecastByCityName(name: String): LiveData<ForecastEntity>
 
     @Query ("SELECT count(*) from Forecast")
     fun getCount():Int
@@ -21,6 +26,9 @@ interface ForecastDao {
     /** INSERT QUERIES **/
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertForecast(forecast: ForecastEntity)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAllForecasts(list: List<ForecastEntity>)
 
     @Transaction
     fun deleteAllAndInsert(forecast: ForecastEntity){

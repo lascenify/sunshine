@@ -9,14 +9,10 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.RecyclerView
+import androidx.navigation.fragment.findNavController
 import com.example.android.sunshine.R
-import com.example.android.sunshine.core.data.AppExecutors
 import com.example.android.sunshine.databinding.CitiesManagementFragmentBinding
 import com.example.android.sunshine.framework.SunshinePreferences
-import com.example.android.sunshine.framework.db.entities.CityEntity
-import com.example.android.sunshine.presentation.ForecastComponentProvider
 import com.example.android.sunshine.presentation.MainActivity
 import com.example.android.sunshine.presentation.viewmodel.CitiesViewModel
 import javax.inject.Inject
@@ -44,27 +40,29 @@ class CitiesManagementFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        SunshinePreferences.addCityToForecasts(requireContext(), "Cieza")
-        val cities = SunshinePreferences.getListOfCities(requireContext())
-        viewModel.setCitiesParams(cities)
         setUpRecyclerView()
+        binding.fabAddCity.setOnClickListener { openSearchBar() }
     }
 
     private fun setUpRecyclerView() {
-        val adapter = CityAdapter(R.layout.item_day_settings) { city ->
-            Log.d("city", city.toString())
-        }
+        val adapter = CityAdapter(R.layout.item_day_settings)
         binding.recyclerviewCities.adapter = adapter
-        viewModel.cities.observe(viewLifecycleOwner, Observer { listOfCities ->
-            if (listOfCities != null) {
-                //binding.forecast = viewModel.forecast
-                adapter.apply {
-                    update(listOfCities)
+
+        viewModel.forecasts.observe(viewLifecycleOwner, Observer { forecasts ->
+            if (forecasts != null){
+                if (forecasts.status.isSuccessful()){
+                    val listOfForecasts = forecasts.data!!
+                    adapter.apply {
+                        update(listOfForecasts)
+                    }
                 }
             }
         })
     }
 
+    private fun openSearchBar(){
+        findNavController().navigate(R.id.nav_searchFragment)
+    }
 
     /*override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

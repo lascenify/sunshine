@@ -1,6 +1,6 @@
 package com.example.android.sunshine.utilities
 
-import com.example.android.sunshine.core.domain.ForecastListItem
+import com.example.android.sunshine.core.domain.forecast.ForecastListItem
 import com.example.android.sunshine.utilities.TestUtil.createFakeForecastListItem
 import org.junit.Before
 import org.junit.Test

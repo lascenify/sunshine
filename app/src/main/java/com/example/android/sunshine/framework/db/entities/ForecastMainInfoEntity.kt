@@ -4,7 +4,7 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
-import com.example.android.sunshine.core.domain.ForecastMainInfo
+import com.example.android.sunshine.core.domain.forecast.ForecastMainInfo
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize

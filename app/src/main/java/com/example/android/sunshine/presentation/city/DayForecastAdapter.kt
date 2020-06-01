@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.android.sunshine.core.domain.OneDayForecast
+import com.example.android.sunshine.core.domain.forecast.OneDayForecast
 import com.example.android.sunshine.databinding.ItemDayForecastBinding
 
 

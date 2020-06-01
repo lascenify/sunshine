@@ -5,7 +5,7 @@
     <data>
         <variable
             name="forecastListItem"
-            type="com.example.android.sunshine.core.domain.ForecastListItem" />
+            type="com.example.android.sunshine.core.domain.forecast.ForecastListItem" />
         <variable
             name="isSelected"
             type="Boolean" />

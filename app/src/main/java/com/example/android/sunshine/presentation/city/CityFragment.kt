@@ -13,12 +13,11 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import com.example.android.sunshine.R
-import com.example.android.sunshine.core.domain.ForecastListItem
-import com.example.android.sunshine.core.domain.OneDayForecast
+import com.example.android.sunshine.core.domain.forecast.ForecastListItem
+import com.example.android.sunshine.core.domain.forecast.OneDayForecast
 import com.example.android.sunshine.core.interactors.ForecastByCoordinates
 import com.example.android.sunshine.databinding.CityFragmentBinding
 import com.example.android.sunshine.framework.SunshinePreferences
-import com.example.android.sunshine.framework.db.entities.toDomain
 import com.example.android.sunshine.presentation.ForecastComponentProvider
 import com.example.android.sunshine.presentation.MainActivity
 import com.example.android.sunshine.presentation.common.HourForecastAdapter
@@ -96,7 +95,7 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
         viewModel.forecast.observe(viewLifecycleOwner, Observer { resource ->
             // CHANGE CONDITION TO SHOW PROGRESS BAR
             if (resource != null && resource.status.isSuccessful()){
-                viewModel.insertCity(resource.data?.city?.toDomain()!!) // remove later
+                //viewModel.insertCity(resource.data?.city?.toDomain()!!) // remove later
                 binding.forecast = viewModel.forecast
                 dayForecastAdapter.apply {
                     resource.data?.list?.let{ update(viewModel.forecastOfNextDays()) }
@@ -131,7 +130,7 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
         val coordinates: DoubleArray = SunshinePreferences.getLocationCoordinates(requireContext())
         val units: String = context?.getString(R.string.pref_units_metric)!!
         val lat = 38.24
-        val lon = -1.42
+        val lon = -1.4199
         if (!coordinates.first().isNaN() && !coordinates.last().isNaN()) {
             viewModel.setForecastParams(
                 ForecastByCoordinates.Params(

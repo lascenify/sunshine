@@ -8,10 +8,8 @@ import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
 import androidx.databinding.BindingAdapter
 import com.example.android.sunshine.R
-import com.example.android.sunshine.core.data.Resource
-import com.example.android.sunshine.core.domain.ForecastListItem
+import com.example.android.sunshine.core.domain.forecast.ForecastListItem
 import com.example.android.sunshine.framework.SunshinePreferences
-import com.example.android.sunshine.framework.db.entities.ForecastEntity
 import com.example.android.sunshine.utilities.ChartUtilities
 import com.example.android.sunshine.utilities.WeatherUtils
 import com.github.mikephil.charting.charts.LineChart

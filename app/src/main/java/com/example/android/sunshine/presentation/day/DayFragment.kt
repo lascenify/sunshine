@@ -8,7 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.example.android.sunshine.R
-import com.example.android.sunshine.core.domain.ForecastListItem
+import com.example.android.sunshine.core.domain.forecast.ForecastListItem
 import com.example.android.sunshine.databinding.DayFragmentBinding
 import com.example.android.sunshine.framework.SunshinePreferences
 import com.example.android.sunshine.presentation.ForecastComponentProvider

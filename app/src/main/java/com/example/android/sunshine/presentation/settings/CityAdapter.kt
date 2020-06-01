@@ -6,24 +6,19 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.sunshine.databinding.ItemDaySettingsBinding
 import com.example.android.sunshine.framework.db.entities.CityEntity
+import com.example.android.sunshine.framework.db.entities.ForecastEntity
+import com.example.android.sunshine.utilities.WeatherUtils
 
 class CityAdapter(
-    private val layoutId: Int,
-    private val callback: ((CityEntity) -> Unit)?
+    private val layoutId: Int
 ) : RecyclerView.Adapter<CityAdapter.ViewHolder>() {
 
-    private var cityList: List<CityEntity>? = null
+    private var cityList: List<ForecastEntity>? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding: ItemDaySettingsBinding =
             DataBindingUtil.inflate(layoutInflater, viewType, parent, false)
-        binding.root.setOnClickListener {
-            binding.city.let {
-                callback?.invoke(it!!)
-            }
-
-        }
         return ViewHolder(binding)
     }
 
@@ -41,15 +36,17 @@ class CityAdapter(
     inner class ViewHolder(private val binding: ItemDaySettingsBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(position: Int) {
-            val city = cityList?.get(position)
+            val temperature = cityList?.get(position)?.getActualTemperature()!!
+            val city = cityList?.get(position)?.city
             binding.city = city
+            binding.temperature = WeatherUtils.formatSimpleTemperature(itemView.context, temperature.toInt())
             binding.executePendingBindings()
         }
     }
 
 
-    fun update(newCitiesList: List<CityEntity>) {
-        cityList = newCitiesList
+    fun update(newList: List<ForecastEntity>) {
+        cityList = newList
         notifyDataSetChanged()
     }
 }
