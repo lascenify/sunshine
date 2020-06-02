@@ -1,9 +1,11 @@
 package com.example.android.sunshine.utilities
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import java.text.SimpleDateFormat
+import java.time.*
+import java.time.format.DateTimeFormatter
 import java.util.*
-import java.util.regex.Pattern
-import kotlin.time.milliseconds
 
 /**
  * Given a date in format txt, returns the day of the week.
@@ -49,11 +51,37 @@ fun getNextDayOfYearFromTxt(todayCompleteTxt: String): String{
     return simpleDateFormat.format(calendar.time);
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 fun getLocalTimeFromTimezone(timeZoneLong: Long): String{
-    val dateFormat = SimpleDateFormat("HH:mm")
-    val timeZone = TimeZone.getDefault()
-    timeZone.rawOffset = timeZoneLong.toInt()
-    val calendar = Calendar.getInstance()
-    calendar.timeZone = timeZone
-    return dateFormat.format(calendar.time)
+    val localDate = LocalDateTime.now(ZoneId.of("UTC"))
+    val zoneOffset = ZoneOffset.ofTotalSeconds(timeZoneLong.toInt())
+    val dateAtOffset = localDate.atOffset(zoneOffset)
+    val result = formatDateAtOffset(dateAtOffset)
+    return result
 }
+
+@RequiresApi(Build.VERSION_CODES.O)
+fun formatDateAtOffset(date: OffsetDateTime): String{
+    val offset = date.offset
+    val hours = offset.toString().dropLast(3).drop(0).toLong()
+    val sign = offset.toString()[0]
+    var time :OffsetDateTime? = null
+    if (sign == '-'){
+        time = date.minusHours(hours)
+    } else if (sign == '+'){
+        time = date.plusHours(hours)
+    }
+    if (time != null) {
+        return time.format(DateTimeFormatter.ISO_LOCAL_TIME).dropLast(7)
+    }
+    else return ""
+}
+
+/**
+ * @param shift: Shift in seconds from UTC
+
+fun getTimeZoneFromShift(shift: Long): TimeZone{
+    when (shift){
+        7200 ->
+    }
+}*/
