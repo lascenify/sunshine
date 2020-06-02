@@ -1,6 +1,8 @@
 package com.example.android.sunshine.framework.db.entities
 
+import android.os.Build
 import android.os.Parcelable
+import androidx.annotation.RequiresApi
 import androidx.room.*
 import com.example.android.sunshine.core.domain.forecast.City
 import com.example.android.sunshine.utilities.getLocalTimeFromTimezone
@@ -35,6 +37,7 @@ data class CityEntity(
         sunsetTime = city.sunsetTime
     )
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun getLocalTime() = getLocalTimeFromTimezone(timezone!!)
 }
 

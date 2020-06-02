@@ -51,15 +51,23 @@ fun getNextDayOfYearFromTxt(todayCompleteTxt: String): String{
     return simpleDateFormat.format(calendar.time);
 }
 
+/**
+ * Returns the local time given a timeZone
+ * @param shiftFromUtcInSecs: shift in seconds from UTC
+ */
 @RequiresApi(Build.VERSION_CODES.O)
-fun getLocalTimeFromTimezone(timeZoneLong: Long): String{
+fun getLocalTimeFromTimezone(shiftFromUtcInSecs: Long): String{
     val localDate = LocalDateTime.now(ZoneId.of("UTC"))
-    val zoneOffset = ZoneOffset.ofTotalSeconds(timeZoneLong.toInt())
+    val zoneOffset = ZoneOffset.ofTotalSeconds(shiftFromUtcInSecs.toInt())
     val dateAtOffset = localDate.atOffset(zoneOffset)
-    val result = formatDateAtOffset(dateAtOffset)
-    return result
+    return formatDateAtOffset(dateAtOffset)
 }
 
+/**
+ * Given a date with offset, returns a string with the local time in format "HH:mm"
+ * For example, given OffsetDateTime with time 09:00+01:00, returns "10:00"
+ * @param date: date with offset
+ */
 @RequiresApi(Build.VERSION_CODES.O)
 fun formatDateAtOffset(date: OffsetDateTime): String{
     val offset = date.offset
@@ -72,16 +80,7 @@ fun formatDateAtOffset(date: OffsetDateTime): String{
         time = date.plusHours(hours)
     }
     if (time != null) {
-        return time.format(DateTimeFormatter.ISO_LOCAL_TIME).dropLast(7)
+        return time.format(DateTimeFormatter.ISO_LOCAL_TIME).substring(0, 5)
     }
     else return ""
 }
-
-/**
- * @param shift: Shift in seconds from UTC
-
-fun getTimeZoneFromShift(shift: Long): TimeZone{
-    when (shift){
-        7200 ->
-    }
-}*/

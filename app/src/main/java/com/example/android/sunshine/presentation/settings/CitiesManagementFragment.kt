@@ -10,7 +10,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.example.android.sunshine.R
+import com.example.android.sunshine.core.data.AppExecutors
 import com.example.android.sunshine.databinding.CitiesManagementFragmentBinding
 import com.example.android.sunshine.framework.SunshinePreferences
 import com.example.android.sunshine.presentation.MainActivity
@@ -24,6 +27,8 @@ class CitiesManagementFragment : Fragment(){
     @Inject
     lateinit var viewModel: CitiesViewModel
 
+    @Inject
+    lateinit var appExecutors: AppExecutors
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -41,13 +46,12 @@ class CitiesManagementFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpRecyclerView()
-        binding.fabAddCity.setOnClickListener { openSearchBar() }
+        setListeners()
     }
 
     private fun setUpRecyclerView() {
         val adapter = CityAdapter(R.layout.item_day_settings)
         binding.recyclerviewCities.adapter = adapter
-
         viewModel.forecasts.observe(viewLifecycleOwner, Observer { forecasts ->
             if (forecasts != null){
                 if (forecasts.status.isSuccessful()){
@@ -58,6 +62,20 @@ class CitiesManagementFragment : Fragment(){
                 }
             }
         })
+
+        ItemTouchHelper(object :
+            ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean = false
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val city = adapter.cityList!![viewHolder.adapterPosition]
+                viewModel.removeCity(city)
+            }
+        }).attachToRecyclerView(binding.recyclerviewCities)
+
+    }
+
+    private fun setListeners(){
+        binding.fabAddCity.setOnClickListener { openSearchBar() }
     }
 
     private fun openSearchBar(){

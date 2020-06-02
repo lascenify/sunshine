@@ -51,8 +51,7 @@ class ForecastRepository @Inject constructor(
 
     fun removeAllLocalData() = forecastLocalDataSource.removeAll()
 
-
-    fun removeForecast(forecast: ForecastResponse) = forecastLocalDataSource.remove(forecast)
+    fun removeForecast(cityId: Long) = forecastLocalDataSource.remove(cityId)
 
     fun removeForecastByCoordinates(lat: Double, lon: Double) = forecastLocalDataSource.removeByCoordinates(lat, lon)
 

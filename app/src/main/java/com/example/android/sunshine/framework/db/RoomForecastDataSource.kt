@@ -30,12 +30,8 @@ open class RoomForecastDataSource
         forecastDao
     }
 
-    override fun remove(forecast: ForecastResponse) {
-        val coordinates = forecast.city?.coordinates!!
-        forecastDao.deleteForecastByCoordinates(
-            lat = coordinates.latitude!!,
-            lon = coordinates.longitude!!)
-    }
+
+    override fun remove(cityId: Long) = forecastDao.deleteForecastByCityId(cityId)
 
     override fun removeAll() = forecastDao.deleteAll()
 

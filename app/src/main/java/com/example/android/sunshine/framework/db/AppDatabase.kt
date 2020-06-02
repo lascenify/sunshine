@@ -14,7 +14,7 @@ import com.example.android.sunshine.utilities.DataConverter
 
 @Database(entities = [
     ForecastEntity::class
-], version = 8, exportSchema = false)
+], version = 9, exportSchema = false)
 @TypeConverters(DataConverter::class)
 abstract class AppDatabase : RoomDatabase(){
     companion object{

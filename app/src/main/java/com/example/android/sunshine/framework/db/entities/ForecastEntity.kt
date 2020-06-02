@@ -11,8 +11,8 @@ import kotlinx.android.parcel.Parcelize
 @Entity(tableName = "Forecast")
 data class ForecastEntity(
 
-    @PrimaryKey(autoGenerate = true)
-    val id: Int? = null,
+    @PrimaryKey (autoGenerate = false)
+    val id: Int?,
 
     @ColumnInfo(name = "list")
     // list of forecast. In case of 5 day weather forecast, 40 elements in this list (each 3 hours)
@@ -23,6 +23,7 @@ data class ForecastEntity(
 
     @Ignore
     constructor(forecastResponse: ForecastResponse): this(
+        id = forecastResponse.city?.cityId,
         list = forecastResponse.list,
         city = forecastResponse.city?.let { CityEntity(it) }
     )

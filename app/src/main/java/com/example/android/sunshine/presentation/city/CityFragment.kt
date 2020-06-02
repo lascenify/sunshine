@@ -93,28 +93,26 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
     private fun initForecastList() {
         viewModel.forecast.removeObservers(viewLifecycleOwner)
         viewModel.forecast.observe(viewLifecycleOwner, Observer { resource ->
-            // CHANGE CONDITION TO SHOW PROGRESS BAR
-            if (resource != null && resource.status.isSuccessful()){
-                //viewModel.insertCity(resource.data?.city?.toDomain()!!) // remove later
+            if (resource != null){
                 binding.forecast = viewModel.forecast
-                dayForecastAdapter.apply {
-                    resource.data?.list?.let{ update(viewModel.forecastOfNextDays()) }
-                }
-                hourForecastAdapter.apply {
-                    resource.data?.list?.let{ update(viewModel.forecastOfNextHours())}
-                }
-                resource.data?.list?.get(0)?.let { updateConditionsUI(it) }
-                if (FIRST_TIME) {
-                    FIRST_TIME = false
-                    val isMetric = SunshinePreferences.isMetric(requireContext())
-                    ChartUtilities.setUpChart(
-                        viewModel.forecastOfNextHours().subList(0, 9),
-                        binding.lineChart,
-                        "Temperature of the next 24 hours",
-                        isMetric
-                    )
-                    Log.d("chart", binding.lineChart.xAxis.labelCount.toString())
-                    Log.d("chart", binding.lineChart.axisLeft.labelCount.toString())
+                if (resource.status.isSuccessful()) {
+                    dayForecastAdapter.apply {
+                        resource.data?.list?.let { update(viewModel.forecastOfNextDays()) }
+                    }
+                    hourForecastAdapter.apply {
+                        resource.data?.list?.let { update(viewModel.forecastOfNextHours()) }
+                    }
+                    resource.data?.list?.get(0)?.let { updateConditionsUI(it) }
+                    if (FIRST_TIME) {
+                        FIRST_TIME = false
+                        val isMetric = SunshinePreferences.isMetric(requireContext())
+                        ChartUtilities.setUpChart(
+                            viewModel.forecastOfNextHours().subList(0, 9),
+                            binding.lineChart,
+                            "Temperature of the next 24 hours",
+                            isMetric
+                        )
+                    }
                 }
             }
 
@@ -129,8 +127,9 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
     private fun setForecastParams() {
         val coordinates: DoubleArray = SunshinePreferences.getLocationCoordinates(requireContext())
         val units: String = context?.getString(R.string.pref_units_metric)!!
-        val lat = 38.24
-        val lon = -1.4199
+        val lat = 51.5085
+        val lon = -0.1257
+
         if (!coordinates.first().isNaN() && !coordinates.last().isNaN()) {
             viewModel.setForecastParams(
                 ForecastByCoordinates.Params(

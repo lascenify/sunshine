@@ -14,7 +14,7 @@ interface ForecastDao {
     @Query ("SELECT * FROM Forecast WHERE lat =:lat AND lon =:lon LIMIT 1")
     fun loadForecastByCoordinates(lat:Double, lon:Double): LiveData<ForecastEntity?>
 
-    @Query("SELECT list, cityName, timezone FROM Forecast")
+    @Query("SELECT id, list, cityName, timezone FROM Forecast")
     fun loadLastForecasts(): LiveData<List<ForecastEntity>?>
 
     @Query("SELECT * FROM Forecast WHERE cityName =:name")
@@ -52,5 +52,8 @@ interface ForecastDao {
 
     @Query ("DELETE FROM Forecast")
     fun deleteAll()
+
+    @Query("DELETE FROM Forecast WHERE cityId=:cityId")
+    fun deleteForecastByCityId(cityId: Long)
 
 }

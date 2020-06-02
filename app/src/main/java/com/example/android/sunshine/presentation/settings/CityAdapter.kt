@@ -3,6 +3,7 @@ package com.example.android.sunshine.presentation.settings
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.sunshine.databinding.ItemDaySettingsBinding
 import com.example.android.sunshine.framework.db.entities.CityEntity
@@ -13,7 +14,7 @@ class CityAdapter(
     private val layoutId: Int
 ) : RecyclerView.Adapter<CityAdapter.ViewHolder>() {
 
-    private var cityList: List<ForecastEntity>? = null
+    var cityList: List<ForecastEntity>? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)

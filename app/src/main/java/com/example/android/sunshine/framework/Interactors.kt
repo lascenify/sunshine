@@ -6,5 +6,6 @@ import javax.inject.Inject
 data class Interactors @Inject constructor(
     val forecastByCoordinates: ForecastByCoordinates,
     val lastForecasts: LastForecasts,
-    val searchCity: SearchCity
+    val searchCity: SearchCity,
+    val removeCity: RemoveCity
 )

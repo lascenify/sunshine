@@ -19,7 +19,7 @@ interface ForecastLocalDataSource {
 
     fun insertAll(list: List<ForecastResponse>)
 
-    fun remove(forecast: ForecastResponse)
+    fun remove(cityId: Long)
 
     fun removeAll()
 
