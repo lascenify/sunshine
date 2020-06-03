@@ -35,6 +35,14 @@ class ForecastRepository @Inject constructor(
     }
 
 
+    fun forecastByCity(cityId: Long): LiveData<Resource<ForecastEntity>>{
+        return object : NetworkBoundResource<ForecastEntity, ForecastResponse>(appExecutors){
+            override fun saveCallResult(item: ForecastResponse) = forecastLocalDataSource.insert(item)
+            override fun shouldFetch(data: ForecastEntity?): Boolean = data == null || repoRateLimit.shouldFetch(RATE_LIMITER_TYPE)
+            override fun loadFromDb(): LiveData<ForecastEntity?> = forecastLocalDataSource.forecastByCityId(cityId)
+            override fun createCall(): LiveData<Resource<ForecastResponse>> = forecastRemoteDataSource.getForecastByCityId(cityId)
+        }.asLiveData()
+    }
     fun lastForecasts(fetchRequired: Boolean): LiveData<Resource<List<ForecastEntity>>> {
         return object : NetworkBoundResource<List<ForecastEntity>, List<ForecastResponse>>(appExecutors){
             override fun saveCallResult(items: List<ForecastResponse>) = forecastLocalDataSource.insertAll(items)

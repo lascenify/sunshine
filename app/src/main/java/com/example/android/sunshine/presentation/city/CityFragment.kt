@@ -15,11 +15,12 @@ import androidx.preference.PreferenceManager
 import com.example.android.sunshine.R
 import com.example.android.sunshine.core.domain.forecast.ForecastListItem
 import com.example.android.sunshine.core.domain.forecast.OneDayForecast
+import com.example.android.sunshine.core.interactors.ForecastByCity
 import com.example.android.sunshine.core.interactors.ForecastByCoordinates
 import com.example.android.sunshine.databinding.CityFragmentBinding
 import com.example.android.sunshine.framework.SunshinePreferences
-import com.example.android.sunshine.presentation.ForecastComponentProvider
-import com.example.android.sunshine.presentation.MainActivity
+import com.example.android.sunshine.presentation.base.ForecastComponentProvider
+import com.example.android.sunshine.presentation.base.MainActivity
 import com.example.android.sunshine.presentation.common.HourForecastAdapter
 import com.example.android.sunshine.presentation.viewmodel.ForecastViewModel
 import com.example.android.sunshine.utilities.ChartUtilities
@@ -30,6 +31,8 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
     private var FIRST_TIME = true
     private lateinit var binding : CityFragmentBinding
 
+    private var cityId = 0L
+
     @Inject
     lateinit var viewModel : ForecastViewModel
 
@@ -38,16 +41,21 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
 
     companion object {
         private var PREFERENCE_UPDATES_FLAG = false
+        private const val KEY_CITY_ID = "cityId"
+
+        fun create(cityId: Long) =
+            CityFragment().apply {
+                arguments = Bundle(1).apply {
+                    putLong(KEY_CITY_ID, cityId)
+                }
+            }
     }
-
-
 
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
         (context as ForecastComponentProvider).get().inject(this)
-        Log.i("viewmodel", "In CityMainForecastFragment using Viewmodel $viewModel")
     }
 
     /**
@@ -67,6 +75,11 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
         super.onViewCreated(view, savedInstanceState)
 
         FIRST_TIME = true
+
+        val forecastId = arguments?.getLong(KEY_CITY_ID)
+        if (forecastId != null)
+            cityId = forecastId
+
         setForecastParams()
 
         bindViews()
@@ -88,16 +101,16 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
         binding.lifecycleOwner = viewLifecycleOwner
         binding.hoursForecastLayout.recyclerviewForecastHours.adapter = hourForecastAdapter
         binding.daysForecastLayout.recyclerviewForecastDays.adapter = dayForecastAdapter
+        binding.forecast = viewModel.forecast
     }
 
     private fun initForecastList() {
-        viewModel.forecast.removeObservers(viewLifecycleOwner)
+        //viewModel.forecast.removeObservers(viewLifecycleOwner)
         viewModel.forecast.observe(viewLifecycleOwner, Observer { resource ->
             if (resource != null){
-                binding.forecast = viewModel.forecast
                 if (resource.status.isSuccessful()) {
                     dayForecastAdapter.apply {
-                        resource.data?.list?.let { update(viewModel.forecastOfNextDays()) }
+                        resource.data?.list.let { update(viewModel.forecastOfNextDays()) }
                     }
                     hourForecastAdapter.apply {
                         resource.data?.list?.let { update(viewModel.forecastOfNextHours()) }
@@ -125,17 +138,10 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
     }
 
     private fun setForecastParams() {
-        val coordinates: DoubleArray = SunshinePreferences.getLocationCoordinates(requireContext())
-        val units: String = context?.getString(R.string.pref_units_metric)!!
-        val lat = 51.5085
-        val lon = -0.1257
-
-        if (!coordinates.first().isNaN() && !coordinates.last().isNaN()) {
+        if (cityId != 0L) {
             viewModel.setForecastParams(
-                ForecastByCoordinates.Params(
-                    lat,
-                    lon,
-                    units
+                ForecastByCity.Params(
+                    cityId
                 )
             )
         }

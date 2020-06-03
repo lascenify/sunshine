@@ -2,7 +2,6 @@ package com.example.android.sunshine.presentation.search
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,8 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.android.sunshine.R
 import com.example.android.sunshine.core.interactors.SearchCity
 import com.example.android.sunshine.databinding.SearchFragmentBinding
-import com.example.android.sunshine.presentation.MainActivity
-import com.example.android.sunshine.presentation.viewmodel.CitiesViewModel
+import com.example.android.sunshine.presentation.base.MainActivity
 import com.example.android.sunshine.presentation.viewmodel.SearchViewModel
 import javax.inject.Inject
 
@@ -54,7 +52,6 @@ class SearchFragment : Fragment(){
                 if (result.status.isSuccessful())
                     findNavController().popBackStack()
             })
-            //findNavController().popBackStack()
         }
         binding.recyclerViewSearchResults.adapter = adapter
         viewModel.cities.observe(viewLifecycleOwner, Observer { result ->

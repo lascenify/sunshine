@@ -19,7 +19,7 @@
             android:value="{$OPEN_WEATHER_API_KEY}"/>
 
         <activity
-            android:name=".presentation.MainActivity"
+            android:name=".presentation.base.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop">
             <intent-filter>

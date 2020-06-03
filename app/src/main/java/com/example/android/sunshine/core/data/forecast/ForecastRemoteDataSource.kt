@@ -17,6 +17,10 @@ interface ForecastRemoteDataSource{
         cityName: String
     ): LiveData<Resource<ForecastResponse>>
 
+    fun getForecastByCityId(
+        cityId: Long
+    ): LiveData<Resource<ForecastResponse>>
+
     /*fun getForecastByCoordinates (lat:Double, lon:Double, units:String): Observable<ForecastResponse> =
         apiService.forecastByCoordinates(
             lat = lat,

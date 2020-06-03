@@ -11,6 +11,10 @@ interface ForecastLocalDataSource {
         lon: Double
     ) : LiveData<ForecastEntity?>
 
+    fun forecastByCityId(
+        cityId: Long
+    ): LiveData<ForecastEntity?>
+
     fun lastForecasts(): LiveData<List<ForecastEntity>?>
 
     fun count(): Int

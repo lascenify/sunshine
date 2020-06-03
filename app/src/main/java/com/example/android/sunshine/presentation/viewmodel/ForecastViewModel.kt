@@ -7,6 +7,7 @@ import androidx.lifecycle.switchMap
 import com.example.android.sunshine.core.data.Resource
 import com.example.android.sunshine.core.domain.forecast.ForecastListItem
 import com.example.android.sunshine.core.domain.forecast.OneDayForecast
+import com.example.android.sunshine.core.interactors.ForecastByCity
 import com.example.android.sunshine.core.interactors.ForecastByCoordinates
 import com.example.android.sunshine.framework.Interactors
 import com.example.android.sunshine.framework.db.entities.ForecastEntity
@@ -27,8 +28,8 @@ class ForecastViewModel
 
     private val daysForecast: MutableList<OneDayForecast> = mutableListOf()
     private val hoursForecast: MutableList<ForecastListItem> = mutableListOf()
-    private val _forecastParams: MutableLiveData<ForecastByCoordinates.Params> = MutableLiveData()
-    val forecastParams: LiveData<ForecastByCoordinates.Params>
+    private val _forecastParams: MutableLiveData<ForecastByCity.Params> = MutableLiveData()
+    val forecastParams: LiveData<ForecastByCity.Params>
         get() = _forecastParams
 
     private val _selectedDay = MutableLiveData<OneDayForecast>()
@@ -42,12 +43,11 @@ class ForecastViewModel
         } else {
             INVALID_HOURS_DATA = true
             INVALID_DAYS_DATA = true
-            interactors.forecastByCoordinates.invoke(params)
+            interactors.forecastByCity.invoke(params)
         }
     }
 
-
-    fun setForecastParams(params: ForecastByCoordinates.Params?){
+    fun setForecastParams(params: ForecastByCity.Params?){
         if (_forecastParams.value != params)
             _forecastParams.value = params
     }

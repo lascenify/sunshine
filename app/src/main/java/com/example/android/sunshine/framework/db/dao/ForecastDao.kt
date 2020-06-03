@@ -20,6 +20,9 @@ interface ForecastDao {
     @Query("SELECT * FROM Forecast WHERE cityName =:name")
     fun loadForecastByCityName(name: String): LiveData<ForecastEntity>
 
+    @Query("SELECT * FROM Forecast WHERE cityId =:cityId")
+    fun loadForecastByCityId(cityId: Long): LiveData<ForecastEntity?>
+
     @Query ("SELECT count(*) from Forecast")
     fun getCount():Int
 

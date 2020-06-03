@@ -17,6 +17,9 @@ open class RoomForecastDataSource
     override fun forecastByCoordinates(lat: Double, lon: Double): LiveData<ForecastEntity?> =
         forecastDao.loadForecastByCoordinates(lat, lon)
 
+    override fun forecastByCityId(cityId: Long): LiveData<ForecastEntity?> =
+        forecastDao.loadForecastByCityId(cityId)
+
     override fun lastForecasts(): LiveData<List<ForecastEntity>?> =
         forecastDao.loadLastForecasts()
 

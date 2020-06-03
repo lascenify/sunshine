@@ -19,4 +19,7 @@ open class ApiForecastDataSource
     override fun getForecastByCityName(cityName: String): LiveData<Resource<ForecastResponse>> =
         forecastApi.forecastByCity(cityName)
 
+    override fun getForecastByCityId(cityId: Long): LiveData<Resource<ForecastResponse>> =
+        forecastApi.forecastByCityId(cityId)
+
 }

@@ -2,7 +2,6 @@ package com.example.android.sunshine.presentation.settings
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,8 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.android.sunshine.R
 import com.example.android.sunshine.core.data.AppExecutors
 import com.example.android.sunshine.databinding.CitiesManagementFragmentBinding
-import com.example.android.sunshine.framework.SunshinePreferences
-import com.example.android.sunshine.presentation.MainActivity
+import com.example.android.sunshine.presentation.base.MainActivity
 import com.example.android.sunshine.presentation.viewmodel.CitiesViewModel
 import javax.inject.Inject
 

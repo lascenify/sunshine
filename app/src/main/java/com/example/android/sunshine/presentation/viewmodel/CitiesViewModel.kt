@@ -26,4 +26,10 @@ class CitiesViewModel
         }
     }
 
+    fun contains(cityId: Long): Boolean =
+        forecasts.value?.data?.any { it.city?.cityId?.toLong() == cityId }!!
+
+    fun getForecastByCityName(cityName: String) =
+        forecasts.value?.data?.find { it.city?.name == cityName }
+
 }
