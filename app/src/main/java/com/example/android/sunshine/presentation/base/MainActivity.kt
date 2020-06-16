@@ -2,6 +2,7 @@
 package com.example.android.sunshine.presentation.base
 
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
@@ -20,51 +21,24 @@ import javax.inject.Inject
 import javax.inject.Provider
 
 typealias ForecastComponentProvider = Provider<CityForecastComponent>
-class MainActivity : FragmentActivity(),
+class MainActivity : AppCompatActivity(),
     ForecastComponentProvider {
 
     lateinit var forecastComp: CityForecastComponent
     lateinit var citiesManagementComponent: CitiesManagementComponent
     lateinit var searchComponent: SearchComponent
 
-    @Inject
-    lateinit var viewModel: CitiesViewModel
-
-    lateinit var binding: MainActivityBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        (applicationContext as SunshineApplication).appComponent.inject(this)
-        binding = DataBindingUtil.setContentView(this, R.layout.main_activity)
+        DataBindingUtil.setContentView<MainActivityBinding>(this, R.layout.main_activity)
 
         forecastComp = (applicationContext as SunshineApplication).appComponent.cityForecastComp().create()
         citiesManagementComponent = (applicationContext as SunshineApplication).appComponent.citiesSettingsComp().create()
         searchComponent = (applicationContext as SunshineApplication).appComponent.searchComp().create()
 
-
-        viewModel.forecasts.observe(this, Observer { forecasts ->
-            if (forecasts != null){
-                if (forecasts.status.isSuccessful()){
-                    val viewPagerAdapter = createViewPagerAdapter(forecasts.data!!)
-                    binding.viewPager.adapter = viewPagerAdapter
-                }
-            }
-        })
     }
 
-    private fun createViewPagerAdapter(forecasts: List<ForecastEntity>): RecyclerView.Adapter<*> {
-
-        return object : FragmentStateAdapter(this) {
-            override fun createFragment(position: Int): CityFragment {
-                val cityId = forecasts[position].id!!.toLong()
-                return CityFragment.create(cityId)
-            }
-            override fun getItemCount(): Int = forecasts.size
-            override fun getItemId(position: Int): Long = forecasts[position].id?.toLong()!!
-            override fun containsItem(cityId: Long): Boolean = viewModel.contains(cityId)
-        }
-    }
 
     override fun get(): CityForecastComponent = forecastComp
 

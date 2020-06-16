@@ -15,14 +15,12 @@ import androidx.preference.PreferenceManager
 import com.example.android.sunshine.R
 import com.example.android.sunshine.core.domain.forecast.ForecastListItem
 import com.example.android.sunshine.core.domain.forecast.OneDayForecast
-import com.example.android.sunshine.core.interactors.ForecastByCity
-import com.example.android.sunshine.core.interactors.ForecastByCoordinates
 import com.example.android.sunshine.databinding.CityFragmentBinding
 import com.example.android.sunshine.framework.SunshinePreferences
 import com.example.android.sunshine.presentation.base.ForecastComponentProvider
 import com.example.android.sunshine.presentation.base.MainActivity
 import com.example.android.sunshine.presentation.common.HourForecastAdapter
-import com.example.android.sunshine.presentation.viewmodel.ForecastViewModel
+import com.example.android.sunshine.presentation.viewmodel.CitiesViewModel
 import com.example.android.sunshine.utilities.ChartUtilities
 import javax.inject.Inject
 
@@ -34,7 +32,7 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
     private var cityId = 0L
 
     @Inject
-    lateinit var viewModel : ForecastViewModel
+    lateinit var viewModel : CitiesViewModel
 
     private lateinit var hourForecastAdapter: HourForecastAdapter
     private lateinit var dayForecastAdapter: DayForecastAdapter
@@ -80,8 +78,6 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
         if (forecastId != null)
             cityId = forecastId
 
-        setForecastParams()
-
         bindViews()
 
         initForecastList()
@@ -101,34 +97,37 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
         binding.lifecycleOwner = viewLifecycleOwner
         binding.hoursForecastLayout.recyclerviewForecastHours.adapter = hourForecastAdapter
         binding.daysForecastLayout.recyclerviewForecastDays.adapter = dayForecastAdapter
-        binding.forecast = viewModel.forecast
+        //binding.forecast = viewModel.forecast
     }
 
     private fun initForecastList() {
         //viewModel.forecast.removeObservers(viewLifecycleOwner)
-        viewModel.forecast.observe(viewLifecycleOwner, Observer { resource ->
+        viewModel.forecasts.observe(viewLifecycleOwner, Observer { resource ->
             if (resource != null){
                 if (resource.status.isSuccessful()) {
-                    dayForecastAdapter.apply {
-                        resource.data?.list.let { update(viewModel.forecastOfNextDays()) }
-                    }
-                    hourForecastAdapter.apply {
-                        resource.data?.list?.let { update(viewModel.forecastOfNextHours()) }
-                    }
-                    resource.data?.list?.get(0)?.let { updateConditionsUI(it) }
-                    if (FIRST_TIME) {
-                        FIRST_TIME = false
-                        val isMetric = SunshinePreferences.isMetric(requireContext())
-                        ChartUtilities.setUpChart(
-                            viewModel.forecastOfNextHours().subList(0, 9),
-                            binding.lineChart,
-                            "Temperature of the next 24 hours",
-                            isMetric
-                        )
+                    val forecastOfCity = viewModel.getForecastByCityId(cityId)
+                    if (forecastOfCity != null) {
+                        binding.forecast = forecastOfCity
+                        dayForecastAdapter.apply {
+                            update(viewModel.forecastOfNextDays(forecastOfCity))
+                        }
+                        hourForecastAdapter.apply {
+                            forecastOfCity.list?.let { update(viewModel.forecastOfNextHours(forecastOfCity)) }
+                        }
+                        forecastOfCity.list?.get(0)?.let { updateConditionsUI(it) }
+                        if (FIRST_TIME) {
+                            FIRST_TIME = false
+                            val isMetric = SunshinePreferences.isMetric(requireContext())
+                            ChartUtilities.setUpChart(
+                                viewModel.forecastOfNextHours(forecastOfCity).subList(0, 9),
+                                binding.lineChart,
+                                "Temperature of the next 24 hours",
+                                isMetric
+                            )
+                        }
                     }
                 }
             }
-
         })
 
     }
@@ -137,21 +136,12 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
         binding.cityConditionsLayout.listItem = forecastListItem
     }
 
-    private fun setForecastParams() {
-        if (cityId != 0L) {
-            viewModel.setForecastParams(
-                ForecastByCity.Params(
-                    cityId
-                )
-            )
-        }
-    }
 
     /**
      * Method to navigate to DetailFragment
      */
     private fun openDayFragment(oneDayForecast: OneDayForecast){
-        viewModel.setSelectedDay(oneDayForecast)
+        //viewModel.setSelectedDay(oneDayForecast)
         val action = CityFragmentDirections.actionCityFragmentToDayFragment()
         findNavController().navigate(action)
     }
@@ -178,7 +168,7 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_refresh -> {
-                retry()
+                //retry()
             }
             R.id.action_open_map -> {
                 openLocationInMap()
@@ -194,7 +184,7 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
         return true
     }
 
-    private fun retry() = viewModel.retry()
+    //private fun retry() = viewModel.retry()
 
     /**
      * Method used to open the location in map from the menu

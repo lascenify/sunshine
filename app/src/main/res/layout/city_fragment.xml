@@ -9,7 +9,7 @@
                 <import type="com.example.android.sunshine.framework.db.entities.ForecastEntity"/>
                 <variable
                     name="forecast"
-                    type="LiveData&lt;Resource&lt;ForecastEntity>>" />
+                    type="ForecastEntity" />
         </data>
 
 
@@ -46,7 +46,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="@{forecast.data.cityName}"
+                        android:text="@{forecast.cityName}"
                         android:textColor="#FFFFFF"
                         tools:text="Cieza" />
 
@@ -56,7 +56,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="@{forecast.data.actualWeatherDescription}"
+                        android:text="@{forecast.actualWeatherDescription}"
                         android:textColor="#FFFFFF"
                         tools:text="Nublado" />
 
@@ -66,7 +66,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        app:setTemperature="@{forecast.data.actualTemperature}"
+                        app:setTemperature="@{forecast.actualTemperature}"
                         android:textColor="#FFFFFF"
                         tools:text="34º" />
 
@@ -120,7 +120,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:text="@string/error_message"
-                app:setVisibility="@{forecast.status.error == true}"/>
+                />
 
             <ProgressBar
                 android:id="@+id/pb_forecast"
@@ -131,7 +131,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:setVisibility="@{forecast.status.loading == true}"/>
+                />
                     <!--android:visibility="@{forecast.status.loading == true}"-->
         </LinearLayout>
     </ScrollView>

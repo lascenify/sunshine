@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/nav_cityFragment">
+    app:startDestination="@id/nav_viewPagerFragment">
     <fragment
         android:id="@+id/nav_cityFragment"
         android:name="com.example.android.sunshine.presentation.city.CityFragment"
@@ -36,4 +36,8 @@
         android:id="@+id/nav_searchFragment"
         android:name="com.example.android.sunshine.presentation.search.SearchFragment"
         android:label="SearchFragment"/>
+    <fragment
+        android:id="@+id/nav_viewPagerFragment"
+        android:name="com.example.android.sunshine.presentation.onboarding.ViewPagerFragment"
+        android:label="ViewPagerFragment" />
 </navigation>
