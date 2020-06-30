@@ -18,17 +18,6 @@ import com.example.android.sunshine.presentation.city.CityFragment
 import com.example.android.sunshine.presentation.viewmodel.CitiesViewModel
 import javax.inject.Inject
 
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ViewPagerFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ViewPagerFragment : Fragment() {
 
     @Inject
@@ -71,8 +60,6 @@ class ViewPagerFragment : Fragment() {
                 return CityFragment.create(cityId)
             }
             override fun getItemCount(): Int = forecasts.size
-            override fun getItemId(position: Int): Long = forecasts[position].id?.toLong()!!
-            override fun containsItem(cityId: Long): Boolean = viewModel.contains(cityId)
         }
     }
 
