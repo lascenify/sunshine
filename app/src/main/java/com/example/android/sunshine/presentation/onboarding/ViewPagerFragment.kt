@@ -45,6 +45,7 @@ class ViewPagerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding =  DataBindingUtil.inflate(inflater, R.layout.fragment_view_pager, container, false)
+
         return binding.root
     }
 
@@ -56,6 +57,7 @@ class ViewPagerFragment : Fragment() {
                 if (forecasts.status.isSuccessful()){
                     val viewPagerAdapter = createViewPagerAdapter(forecasts.data!!)
                     binding.viewPager.adapter = viewPagerAdapter
+                    binding.springDotsIndicator.setViewPager2(binding.viewPager)
                 }
             }
         })
