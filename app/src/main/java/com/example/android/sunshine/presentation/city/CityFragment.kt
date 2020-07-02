@@ -97,11 +97,10 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
         binding.lifecycleOwner = viewLifecycleOwner
         binding.hoursForecastLayout.recyclerviewForecastHours.adapter = hourForecastAdapter
         binding.daysForecastLayout.recyclerviewForecastDays.adapter = dayForecastAdapter
-        //binding.forecast = viewModel.forecast
+
     }
 
     private fun initForecastList() {
-        //viewModel.forecast.removeObservers(viewLifecycleOwner)
         viewModel.forecasts.observe(viewLifecycleOwner, Observer { resource ->
             if (resource != null){
                 if (resource.status.isSuccessful()) {
@@ -129,6 +128,7 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
                 }
             }
         })
+        binding.listOfForecasts = viewModel.forecasts
 
     }
 
@@ -204,39 +204,5 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         PREFERENCE_UPDATES_FLAG = true
     }
-
-
-
-    /*
-    override fun onStart() {
-        super.onStart()
-        if (PREFERENCE_UPDATES_FLAG){
-            loadWeatherData()
-            PREFERENCE_UPDATES_FLAG = false
-        }
-    }
-
-    private fun loadWeatherData(){
-        //showWeatherDataView()
-        //iewModel.loadForecast()
-    }*/
-    /*private fun showLoading(){
-        recyclerView.visibility = View.INVISIBLE
-        //binding.pbForecast.visibility = View.VISIBLE
-    }*/
-
-/*
-    private fun showWeatherDataView(){
-        binding.pbForecast.visibility = View.INVISIBLE
-        binding.tvErrorMessage.visibility = View.INVISIBLE
-        binding.recyclerviewForecast.visibility = View.VISIBLE
-    }
-
-    private fun showErrorMessage(){
-        binding.pbForecast.visibility = View.INVISIBLE
-        binding.tvErrorMessage.visibility = View.VISIBLE
-        binding.recyclerviewForecast.visibility = View.INVISIBLE
-    }*/
-
 
 }
