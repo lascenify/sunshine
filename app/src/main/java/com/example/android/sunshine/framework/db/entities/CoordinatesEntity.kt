@@ -4,8 +4,7 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
-import androidx.room.PrimaryKey
-import com.example.android.sunshine.core.domain.Coordinates
+import com.example.android.sunshine.core.domain.forecast.Coordinates
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -22,7 +21,7 @@ data class CoordinatesEntity(
         lat = coordinates.latitude)
 }
 
-fun CoordinatesEntity.asDomainModel(): Coordinates{
+fun CoordinatesEntity.asDomainModel(): Coordinates {
     return Coordinates(
         longitude = lon!!,
         latitude = lat!!

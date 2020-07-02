@@ -4,10 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
-import com.example.android.sunshine.core.domain.ForecastListItem
-import com.example.android.sunshine.core.domain.OneDayForecast
+import com.example.android.sunshine.core.data.Resource
+import com.example.android.sunshine.core.domain.forecast.ForecastListItem
+import com.example.android.sunshine.core.domain.forecast.OneDayForecast
+import com.example.android.sunshine.core.interactors.ForecastByCity
 import com.example.android.sunshine.core.interactors.ForecastByCoordinates
 import com.example.android.sunshine.framework.Interactors
+import com.example.android.sunshine.framework.db.entities.ForecastEntity
 import com.example.android.sunshine.framework.di.ForecastScope
 import com.example.android.sunshine.utilities.AbsentLiveData
 import com.example.android.sunshine.utilities.getDayOfWeekFromText
@@ -25,8 +28,8 @@ class ForecastViewModel
 
     private val daysForecast: MutableList<OneDayForecast> = mutableListOf()
     private val hoursForecast: MutableList<ForecastListItem> = mutableListOf()
-    private val _forecastParams: MutableLiveData<ForecastByCoordinates.Params> = MutableLiveData()
-    val forecastParams: LiveData<ForecastByCoordinates.Params>
+    private val _forecastParams: MutableLiveData<ForecastByCity.Params> = MutableLiveData()
+    val forecastParams: LiveData<ForecastByCity.Params>
         get() = _forecastParams
 
     private val _selectedDay = MutableLiveData<OneDayForecast>()
@@ -34,17 +37,17 @@ class ForecastViewModel
     val selectedDay: LiveData<OneDayForecast>
         get() = _selectedDay
 
-    var forecast= _forecastParams.switchMap { params ->
+    var forecast: LiveData<Resource<ForecastEntity>> = _forecastParams.switchMap { params ->
         if (params == null){
             AbsentLiveData.create()
         } else {
             INVALID_HOURS_DATA = true
             INVALID_DAYS_DATA = true
-            interactors.forecastByCoordinates.invoke(params)
+            interactors.forecastByCity.invoke(params)
         }
     }
 
-    fun setForecastParams(params: ForecastByCoordinates.Params?){
+    fun setForecastParams(params: ForecastByCity.Params?){
         if (_forecastParams.value != params)
             _forecastParams.value = params
     }
@@ -78,11 +81,13 @@ class ForecastViewModel
         for (x in 0 until 4){
             val nextDayTxt = getNextDayOfYearFromTxt(previousDayTxt)
             val forecastListFromDay = forecastList.filter { it.dt_txt?.contains(nextDayTxt) == true}
-            val oneDayForecast = OneDayForecast(
-                getDayOfWeekFromText(nextDayTxt),
-                forecastListFromDay,
-                null,
-                null)
+            val oneDayForecast =
+                OneDayForecast(
+                    getDayOfWeekFromText(nextDayTxt),
+                    forecastListFromDay,
+                    null,
+                    null
+                )
             oneDayForecast.calculateTemperatures()
             daysForecast.add(oneDayForecast)
             previousDayTxt = nextDayTxt

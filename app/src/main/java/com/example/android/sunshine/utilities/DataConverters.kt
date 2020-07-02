@@ -1,8 +1,8 @@
 package com.example.android.sunshine.utilities
 
 import androidx.room.TypeConverter
-import com.example.android.sunshine.core.domain.ForecastListItem
-import com.example.android.sunshine.core.domain.WeatherItem
+import com.example.android.sunshine.core.domain.forecast.City
+import com.example.android.sunshine.core.domain.forecast.ForecastListItem
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 
@@ -41,4 +41,24 @@ object DataConverter {
         return adapter.toJson(objects)
     }
 
+    @TypeConverter
+    @JvmStatic
+    fun stringToCity(data: String?): City?{
+        if (data == null)
+            return null
+        val moshi = Moshi.Builder().build()
+        val type = Types.newParameterizedType(City::class.java)
+        val adapter = moshi.adapter<City>(type)
+        return adapter.fromJson(data)
+    }
+
+
+    @TypeConverter
+    @JvmStatic
+    fun cityToString(city: City?): String?{
+        val moshi = Moshi.Builder().build()
+        val type = Types.newParameterizedType(City::class.java)
+        val adapter = moshi.adapter<City>(type)
+        return adapter.toJson(city)
+    }
 }

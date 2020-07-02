@@ -4,5 +4,9 @@ import com.example.android.sunshine.core.interactors.*
 import javax.inject.Inject
 
 data class Interactors @Inject constructor(
-    val forecastByCoordinates: ForecastByCoordinates
+    val forecastByCoordinates: ForecastByCoordinates,
+    val forecastByCity: ForecastByCity,
+    val lastForecasts: LastForecasts,
+    val searchCity: SearchCity,
+    val removeCity: RemoveCity
 )

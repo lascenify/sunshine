@@ -28,6 +28,7 @@ object SunshinePreferences {
     private const val PREF_COORD_LAT = "coord_lat"
     private const val PREF_COORD_LONG = "coord_long"
 
+    private const val PREF_CITIES_LIST = "cities"
     private val defaultWeatherCoordinates = doubleArrayOf(37.4284, 122.0724)
 
     /**
@@ -116,6 +117,24 @@ object SunshinePreferences {
         return (sharedPreferences.contains(PREF_COORD_LONG) && sharedPreferences.contains(
             PREF_COORD_LAT
         ))
+    }
+
+
+    fun addCityToForecasts(context: Context, newCity: String) {
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val editor = sharedPreferences.edit()
+        var cities = sharedPreferences.getStringSet(PREF_CITIES_LIST, null)
+        if (cities == null)
+            cities = mutableSetOf()
+        cities.add(newCity)
+        editor.putStringSet(PREF_CITIES_LIST, cities)
+        editor.apply()
+    }
+
+
+    fun getListOfCities(context: Context): List<String>{
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        return sharedPreferences.getStringSet(PREF_CITIES_LIST, null)!!.toList()
     }
 
 }

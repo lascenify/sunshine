@@ -11,8 +11,17 @@ interface ForecastDao {
     @Query("SELECT * FROM Forecast LIMIT 1")
     fun loadLastForecast(): LiveData<ForecastEntity?>
 
-    @Query ("SELECT * FROM Forecast ORDER BY abs(lat-:lat) AND abs(lon-:lon) LIMIT 1")
+    @Query ("SELECT * FROM Forecast WHERE lat =:lat AND lon =:lon LIMIT 1")
     fun loadForecastByCoordinates(lat:Double, lon:Double): LiveData<ForecastEntity?>
+
+    @Query("SELECT id, list, cityName, timezone FROM Forecast")
+    fun loadLastForecasts(): LiveData<List<ForecastEntity>?>
+
+    @Query("SELECT * FROM Forecast WHERE cityName =:name")
+    fun loadForecastByCityName(name: String): LiveData<ForecastEntity>
+
+    @Query("SELECT * FROM Forecast WHERE cityId =:cityId")
+    fun loadForecastByCityId(cityId: Long): LiveData<ForecastEntity?>
 
     @Query ("SELECT count(*) from Forecast")
     fun getCount():Int
@@ -20,6 +29,9 @@ interface ForecastDao {
     /** INSERT QUERIES **/
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertForecast(forecast: ForecastEntity)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAllForecasts(list: List<ForecastEntity>)
 
     @Transaction
     fun deleteAllAndInsert(forecast: ForecastEntity){
@@ -43,5 +55,8 @@ interface ForecastDao {
 
     @Query ("DELETE FROM Forecast")
     fun deleteAll()
+
+    @Query("DELETE FROM Forecast WHERE cityId=:cityId")
+    fun deleteForecastByCityId(cityId: Long)
 
 }

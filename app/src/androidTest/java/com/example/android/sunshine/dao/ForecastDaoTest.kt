@@ -2,7 +2,7 @@ package com.example.android.sunshine.dao
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.example.android.sunshine.core.domain.Coordinates
+import com.example.android.sunshine.core.domain.forecast.Coordinates
 import com.example.android.sunshine.framework.db.dao.ForecastDao
 import com.example.android.sunshine.framework.db.entities.ForecastEntity
 import com.example.android.sunshine.utilities.TestUtil
@@ -32,8 +32,16 @@ class ForecastDaoTest : DbTest(){
 
     @Before
     fun setup(){
-        coordinates1 = Coordinates(-1.42, 38.24)
-        coordinates2 = Coordinates(50.0, 50.0)
+        coordinates1 =
+            Coordinates(
+                -1.42,
+                38.24
+            )
+        coordinates2 =
+            Coordinates(
+                50.0,
+                50.0
+            )
         forecastDao = db.weatherForecastDao()
         fakeForecast1 = ForecastEntity(TestUtil.createFakeForecastResponse(coordinates1))
         fakeForecast2 = ForecastEntity(TestUtil.createFakeForecastResponse(coordinates2))

@@ -5,7 +5,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
-import com.example.android.sunshine.core.domain.Clouds
+import com.example.android.sunshine.core.domain.forecast.Clouds
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize

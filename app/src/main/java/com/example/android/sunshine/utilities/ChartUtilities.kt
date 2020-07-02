@@ -2,7 +2,7 @@ package com.example.android.sunshine.utilities
 
 import android.graphics.Color
 import com.example.android.sunshine.R
-import com.example.android.sunshine.core.domain.ForecastListItem
+import com.example.android.sunshine.core.domain.forecast.ForecastListItem
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis

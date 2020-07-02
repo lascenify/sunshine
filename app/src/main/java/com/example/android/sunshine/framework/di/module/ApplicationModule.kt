@@ -4,9 +4,9 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import com.example.android.sunshine.core.data.AppExecutors
-import com.example.android.sunshine.core.data.ForecastRepository
+import com.example.android.sunshine.core.data.forecast.ForecastRepository
 import com.example.android.sunshine.framework.SunshineApplication
-import com.example.android.sunshine.framework.api.network.ApiForecastDataSource
+import com.example.android.sunshine.framework.api.forecast.ApiForecastDataSource
 import com.example.android.sunshine.framework.db.RoomForecastDataSource
 import dagger.Module
 import dagger.Provides
@@ -24,7 +24,12 @@ class ApplicationModule (private val application: SunshineApplication) {
     fun provideRepository(
         localDataSource: RoomForecastDataSource,
         remoteDataSource: ApiForecastDataSource,
-        appExecutors: AppExecutors): ForecastRepository = ForecastRepository(appExecutors, remoteDataSource, localDataSource)
+        appExecutors: AppExecutors): ForecastRepository =
+        ForecastRepository(
+            appExecutors,
+            remoteDataSource,
+            localDataSource
+        )
 
 
     @Provides

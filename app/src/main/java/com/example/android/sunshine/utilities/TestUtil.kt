@@ -1,7 +1,8 @@
 package com.example.android.sunshine.utilities
 
-import com.example.android.sunshine.core.domain.*
-import com.example.android.sunshine.framework.db.entities.CityEntity
+import com.example.android.sunshine.core.domain.forecast.*
+import com.example.android.sunshine.core.domain.search.SearchResponse
+import com.example.android.sunshine.core.domain.search.SearchResult
 import com.example.android.sunshine.framework.db.entities.ForecastEntity
 
 object TestUtil {
@@ -14,8 +15,25 @@ object TestUtil {
             1588766400,
             null,
             null,
-            ForecastMainInfo(80.15, 80.15, 80.15, 80.15, 1000.0, 1000, 1000, 63.0, -1.25),
-            listOf(WeatherItem(803, "clouds", "broken clouds", "04d")),
+            ForecastMainInfo(
+                80.15,
+                80.15,
+                80.15,
+                80.15,
+                1000.0,
+                1000,
+                1000,
+                63.0,
+                -1.25
+            ),
+            listOf(
+                WeatherItem(
+                    803,
+                    "clouds",
+                    "broken clouds",
+                    "04d"
+                )
+            ),
             Clouds(97),
             Wind(9.95, 168.0),
             Sys("d"),
@@ -27,7 +45,7 @@ object TestUtil {
      * @param coordinates: coordinates of the city from which we want to create a fake ForecastResponse
      * @return a ForecastResponse of the given coordinates
      * */
-    fun createFakeForecastResponse(coordinates: Coordinates): ForecastResponse{
+    fun createFakeForecastResponse(coordinates: Coordinates): ForecastResponse {
         val forecastListItems = mutableListOf<ForecastListItem>()
         forecastListItems.add(createFakeForecastListItem())
         forecastListItems.add(createFakeForecastListItem())
@@ -36,12 +54,14 @@ object TestUtil {
             0,
             40,
             forecastListItems,
-            City(6295630,
+            City(
+                6295630,
                 "Globe",
                 coordinates,
                 0,
                 1588744386,
-                1588788002)
+                1588788002
+            )
         )
     }
 
@@ -59,8 +79,25 @@ object TestUtil {
             1588766400,
             null,
             null,
-            ForecastMainInfo(80.15, 80.15, 80.15, 80.15, 1000.0, 1000, 1000, 63.0, -1.25),
-            listOf(WeatherItem(803, "clouds", "broken clouds", "04d")),
+            ForecastMainInfo(
+                80.15,
+                80.15,
+                80.15,
+                80.15,
+                1000.0,
+                1000,
+                1000,
+                63.0,
+                -1.25
+            ),
+            listOf(
+                WeatherItem(
+                    803,
+                    "clouds",
+                    "broken clouds",
+                    "04d"
+                )
+            ),
             Clouds(97),
             Wind(9.95, 168.0),
             Sys("d"),
@@ -161,5 +198,14 @@ object TestUtil {
 
         for (i in 0 until nItems)
             listOfItems.add(createFakeForecastListItemAtTime(arrayOfHours[i]))
+    }
+
+
+    @ExperimentalStdlibApi
+    fun createFakeCityResult(): SearchResponse {
+        /*val hits = mutableListOf<SearchResult>()
+        hits.add(0, SearchResult(buildList { "Murcia" }, "Murcia", "Spain", null, null, "30000", null))
+        hits.add(0, SearchResult(buildList { "Murcia" }, "Murcia", "Spain", null, null, "30000", null))
+        */return SearchResponse(null)
     }
 }

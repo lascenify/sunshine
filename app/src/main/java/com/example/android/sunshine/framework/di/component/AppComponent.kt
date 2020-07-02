@@ -5,6 +5,8 @@ import com.example.android.sunshine.framework.di.AppSubcomponents
 import com.example.android.sunshine.framework.di.module.ApplicationModule
 import com.example.android.sunshine.framework.di.module.DataBaseModule
 import com.example.android.sunshine.framework.di.module.NetworkModule
+import com.example.android.sunshine.presentation.base.MainActivity
+import com.example.android.sunshine.presentation.onboarding.ViewPagerFragment
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -19,6 +21,13 @@ interface AppComponent {
 
     fun cityForecastComp(): CityForecastComponent.Factory
 
+    fun citiesSettingsComp(): CitiesManagementComponent.Factory
+
+    fun searchComp(): SearchComponent.Factory
+
+    fun inject(activity: MainActivity)
+
+    fun inject(fragment: ViewPagerFragment)
     /*fun inject(cityMainForecastFragment: CityMainForecastFragment)
 
     fun inject(temperatureChartFragment: TemperatureChartFragment)*/

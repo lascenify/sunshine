@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="city"
+            type="com.example.android.sunshine.framework.db.entities.CityEntity" />
+        <variable
+            name="temperature"
+            type="String" />
+    </data>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/settings_city_local_hour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="16:23"
+                style="@style/TextAppearance.MaterialComponents.Headline6"
+                android:text="@{city.getLocalTime()}"/>
+            <TextView
+                android:id="@+id/settings_city_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Cieza"
+                style="@style/TextAppearance.MaterialComponents.Headline4"
+                android:text="@{city.name}"/>
+        </LinearLayout>
+        <TextView
+            android:gravity="center"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="26º"
+            style="@style/TextAppearance.MaterialComponents.Headline3"
+            android:text="@{temperature}"/>
+    </RelativeLayout>
+</layout>

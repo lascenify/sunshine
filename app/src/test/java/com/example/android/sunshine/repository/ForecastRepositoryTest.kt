@@ -1,20 +1,17 @@
 package com.example.android.sunshine.repository
-import android.os.SystemClock
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.example.android.sunshine.core.data.ForecastRepository
+import com.example.android.sunshine.core.data.forecast.ForecastRepository
 import com.example.android.sunshine.core.data.Resource
-import com.example.android.sunshine.core.domain.Coordinates
-import com.example.android.sunshine.core.domain.ForecastResponse
-import com.example.android.sunshine.framework.Constants
-import com.example.android.sunshine.framework.api.network.ApiForecastDataSource
+import com.example.android.sunshine.core.domain.forecast.Coordinates
+import com.example.android.sunshine.core.domain.forecast.ForecastResponse
+import com.example.android.sunshine.framework.api.forecast.ApiForecastDataSource
 import com.example.android.sunshine.framework.db.RoomForecastDataSource
 import com.example.android.sunshine.framework.db.entities.ForecastEntity
 import com.example.android.sunshine.util.ApiUtil
 import com.example.android.sunshine.util.InstantAppExecutors
 import com.example.android.sunshine.util.mock
-import com.example.android.sunshine.utilities.RateLimiter
 import com.example.android.sunshine.utilities.TestUtil
 import org.junit.Before
 import org.junit.Rule
@@ -50,8 +47,17 @@ class ForecastRepositoryTest {
     @Before
     fun setup(){
         MockitoAnnotations.initMocks(this)
-        repository = ForecastRepository(InstantAppExecutors(), remoteDataSource, localDataSource)
-        val coordinates = Coordinates(-1.42, 38.24)
+        repository =
+            ForecastRepository(
+                InstantAppExecutors(),
+                remoteDataSource,
+                localDataSource
+            )
+        val coordinates =
+            Coordinates(
+                -1.42,
+                38.24
+            )
         lat = coordinates.latitude!!
         lon = coordinates.longitude!!
         fakeForecastResponse = TestUtil.createFakeForecastResponse(coordinates)

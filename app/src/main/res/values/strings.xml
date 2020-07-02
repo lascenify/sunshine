@@ -149,6 +149,9 @@
     <string name="pref_celsius_unit">Celsius</string>
     <string name="pref_fahrenheit_unit">Fahrenheit</string>
     <string name="bundle_day">dayForecast</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- - - - - - - - - - - -->
     <!-- Used by NetworkUtils-->
     <!-- - - - - - - - - - - -->

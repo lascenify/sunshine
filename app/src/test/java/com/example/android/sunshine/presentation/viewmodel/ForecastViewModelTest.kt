@@ -4,13 +4,14 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.example.android.sunshine.core.data.Resource
-import com.example.android.sunshine.core.domain.Coordinates
-import com.example.android.sunshine.core.domain.ForecastListItem
-import com.example.android.sunshine.core.domain.OneDayForecast
+import com.example.android.sunshine.core.domain.forecast.Coordinates
+import com.example.android.sunshine.core.domain.forecast.ForecastListItem
+import com.example.android.sunshine.core.domain.forecast.OneDayForecast
 import com.example.android.sunshine.core.interactors.ForecastByCoordinates
+import com.example.android.sunshine.core.interactors.LastForecasts
+import com.example.android.sunshine.core.interactors.SearchCity
 import com.example.android.sunshine.framework.Interactors
 import com.example.android.sunshine.framework.db.entities.ForecastEntity
-import com.example.android.sunshine.presentation.viewmodel.ForecastViewModel
 import com.example.android.sunshine.util.mock
 import com.example.android.sunshine.utilities.TestUtil
 import org.hamcrest.CoreMatchers.`is`
@@ -37,6 +38,12 @@ class ForecastViewModelTest{
     @Mock
     private lateinit var forecastByCoordinates: ForecastByCoordinates
 
+    @Mock
+    private lateinit var lastForecasts: LastForecasts
+
+    @Mock
+    private lateinit var searchCity: SearchCity
+
 
     private lateinit var forecastViewModel: ForecastViewModel
 
@@ -45,7 +52,7 @@ class ForecastViewModelTest{
     @Before
     fun setup(){
         MockitoAnnotations.initMocks(this)
-        interactors = Interactors(forecastByCoordinates)
+        interactors = Interactors(forecastByCoordinates, lastForecasts, searchCity)
         forecastViewModel =
             ForecastViewModel(
                 interactors
@@ -89,7 +96,12 @@ class ForecastViewModelTest{
         verify(observer, never()).onChanged(ArgumentMatchers.any())
 
         // We assign the right success result to the livedata
-        val fooForecast = TestUtil.createFakeForecastEntity(Coordinates(params.lon, params.lat))
+        val fooForecast = TestUtil.createFakeForecastEntity(
+            Coordinates(
+                params.lon,
+                params.lat
+            )
+        )
         val fooValue = Resource.success(fooForecast)
         forecast.value = fooValue
 
@@ -246,7 +258,13 @@ class ForecastViewModelTest{
 
     @Test
     fun testSelectDay(){
-        val selectedDay = OneDayForecast("Thursday", listOf(), 20, 10)
+        val selectedDay =
+            OneDayForecast(
+                "Thursday",
+                listOf(),
+                20,
+                10
+            )
         forecastViewModel.setSelectedDay(selectedDay)
         assertThat(forecastViewModel.selectedDay, notNullValue())
         assertThat(forecastViewModel.selectedDay.value?.dayOfWeek, `is` ("Thursday"))
