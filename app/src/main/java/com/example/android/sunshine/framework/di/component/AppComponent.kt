@@ -2,11 +2,10 @@ package com.example.android.sunshine.framework.di.component
 
 import android.content.Context
 import com.example.android.sunshine.framework.di.AppSubcomponents
-import com.example.android.sunshine.framework.di.module.ApplicationModule
 import com.example.android.sunshine.framework.di.module.DataBaseModule
 import com.example.android.sunshine.framework.di.module.NetworkModule
 import com.example.android.sunshine.presentation.base.MainActivity
-import com.example.android.sunshine.presentation.onboarding.ViewPagerFragment
+import com.example.android.sunshine.presentation.base.ViewPagerFragment
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton

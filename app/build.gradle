@@ -201,6 +201,12 @@ dependencies {
 
     // Dots for viewPager
     implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2'
+
+
+    implementation 'com.bignerdranch.android:expandablerecyclerview:2.0.0'
+
+    // OnBoarding
+    implementation 'androidx.leanback:leanback:1.1.0-alpha04'
 }
 
 allprojects {

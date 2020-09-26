@@ -1,6 +1,9 @@
 package com.example.android.sunshine.presentation.city
 
+import android.opengl.Visibility
 import android.view.LayoutInflater
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +13,7 @@ import com.example.android.sunshine.databinding.ItemDayForecastBinding
 
 class DayForecastAdapter(
     private val layoutId: Int,
-    private val callback: ((OneDayForecast) -> Unit)?
+    private val callback: ((OneDayForecast, String) -> Unit)?
 ) : RecyclerView.Adapter<DayForecastAdapter.ViewHolder>() {
 
     private var dayList: List<OneDayForecast>? = null
@@ -29,11 +32,23 @@ class DayForecastAdapter(
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding: ItemDayForecastBinding =
             DataBindingUtil.inflate(layoutInflater, viewType, parent, false)
-        binding.root.setOnClickListener {
-            binding.day?.let {
-                callback?.invoke(it)
-            }
+        binding.arrowDownButton.setOnClickListener {
+            binding.expandableDayDetail.visibility = GONE;
+            binding.arrowDownButton.visibility = GONE;
+            binding.arrowRightButton.visibility = GONE;
+            /*binding.day?.let {
+                callback?.invoke(it, "arrowDown")
 
+            }*/
+        }
+
+        binding.arrowRightButton.setOnClickListener {
+            binding.expandableDayDetail.visibility = VISIBLE;
+            binding.arrowDownButton.visibility = GONE;
+            binding.arrowRightButton.visibility = GONE;
+            /*binding.day?.let {
+                callback?.invoke(it, "arrowRight")
+            }*/
         }
         return ViewHolder(binding)
     }

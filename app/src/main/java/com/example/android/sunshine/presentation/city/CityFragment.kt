@@ -86,8 +86,13 @@ class CityFragment :Fragment(), SharedPreferences.OnSharedPreferenceChangeListen
     }
 
     private fun bindViews() {
-        dayForecastAdapter = DayForecastAdapter(R.layout.item_day_forecast) { oneDayForecast ->
-            openDayFragment(oneDayForecast)
+        dayForecastAdapter = DayForecastAdapter(R.layout.item_day_forecast) { oneDayForecast, buttonClicked ->
+            //openDayFragment(oneDayForecast)
+            if (buttonClicked.equals("arrowDown")){
+
+            } else if (buttonClicked.equals("arrowRight")){
+
+            }
         }
 
         hourForecastAdapter = HourForecastAdapter(R.layout.item_hour_forecast) { forecastListItem ->

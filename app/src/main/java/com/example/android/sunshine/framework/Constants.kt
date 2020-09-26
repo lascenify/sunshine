@@ -3,9 +3,6 @@ package com.example.android.sunshine.framework
 import com.example.android.sunshine.BuildConfig
 
 object Constants {
-    /** Tag that will identify this job **/
-    const val SUNSHINE_SYNC_WORK_NAME = "sunshine_syncing_work"
-
     object NetworkService{
         const val BASE_FORECAST_URL = "https://api.openweathermap.org/data/2.5/"
         const val FORECAST_API_KEY_VALUE =
@@ -34,4 +31,6 @@ object Constants {
     object Database{
         const val DATABASE_NAME = "sunshine"
     }
+
+
 }

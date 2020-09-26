@@ -33,16 +33,6 @@
             app:setWeatherIcon="@{day.icon}"
             />
 
-        <TextView
-            android:id="@+id/tv_item_day_max_tmp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="10º"
-            android:paddingRight="8dp"
-            android:textSize="18sp"
-            android:layout_toLeftOf="@id/tv_item_day_min_tmp"
-            app:setSimpleTemperature="@{day.maxTemperature}"
-            android:textColor="#FFFFFF"/>
 
         <TextView
             android:id="@+id/tv_item_day_min_tmp"
@@ -50,15 +40,42 @@
             android:layout_height="wrap_content"
             tools:text="5º"
             android:textSize="18sp"
-            android:layout_alignParentRight="true"
+            android:layout_toLeftOf="@id/tv_item_day_max_tmp"
             app:setSimpleTemperature="@{day.minTemperature}"
             android:textColor="#FFFFFF"/>
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="1dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:background="#dadada" />
+        <TextView
+            android:id="@+id/tv_item_day_max_tmp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="10º"
+            android:paddingRight="8dp"
+            android:textSize="18sp"
+            android:layout_toLeftOf="@id/arrowRightButton"
+            app:setSimpleTemperature="@{day.maxTemperature}"
+            android:textColor="#FFFFFF"/>
+
+        <Button
+            android:id="@+id/arrowRightButton"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/ic_baseline_keyboard_arrow_right_white_24"
+            android:layout_alignParentRight="true"
+            android:visibility="visible"/>
+        <Button
+            android:id="@+id/arrowDownButton"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/ic_baseline_keyboard_arrow_down_white_24"
+            android:layout_alignParentRight="true"
+            android:visibility="gone"/>
+
+        <ExpandableListView
+            android:id="@+id/expandableDayDetail"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/tv_item_day_of_week"
+            android:background="#BC4C4C" />
     </RelativeLayout>
 </layout>

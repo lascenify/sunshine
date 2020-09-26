@@ -27,6 +27,7 @@ object SunshinePreferences {
     const val PREF_CITY_NAME = "city_name"
     private const val PREF_COORD_LAT = "coord_lat"
     private const val PREF_COORD_LONG = "coord_long"
+    const val PREF_USER_FINISHED_ONBOARDING = "finished_onboarding";
 
     private const val PREF_CITIES_LIST = "cities"
     private val defaultWeatherCoordinates = doubleArrayOf(37.4284, 122.0724)

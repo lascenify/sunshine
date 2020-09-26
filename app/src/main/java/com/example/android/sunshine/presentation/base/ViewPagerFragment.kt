@@ -1,4 +1,4 @@
-package com.example.android.sunshine.presentation.onboarding
+package com.example.android.sunshine.presentation.base
 
 import android.content.Context
 import android.os.Bundle
