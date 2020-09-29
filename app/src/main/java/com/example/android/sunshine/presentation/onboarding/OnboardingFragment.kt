@@ -12,7 +12,9 @@ import androidx.annotation.Nullable
 import androidx.leanback.app.OnboardingSupportFragment
 import androidx.preference.PreferenceManager
 import com.example.android.sunshine.R
+import com.example.android.sunshine.framework.SunshinePreferences
 import com.example.android.sunshine.framework.SunshinePreferences.PREF_USER_FINISHED_ONBOARDING
+import com.example.android.sunshine.framework.SunshinePreferences.PREF_USER_FIRST_TIME
 import com.example.android.sunshine.presentation.base.MainActivity
 
 class OnboardingFragment(): OnboardingSupportFragment() {
@@ -114,6 +116,7 @@ class OnboardingFragment(): OnboardingSupportFragment() {
         // the next time the user launches the app.
         PreferenceManager.getDefaultSharedPreferences(context).edit().apply {
             putBoolean(PREF_USER_FINISHED_ONBOARDING, true)
+            putBoolean(PREF_USER_FIRST_TIME, true)
             apply()
             startActivity(Intent(context, MainActivity::class.java))
             requireActivity().finish()

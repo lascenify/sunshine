@@ -13,3 +13,13 @@ fun setVisibilty(view: View, isVisible: Boolean) {
         view.visibility = GONE
     }
 }
+
+
+@BindingAdapter("app:visibility")
+fun showSearchIfNoData(view: View, isVisible: Boolean) {
+    if (isVisible) {
+        view.visibility = VISIBLE
+    } else {
+        view.visibility = GONE
+    }
+}

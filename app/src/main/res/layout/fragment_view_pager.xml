@@ -3,13 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+<import type="com.example.android.sunshine.presentation.viewmodel.CitiesViewModel"/>
+        <variable
+            name="viewModel"
+            type="CitiesViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorPrimaryDark">
+
+        <!--androidx.fragment.app.FragmentContainerView
+            android:id="@+id/view_pager_search_fragment"
+            android:name="com.example.android.sunshine.presentation.search.SearchFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout="@layout/search_fragment" / -->
 
         <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
             android:id="@+id/spring_dots_indicator"

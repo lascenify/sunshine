@@ -20,19 +20,13 @@ import androidx.preference.PreferenceManager
 import com.example.android.sunshine.R
 
 object SunshinePreferences {
-    /*
-     * Human readable location string, provided by the API.  Because for styling,
-     * "Mountain View" is more recognizable than 94043.
-     */
-    const val PREF_CITY_NAME = "city_name"
     private const val PREF_COORD_LAT = "coord_lat"
     private const val PREF_COORD_LONG = "coord_long"
-    const val PREF_USER_FINISHED_ONBOARDING = "finished_onboarding";
+    const val PREF_USER_FINISHED_ONBOARDING = "finished_onboarding"
+    const val PREF_USER_FIRST_TIME = "first_time"
 
     private const val PREF_CITIES_LIST = "cities"
-    private val defaultWeatherCoordinates = doubleArrayOf(37.4284, 122.0724)
-
-    /**
+     /**
      * Helper method to handle setting location details in Preferences (City Name, Latitude,
      * Longitude)
      *
