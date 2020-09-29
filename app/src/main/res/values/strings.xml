@@ -154,13 +154,13 @@
     <!-- - - - - - - - - - - - - - -->
     <!--Used by Onboarding fragment-->
     <!-- - - - - - - - - - - - - - -->
-    <string name="onboarding_welcome_fragment">Welcome</string>
-    <string name="onboarding_location_fragment">Location</string>
-    <string name="onboarding_finish_fragment">Finish</string>
+    <string name="onboarding_welcome_fragment">Welcome to Sunshine!</string>
+    <string name="onboarding_finish_fragment">Enjoy the sunshine</string>
 
-    <string name="onboarding_welcome_desc">Welcome to Sunshine!</string>
-    <string name="onboarding_location_desc">Where do you live?</string>
-    <string name="onboarding_finish_desc">Enjoy the sunshine</string>
-
+    <string name="onboarding_welcome_desc">
+        This is a pet-project developed by Ascen Salmerón.
+        The source code can be found on GitHub.
+    </string>
+    <string name="onboarding_finish_desc">Hope you enjoy the trip and the sunshine</string>
     <string name="onboarding_start">Start</string>
 </resources>
